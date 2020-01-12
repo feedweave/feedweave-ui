@@ -3,12 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "arweave": "^1.6.0",
+    "bootstrap": "^4.4.1",
+    "classnames": "^2.2.6",
+    "immutable": "^4.0.0-rc.12",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "reactstrap": "^8.2.0",
+    "remark-parse": "^7.0.2",
+    "remark-react": "^6.0.0",
+    "rich-markdown-editor": "^9.11.1",
+    "unified": "^8.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -16,6 +26,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:4000",
   "eslintConfig": {
     "extends": "react-app"
   },

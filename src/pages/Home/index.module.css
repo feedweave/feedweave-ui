@@ -1,0 +1,24 @@
+.nav {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #666666;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  display: inline;
+  padding-right: 10px;
+}
+
+.nav li a {
+  color: #b1b1b1;
+}
+.nav li a[aria-current="page"] {
+  color: #666666;
+}

@@ -1,0 +1,67 @@
+.itemBody {
+  color: black;
+}
+
+.itemContainer {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.fullSizeContainer {
+  border-bottom: 0;
+}
+
+.itemContainer:hover {
+  background-color: #fbfbfb;
+}
+
+.fullSizeContainer:hover {
+  background-color: white;
+}
+
+.itemContainer a {
+  text-decoration: none;
+}
+.itemContent {
+  color: #646464;
+  font-size: 15px;
+}
+
+.itemContent h1,
+h2,
+h3,
+h4 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  color: black;
+}
+
+.itemContent h2,
+h3,
+h4 {
+  font-size: 20px;
+}
+
+.itemContent > *:last-child {
+  margin-bottom: 5px;
+}
+
+.itemCredit {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.itemCredit a {
+  text-decoration: underline;
+  color: black;
+}
+
+.itemDate {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  color: #646464;
+}

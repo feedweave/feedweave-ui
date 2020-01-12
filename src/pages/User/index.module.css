@@ -1,0 +1,22 @@
+.userName {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.userStats {
+  font-size: 15px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 40px;
+}
+
+.followContainer {
+  margin-top: 20px;
+}
+
+.followTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
