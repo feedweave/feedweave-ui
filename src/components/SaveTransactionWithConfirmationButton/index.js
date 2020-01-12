@@ -13,6 +13,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
     super(props);
 
     this.state = {
+      isLoading: false,
       isModalOpen: false,
       txData: null
     };
@@ -28,11 +29,16 @@ class SaveTransactionWithConfirmationButton extends React.Component {
 
   async openModal() {
     const { data, tags, user } = this.props;
+    this.setState({ isLoading: true });
     const tx = await createTransaction(data, tags, user.wallet);
     const balance = await arweave.wallets.getBalance(user.address);
     const balanceAfter = arweave.ar.sub(balance, tx.reward);
 
-    this.setState({ isModalOpen: true, txData: { tx, balance, balanceAfter } });
+    this.setState({
+      isModalOpen: true,
+      isLoading: false,
+      txData: { tx, balance, balanceAfter }
+    });
   }
 
   async handleSave() {
@@ -92,11 +98,15 @@ class SaveTransactionWithConfirmationButton extends React.Component {
 
   render() {
     const { buttonText, data } = this.props;
-    const { isModalOpen, txData } = this.state;
+    const { isModalOpen, txData, isLoading } = this.state;
     return (
       <div>
-        <Button color="primary" onClick={this.openModal} disabled={!!!data}>
-          {buttonText}
+        <Button
+          color="primary"
+          onClick={this.openModal}
+          disabled={isLoading || !!!data}
+        >
+          {isLoading ? "Loading..." : buttonText}
         </Button>
         <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>
