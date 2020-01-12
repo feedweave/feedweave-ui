@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import styles from "./index.module.css";
 
 import { arweave, createTransaction, publishTransaction } from "../../util";
 
@@ -52,12 +53,26 @@ class SaveTransactionWithConfirmationButton extends React.Component {
 
     const dataSize = new Blob([data]).size;
     return (
-      <ModalBody>
+      <ModalBody className={styles.modalBody}>
         <div>
           <strong>ID</strong>: {tx.id}
         </div>
         <div>
-          <strong>Size</strong>: {dataSize + " Bytes"}{" "}
+          <strong>Data</strong>: {dataSize + " Bytes"}{" "}
+        </div>
+        <div>
+          <strong>Tags</strong>:
+          <div className={styles.tagList}>
+            <code>
+              {Object.keys(tx.tags).map(key => {
+                return (
+                  <div>
+                    {key}: {tx.tags[key]}
+                  </div>
+                );
+              })}
+            </code>
+          </div>
         </div>
         <div>
           <strong>Price</strong>: {winstonToAr(tx.reward)}
