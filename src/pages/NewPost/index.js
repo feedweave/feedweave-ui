@@ -12,7 +12,7 @@ const tags = {
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { post: "" };
+    this.state = { post: null };
     this.handleTextChange = this.handleTextChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
