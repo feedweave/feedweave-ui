@@ -24,7 +24,7 @@ const FollowList = ({ ids, title }) => {
 
 const Index = ({ feed }) => {
   if (feed.length === 0) {
-    return "You're not following anyone yet!";
+    return "No posts yet!";
   } else {
     return <PostFeed posts={feed} />;
   }
