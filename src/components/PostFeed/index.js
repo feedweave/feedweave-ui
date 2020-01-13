@@ -57,9 +57,13 @@ export class PostFeedItem extends React.Component {
             By: <Link to={`/user/${ownerAddress}`}>{ownerAddress}</Link>
           </div>
           <div className={styles.itemDate}>{formatDate(timestamp)}</div>
-          <div>
-            <a href={`https://explorer.arweave.co/transaction/${id}`}>Raw tx</a>
-          </div>
+          {fullSize ? (
+            <div>
+              <a href={`https://explorer.arweave.co/transaction/${id}`}>
+                Raw tx
+              </a>
+            </div>
+          ) : null}
         </div>
       </div>
     );
