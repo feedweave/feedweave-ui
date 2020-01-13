@@ -74,12 +74,9 @@ class Header extends React.Component {
                 </Link>
               </NavItem>
               <NavItem>
-                <NavLink
-                  active
-                  href={`https://explorer.arweave.co/address/${user.address}`}
-                >
+                <Link className="nav-link active" to={`/user/${user.address}`}>
                   Wallet
-                </NavLink>
+                </Link>
               </NavItem>
               <NavItem>
                 <NavLink href="#" onClick={this.handleLogout}>

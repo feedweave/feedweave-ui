@@ -52,11 +52,15 @@ export class PostFeedItem extends React.Component {
               ).contents
           }
         </div>
-        <div></div>
-        <div className={styles.itemCredit}>
-          By: <Link to={`/user/${ownerAddress}`}>{ownerAddress}</Link>
+        <div className={styles.itemMetadata}>
+          <div className={styles.itemCredit}>
+            By: <Link to={`/user/${ownerAddress}`}>{ownerAddress}</Link>
+          </div>
+          <div className={styles.itemDate}>{formatDate(timestamp)}</div>
+          <div>
+            <a href={`https://explorer.arweave.co/transaction/${id}`}>Raw tx</a>
+          </div>
         </div>
-        <div className={styles.itemDate}>{formatDate(timestamp)}</div>
       </div>
     );
 

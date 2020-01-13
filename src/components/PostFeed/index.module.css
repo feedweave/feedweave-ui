@@ -47,9 +47,10 @@ h4 {
 .itemContent > *:last-child {
   margin-bottom: 5px;
 }
-
-.itemCredit {
+.itemMetadata {
   font-size: 13px;
+}
+.itemCredit {
   margin-bottom: 5px;
 }
 
@@ -62,6 +63,6 @@ h4 {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 13px;
   color: #646464;
+  margin-bottom: 5px;
 }

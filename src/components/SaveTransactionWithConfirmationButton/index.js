@@ -52,7 +52,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
   }
 
   renderModalBody() {
-    const { data, user } = this.props;
+    const { data, user, tags } = this.props;
     const {
       txData: { tx, balance, balanceAfter }
     } = this.state;
@@ -70,10 +70,10 @@ class SaveTransactionWithConfirmationButton extends React.Component {
           <strong>Tags</strong>:
           <div className={styles.tagList}>
             <code>
-              {Object.keys(tx.tags).map(key => {
+              {Object.keys(tags).map(key => {
                 return (
-                  <div>
-                    {key}: {tx.tags[key]}
+                  <div key={key}>
+                    {key}: {tags[key]}
                   </div>
                 );
               })}

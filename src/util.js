@@ -23,7 +23,6 @@ export const createTransaction = async (post, tags, wallet) => {
   }
 
   await arweave.transactions.sign(tx, wallet);
-  tx["tags"] = tags;
   return tx;
 };
 

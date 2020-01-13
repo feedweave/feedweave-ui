@@ -77,6 +77,11 @@ class User extends React.Component {
             <Link to={`/user/${user.id}/following`}>Following</Link>:{" "}
             {followingCount}
           </div>
+          <div>
+            <a href={`https://explorer.arweave.co/address/${user.id}`}>
+              Arweave activity
+            </a>
+          </div>
           {loggedInUser && loggedInUser.address !== walletId ? (
             <div className={styles.followContainer}>
               <FollowButton walletId={walletId} />
