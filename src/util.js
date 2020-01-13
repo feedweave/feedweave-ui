@@ -2,12 +2,12 @@ import React from "react";
 import Arweave from "arweave/web";
 
 export const arweave = Arweave.init({
-  host: "localhost",
-  port: 4000,
-  protocol: "http"
+  host: "gateway.arweave.co",
+  port: 443,
+  protocol: "https"
 });
 
-export const API_HOST = "";
+export const API_HOST = "https://gateway.arweave.co";
 
 export const APP_NAME = `arweave-blog-0.0.1`;
 export const SOCIAL_GRAPH_APP_NAME = `social-graph`;
