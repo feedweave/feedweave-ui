@@ -12,7 +12,7 @@ class YourFeed extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      feed: []
+      feed: {}
     };
   }
 
@@ -32,33 +32,36 @@ class YourFeed extends React.Component {
     }
   }
 
+  renderFeed() {
+    const {
+      user: {
+        userInfo: { followingIds }
+      }
+    } = this.context;
+
+    const { feed } = this.state;
+    if (followingIds.length === 0) {
+      return "You're not following anyone yet!";
+    }
+
+    return <PostFeed feed={feed} />;
+  }
+
   render() {
-    const { isLoaded, feed } = this.state;
-    const { user } = this.context;
+    const { isLoaded } = this.state;
     return (
       <div>
         <nav className={styles.nav}>
-          {user ? (
-            <ul>
-              <li>
-                <Link to="/my-feed">Your feed</Link>
-              </li>
-              <li>
-                <Link to="/">Global feed</Link>
-              </li>
-            </ul>
-          ) : (
-            <ul>
-              <li>Global feed</li>
-            </ul>
-          )}
+          <ul>
+            <li>
+              <Link to="/my-feed">Your feed</Link>
+            </li>
+            <li>
+              <Link to="/">Global feed</Link>
+            </li>
+          </ul>
         </nav>
-        {isLoaded ? null : "Loading..."}
-        {feed.length === 0 ? (
-          "You're not following anyone yet!"
-        ) : (
-          <PostFeed posts={feed} />
-        )}
+        {isLoaded ? this.renderFeed() : "Loading..."}
       </div>
     );
   }

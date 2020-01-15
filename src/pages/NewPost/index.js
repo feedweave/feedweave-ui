@@ -9,6 +9,10 @@ const tags = {
   "App-Name": APP_NAME
 };
 
+const unescape = text => {
+  return text.replace(/\\([\\`*{}[\]()#+\-.!_>])/g, "$1");
+};
+
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +24,8 @@ class NewPost extends React.Component {
   static contextType = UserContext;
 
   handleTextChange = value => {
-    this.setState({ post: value() });
+    const text = unescape(value());
+    this.setState({ post: text });
   };
 
   async onSave(tx) {

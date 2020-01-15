@@ -66,3 +66,7 @@ h4 {
   color: #646464;
   margin-bottom: 5px;
 }
+
+.itemContainer img {
+  max-width: 100%;
+}

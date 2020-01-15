@@ -34,10 +34,12 @@ function formatDate(unixtime) {
 export class PostFeedItem extends React.Component {
   render() {
     const {
-      post: { id, ownerAddress, content, timestamp },
+      post: { id, content, timestamp },
+      user: { id: userId, arweaveId },
       fullSize
     } = this.props;
 
+    const userName = arweaveId ? `@${arweaveId}` : userId;
     const body = (
       <div className={styles.itemBody}>
         <div className={styles.itemContent}>
@@ -54,7 +56,7 @@ export class PostFeedItem extends React.Component {
         </div>
         <div className={styles.itemMetadata}>
           <div className={styles.itemCredit}>
-            By: <Link to={`/user/${ownerAddress}`}>{ownerAddress}</Link>
+            By: <Link to={`/user/${userId}`}>{userName}</Link>
           </div>
           <div className={styles.itemDate}>{formatDate(timestamp)}</div>
           {fullSize ? (
@@ -80,12 +82,17 @@ export class PostFeedItem extends React.Component {
   }
 }
 
-const PostFeed = ({ posts }) => (
-  <div>
-    {posts.map(post => (
-      <PostFeedItem key={post.id} post={post} />
-    ))}
-  </div>
-);
+const PostFeed = ({ feed }) => {
+  const { users, transactions } = feed;
+
+  return (
+    <div>
+      {transactions.map(post => {
+        const user = users.find(u => u.id === post.ownerAddress);
+        return <PostFeedItem key={post.id} post={post} user={user} />;
+      })}
+    </div>
+  );
+};
 
 export default PostFeed;

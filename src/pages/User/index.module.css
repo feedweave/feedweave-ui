@@ -1,7 +1,7 @@
 .userName {
   font-size: 19px;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .userStats {
@@ -19,4 +19,15 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.registerNameButton {
+  margin-bottom: 15px;
+}
+.userNameSubheading {
+  font-size: 14px;
+  color: #757575;
+}
+.userNameContainer {
+  margin-bottom: 12px;
 }

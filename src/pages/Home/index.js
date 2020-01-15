@@ -12,7 +12,7 @@ class Home extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      feed: []
+      feed: {}
     };
   }
 
@@ -48,8 +48,7 @@ class Home extends React.Component {
             </ul>
           )}
         </nav>
-        {isLoaded ? null : "Loading..."}
-        <PostFeed posts={feed} />
+        {isLoaded ? <PostFeed feed={feed} /> : "Loading..."}
       </div>
     );
   }

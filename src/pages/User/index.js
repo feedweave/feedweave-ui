@@ -1,5 +1,6 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
+import { Button } from "reactstrap";
 
 import { API_HOST } from "../../util";
 import PostFeed from "../../components/PostFeed";
@@ -26,7 +27,7 @@ const Index = ({ feed }) => {
   if (feed.length === 0) {
     return "No posts yet!";
   } else {
-    return <PostFeed posts={feed} />;
+    return <PostFeed feed={feed} />;
   }
 };
 
@@ -44,7 +45,18 @@ class User extends React.Component {
   static contextType = UserContext;
 
   async componentDidMount() {
+    await this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.walletId !== prevProps.walletId) {
+      this.loadData();
+    }
+  }
+
+  async loadData() {
     // TODO handle errors
+    this.setState({ isLoaded: false });
     const { walletId } = this.props;
     const feed = await fetch(
       `${API_HOST}/transactions?app-name=arweave-blog-0.0.1&wallet-id=${walletId}`
@@ -59,12 +71,30 @@ class User extends React.Component {
     const { walletId } = this.props;
     const { user: loggedInUser } = this.context;
     const { user, feed, isLoaded } = this.state;
-    const { postCount, followerCount, followingCount } = user;
+    const { postCount, followerCount, followingCount, arweaveId } = user;
+
+    const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
     const element = isLoaded ? (
       <div>
-        <h1 className={styles.userName}>
-          <Link to={`/user/${user.id}`}>{walletId}</Link>
-        </h1>
+        <div className={styles.userNameContainer}>
+          <h1 className={styles.userName}>
+            <Link to={`/user/${user.id}`}>
+              {arweaveId ? `@${arweaveId}` : walletId}
+            </Link>
+          </h1>
+          {arweaveId ? (
+            <div className={styles.userNameSubheading}>{walletId}</div>
+          ) : null}
+        </div>
+        {isLoggedInUser && !arweaveId ? (
+          <Button
+            className={styles.registerNameButton}
+            color="primary"
+            size="sm"
+          >
+            Set up ID
+          </Button>
+        ) : null}
         <div className={styles.userStats}>
           <div>
             <Link to={`/user/${user.id}`}>Posts</Link>: {postCount}
@@ -82,7 +112,7 @@ class User extends React.Component {
               Arweave activity
             </a>
           </div>
-          {loggedInUser && loggedInUser.address !== walletId ? (
+          {!isLoggedInUser ? (
             <div className={styles.followContainer}>
               <FollowButton walletId={walletId} />
             </div>
