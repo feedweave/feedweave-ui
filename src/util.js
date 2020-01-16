@@ -40,3 +40,16 @@ export const UserContext = React.createContext({
   user: null,
   handleUser: () => {}
 });
+
+export const fetchUserByArweaveID = async userName => {
+  const res = await fetch(
+    `${API_HOST}/arweave-social/check-arweave-id/${userName}`
+  );
+
+  if (res.status === 404) {
+    return null;
+  } else {
+    const user = await res.json();
+    return user;
+  }
+};

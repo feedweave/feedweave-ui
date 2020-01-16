@@ -1,6 +1,5 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
-import { Button } from "reactstrap";
 
 import { API_HOST } from "../../util";
 import PostFeed from "../../components/PostFeed";
@@ -9,16 +8,23 @@ import FollowButton from "../../components/FollowButton";
 import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
+import SetUpIDButton from "../../components/SetUpIDButton";
 
-const FollowList = ({ ids, title }) => {
+const FollowList = ({ ids, title, users }) => {
   return (
     <div>
       <div className={styles.followTitle}>{title}</div>
-      {ids.map(id => (
-        <div>
-          <Link to={`/user/${id}`}>{id}</Link>
-        </div>
-      ))}
+      {ids.map(id => {
+        const relatedUser = users.find(user => user.id === id) || {};
+        const displayName =
+          (relatedUser.arweaveId && `@${relatedUser.arweaveId}`) || id;
+
+        return (
+          <div>
+            <Link to={`/user/${id}`}>{displayName}</Link>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -38,8 +44,11 @@ class User extends React.Component {
       error: null,
       isLoaded: false,
       user: {},
+      relatedUsers: [],
       feed: []
     };
+
+    this.loadData = this.loadData.bind(this);
   }
 
   static contextType = UserContext;
@@ -62,16 +71,16 @@ class User extends React.Component {
       `${API_HOST}/transactions?app-name=arweave-blog-0.0.1&wallet-id=${walletId}`
     ).then(res => res.json());
 
-    const user = await fetch(
+    const { user, relatedUsers } = await fetch(
       `${API_HOST}/arweave-social/user/${walletId}`
     ).then(res => res.json());
-    this.setState({ isLoaded: true, feed, user });
+    this.setState({ isLoaded: true, feed, user, relatedUsers });
   }
   render() {
     const { walletId } = this.props;
     const { user: loggedInUser } = this.context;
-    const { user, feed, isLoaded } = this.state;
-    const { postCount, followerCount, followingCount, arweaveId } = user;
+    const { user, feed, isLoaded, relatedUsers } = this.state;
+    const { postCount, followerIds, followingIds, arweaveId } = user;
 
     const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
     const element = isLoaded ? (
@@ -87,13 +96,7 @@ class User extends React.Component {
           ) : null}
         </div>
         {isLoggedInUser && !arweaveId ? (
-          <Button
-            className={styles.registerNameButton}
-            color="primary"
-            size="sm"
-          >
-            Set up ID
-          </Button>
+          <SetUpIDButton onSave={this.loadData} />
         ) : null}
         <div className={styles.userStats}>
           <div>
@@ -101,11 +104,11 @@ class User extends React.Component {
           </div>
           <div>
             <Link to={`/user/${user.id}/followers`}>Followers</Link>:{" "}
-            {followerCount}
+            {followerIds.length}
           </div>
           <div>
             <Link to={`/user/${user.id}/following`}>Following</Link>:{" "}
-            {followingCount}
+            {followingIds.length}
           </div>
           <div>
             <a href={`https://explorer.arweave.co/address/${user.id}`}>
@@ -123,11 +126,13 @@ class User extends React.Component {
           <FollowList
             path="/following"
             ids={user.followingIds}
+            users={relatedUsers}
             title="Following"
           />
           <FollowList
             path="/followers"
             ids={user.followerIds}
+            users={relatedUsers}
             title="Followers"
           />
         </Router>
