@@ -76,6 +76,20 @@ class User extends React.Component {
     ).then(res => res.json());
     this.setState({ isLoaded: true, feed, user, relatedUsers });
   }
+  renderFollowButton() {
+    const { walletId } = this.props;
+    const { user: loggedInUser } = this.context;
+    if (!loggedInUser) {
+      return;
+    }
+
+    if (loggedInUser.address === walletId) {
+      return;
+    }
+
+    return <FollowButton walletId={walletId} />;
+  }
+
   render() {
     const { walletId } = this.props;
     const { user: loggedInUser } = this.context;
@@ -115,11 +129,7 @@ class User extends React.Component {
               Arweave activity
             </a>
           </div>
-          {!isLoggedInUser ? (
-            <div className={styles.followContainer}>
-              <FollowButton walletId={walletId} />
-            </div>
-          ) : null}
+          {this.renderFollowButton()}
         </div>
         <Router primary={false}>
           <Index path="/" feed={feed} />

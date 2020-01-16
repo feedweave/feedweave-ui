@@ -44,8 +44,8 @@ class Header extends React.Component {
         const data = reader.result;
         const wallet = JSON.parse(data);
         const address = await arweave.wallets.jwkToAddress(wallet);
-        const userInfo = await getUserInfo(address).then(res => res.json());
-        const userData = { wallet, address, userInfo };
+        const { user } = await getUserInfo(address).then(res => res.json());
+        const userData = { wallet, address, userInfo: user };
         handleUser(userData);
         navigate("/my-feed");
       } catch (error) {
