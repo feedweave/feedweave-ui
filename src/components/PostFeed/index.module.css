@@ -49,9 +49,22 @@ h4 {
 }
 .itemMetadata {
   font-size: 13px;
+  display: flex;
+}
+.twitterAvatar {
+  width: 35px;
+  height: 35px;
+}
+.twitterAvatar img {
+  width: 100%;
+}
+.metadataText {
+  padding-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .itemCredit {
-  margin-bottom: 5px;
 }
 
 .itemCredit a {

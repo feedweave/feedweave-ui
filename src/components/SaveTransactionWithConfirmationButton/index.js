@@ -64,7 +64,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
           <strong>ID</strong>: {tx.id}
         </div>
         <div>
-          <strong>Data</strong>: {dataSize + " Bytes"}{" "}
+          <strong>Data</strong>: {dataSize + " Bytes"}
         </div>
         <div>
           <strong>Tags</strong>:

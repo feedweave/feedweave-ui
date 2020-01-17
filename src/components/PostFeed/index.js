@@ -35,7 +35,7 @@ export class PostFeedItem extends React.Component {
   render() {
     const {
       post: { id, content, timestamp, blockHash },
-      user: { id: userId, arweaveId },
+      user: { id: userId, arweaveId, twitterId },
       fullSize
     } = this.props;
 
@@ -55,24 +55,32 @@ export class PostFeedItem extends React.Component {
           }
         </div>
         <div className={styles.itemMetadata}>
-          <div className={styles.itemCredit}>
-            By: <Link to={`/user/${userId}`}>{userName}</Link>
-          </div>
-          <div className={styles.itemDateAndStatus}>
-            {formatDate(timestamp)}
-
-            {!blockHash ? (
-              <div className={styles.itemPending}>Mining...</div>
-            ) : null}
-          </div>
-          {fullSize ? (
-            <div>
-              <a href={`https://explorer.arweave.co/transaction/${id}`}>
-                Raw tx
-              </a>
+          {twitterId ? (
+            <div className={styles.twitterAvatar}>
+              <img
+                alt="twitter-avatar"
+                src={`https://avatars.io/twitter/${twitterId}`}
+              />
             </div>
           ) : null}
+          <div className={styles.metadataText}>
+            <div className={styles.itemCredit}>
+              By: <Link to={`/user/${userId}`}>{userName}</Link>
+            </div>
+            <div className={styles.itemDateAndStatus}>
+              {formatDate(timestamp)}
+
+              {!blockHash ? (
+                <div className={styles.itemPending}>Mining...</div>
+              ) : null}
+            </div>
+          </div>
         </div>
+        {fullSize ? (
+          <div>
+            <a href={`https://explorer.arweave.co/transaction/${id}`}>Raw tx</a>
+          </div>
+        ) : null}
       </div>
     );
 

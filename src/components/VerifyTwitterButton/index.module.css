@@ -1,0 +1,23 @@
+.twitterWidget {
+  display: flex;
+}
+
+.twitterWidgetAvatar {
+  width: 60px;
+  height: 60px;
+}
+
+.twitterWidgetAvatar img {
+  width: 100%;
+}
+
+.twitterWidgetMetadata {
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.twitterHandle {
+  font-weight: bold;
+}

@@ -9,6 +9,7 @@ import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
 import SetUpIDButton from "../../components/SetUpIDButton";
+import VerifyTwitterButton from "../../components/VerifyTwitterButton";
 
 const FollowList = ({ ids, title, users }) => {
   return (
@@ -94,24 +95,35 @@ class User extends React.Component {
     const { walletId } = this.props;
     const { user: loggedInUser } = this.context;
     const { user, feed, isLoaded, relatedUsers } = this.state;
-    const { postCount, followerIds, followingIds, arweaveId } = user;
+    const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
 
     const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
     const element = isLoaded ? (
       <div>
         <div className={styles.userNameContainer}>
-          <h1 className={styles.userName}>
-            <Link to={`/user/${user.id}`}>
-              {arweaveId ? `@${arweaveId}` : walletId}
-            </Link>
-          </h1>
-          {arweaveId ? (
-            <div className={styles.userNameSubheading}>{walletId}</div>
+          {twitterId ? (
+            <div className={styles.twitterAvatar}>
+              <img
+                alt="twitter-avatar"
+                src={`https://avatars.io/twitter/${twitterId}`}
+              />
+            </div>
           ) : null}
+          <div className={styles.userNameText}>
+            <h1 className={styles.userName}>
+              <Link to={`/user/${user.id}`}>
+                {arweaveId ? `@${arweaveId}` : walletId}
+              </Link>
+            </h1>
+            {arweaveId ? (
+              <div className={styles.userNameSubheading}>{walletId}</div>
+            ) : null}
+          </div>
         </div>
         {isLoggedInUser && !arweaveId ? (
           <SetUpIDButton onSave={this.loadData} />
         ) : null}
+        {isLoggedInUser && !twitterId ? <VerifyTwitterButton /> : null}
         <div className={styles.userStats}>
           <div>
             <Link to={`/user/${user.id}`}>Posts</Link>: {postCount}
@@ -124,6 +136,12 @@ class User extends React.Component {
             <Link to={`/user/${user.id}/following`}>Following</Link>:{" "}
             {followingIds.length}
           </div>
+          {twitterId ? (
+            <div>
+              Twitter:{" "}
+              <a href={`https://twitter.com/${twitterId}`}>{`@${twitterId}`}</a>
+            </div>
+          ) : null}
           <div>
             <a href={`https://explorer.arweave.co/address/${user.id}`}>
               Arweave activity

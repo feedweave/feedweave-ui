@@ -21,10 +21,27 @@
   margin-bottom: 10px;
 }
 
+.userNameContainer {
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.twitterAvatar {
+  width: 65px;
+  height: 65px;
+}
+.twitterAvatar img {
+  width: 100%;
+}
+
+.userNameText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
+}
+
 .userNameSubheading {
   font-size: 14px;
   color: #757575;
-}
-.userNameContainer {
-  margin-bottom: 12px;
 }
