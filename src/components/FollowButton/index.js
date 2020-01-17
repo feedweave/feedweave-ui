@@ -55,6 +55,7 @@ class FollowButton extends React.Component {
         onSave={this.onSave}
         buttonText={action.charAt(0).toUpperCase() + action.slice(1)}
         color="primary"
+        size="sm"
       />
     );
   }

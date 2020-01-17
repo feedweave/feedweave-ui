@@ -97,12 +97,13 @@ class SaveTransactionWithConfirmationButton extends React.Component {
   }
 
   render() {
-    const { buttonText, data, disabled } = this.props;
+    const { buttonText, data, disabled, size } = this.props;
     const { isModalOpen, txData, isLoading } = this.state;
     return (
       <div>
         <Button
           color="primary"
+          size={size}
           onClick={this.openModal}
           disabled={disabled || isLoading || !!!data}
         >

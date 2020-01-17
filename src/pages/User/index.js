@@ -88,7 +88,11 @@ class User extends React.Component {
       return;
     }
 
-    return <FollowButton walletId={walletId} />;
+    return (
+      <div className={styles.followButton}>
+        <FollowButton walletId={walletId} />
+      </div>
+    );
   }
 
   render() {
@@ -98,6 +102,9 @@ class User extends React.Component {
     const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
 
     const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
+
+    const showIdButton = isLoggedInUser && !arweaveId;
+    const showTwitterButton = isLoggedInUser && !twitterId;
     const element = isLoaded ? (
       <div>
         <div className={styles.userNameContainer}>
@@ -120,10 +127,12 @@ class User extends React.Component {
             ) : null}
           </div>
         </div>
-        {isLoggedInUser && !arweaveId ? (
-          <SetUpIDButton onSave={this.loadData} />
+        {showIdButton || showTwitterButton ? (
+          <div className={styles.idButtons}>
+            {showIdButton ? <SetUpIDButton onSave={this.loadData} /> : null}
+            {showTwitterButton ? <VerifyTwitterButton /> : null}
+          </div>
         ) : null}
-        {isLoggedInUser && !twitterId ? <VerifyTwitterButton /> : null}
         <div className={styles.userStats}>
           <div>
             <Link to={`/user/${user.id}`}>Posts</Link>: {postCount}

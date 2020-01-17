@@ -218,7 +218,7 @@ class VerifyTwitterButton extends React.Component {
     const { isModalOpen, activePage } = this.state;
     return (
       <div>
-        <Button color="primary" onClick={this.openModal}>
+        <Button color="primary" size="sm" onClick={this.openModal}>
           Verify Twitter
         </Button>
         <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
