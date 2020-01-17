@@ -31,7 +31,7 @@ class Header extends React.Component {
           <Link to="/">
             <div className="navbar-brand">
               {" "}
-              <strong>ARWEAVE</strong> social
+              <strong>FEED</strong>weave
             </div>
           </Link>
           {user ? (
