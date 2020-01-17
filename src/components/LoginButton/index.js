@@ -1,23 +1,39 @@
 import React from "react";
-import { Button } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import { navigate } from "@reach/router";
 import { arweave, getUserInfo } from "../../util";
 
 import { UserContext } from "../../util";
 
+import styles from "./index.module.css";
+
 class LoginButton extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { isModalOpen: false };
+
     this.inputFileRef = React.createRef();
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleUploadClick = this.handleUploadClick.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   static contextType = UserContext;
 
-  handleButtonClick = e => {
+  toggleModal() {
+    this.setState({ isModalOpen: !this.state.isModalOpen });
+  }
+
+  async openModal() {
+    this.setState({
+      isModalOpen: true
+    });
+  }
+
+  handleUploadClick = e => {
     e.preventDefault();
     this.inputFileRef.current.click();
   };
@@ -38,6 +54,7 @@ class LoginButton extends React.Component {
           res.json()
         );
         handleUser({ wallet, address, userInfo });
+        this.toggleModal();
         navigate("/my-feed");
       } catch (error) {
         alert(error.toString());
@@ -47,11 +64,30 @@ class LoginButton extends React.Component {
   };
 
   render() {
+    const { isModalOpen } = this.state;
     return (
       <div>
-        <Button color="link" onClick={this.handleButtonClick}>
+        <Button color="link" onClick={this.openModal}>
           Log in/Sign up
         </Button>
+        <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>Log in</ModalHeader>
+          <ModalBody>
+            <div className={styles.dropArea} onClick={this.handleUploadClick}>
+              <div>
+                Drop or{" "}
+                <Button className={styles.dropAreaLink} color="link">
+                  upload
+                </Button>{" "}
+                a keyfile to log in.
+              </div>
+            </div>
+            <div className={styles.getWalletCopy}>
+              Don't have a wallet? Get one{" "}
+              <a href="https://tokens.arweave.org/">here</a>!
+            </div>
+          </ModalBody>
+        </Modal>
         <input
           ref={this.inputFileRef}
           type="file"

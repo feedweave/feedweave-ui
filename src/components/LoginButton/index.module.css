@@ -1,0 +1,21 @@
+.dropArea {
+  height: 200px;
+  border: 2px dashed #62666f;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: auto;
+  max-width: 300px;
+  cursor: pointer;
+}
+.dropAreaLink {
+  padding: 0;
+  vertical-align: unset;
+}
+
+.getWalletCopy {
+  text-align: center;
+  margin-top: 15px;
+}
