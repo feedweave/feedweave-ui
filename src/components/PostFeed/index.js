@@ -34,7 +34,7 @@ function formatDate(unixtime) {
 export class PostFeedItem extends React.Component {
   render() {
     const {
-      post: { id, content, timestamp },
+      post: { id, content, timestamp, blockHash },
       user: { id: userId, arweaveId },
       fullSize
     } = this.props;
@@ -58,7 +58,13 @@ export class PostFeedItem extends React.Component {
           <div className={styles.itemCredit}>
             By: <Link to={`/user/${userId}`}>{userName}</Link>
           </div>
-          <div className={styles.itemDate}>{formatDate(timestamp)}</div>
+          <div className={styles.itemDateAndStatus}>
+            {formatDate(timestamp)}
+
+            {!blockHash ? (
+              <div className={styles.itemPending}>Mining...</div>
+            ) : null}
+          </div>
           {fullSize ? (
             <div>
               <a href={`https://explorer.arweave.co/transaction/${id}`}>

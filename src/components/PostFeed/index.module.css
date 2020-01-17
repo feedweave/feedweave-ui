@@ -59,12 +59,22 @@ h4 {
   color: black;
 }
 
-.itemDate {
+.itemDateAndPending {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   color: #646464;
   margin-bottom: 5px;
+}
+
+.itemPending {
+  display: inline-block;
+  background-color: #f1f1f1;
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: #424242;
+  font-size: 12px;
+  margin-left: 5px;
 }
 
 .itemContainer img {
