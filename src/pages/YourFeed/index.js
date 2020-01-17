@@ -49,6 +49,7 @@ class YourFeed extends React.Component {
 
   render() {
     const { isLoaded } = this.state;
+    const { user } = this.context;
     return (
       <div>
         <nav className={styles.nav}>
@@ -61,7 +62,7 @@ class YourFeed extends React.Component {
             </li>
           </ul>
         </nav>
-        {isLoaded ? this.renderFeed() : "Loading..."}
+        {isLoaded && user ? this.renderFeed() : "Loading..."}
       </div>
     );
   }
