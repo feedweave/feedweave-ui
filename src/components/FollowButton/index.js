@@ -35,6 +35,7 @@ class FollowButton extends React.Component {
     );
     handleUser({ ...user, userInfo: updatedUserInfo });
   }
+
   render() {
     const { walletId: followAddress } = this.props;
     const { user } = this.context;
@@ -44,26 +45,18 @@ class FollowButton extends React.Component {
 
     const isFollowing = followingIds.indexOf(followAddress) > -1;
 
-    const element = isFollowing ? (
+    const action = isFollowing ? "unfollow" : "follow";
+
+    return (
       <SaveTransactionWithConfirmationButton
         data={followAddress}
-        tags={generateTags("unfollow")}
+        tags={generateTags(action)}
         user={user}
         onSave={this.onSave}
-        buttonText="Unfollow"
-        color="primary"
-      />
-    ) : (
-      <SaveTransactionWithConfirmationButton
-        data={followAddress}
-        tags={generateTags("follow")}
-        user={user}
-        onSave={this.onSave}
-        buttonText="Follow"
+        buttonText={action.charAt(0).toUpperCase() + action.slice(1)}
         color="primary"
       />
     );
-    return element;
   }
 }
 
