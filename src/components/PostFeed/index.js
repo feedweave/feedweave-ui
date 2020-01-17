@@ -57,10 +57,12 @@ export class PostFeedItem extends React.Component {
         <div className={styles.itemMetadata}>
           {twitterId ? (
             <div className={styles.twitterAvatar}>
-              <img
-                alt="twitter-avatar"
-                src={`https://avatars.io/twitter/${twitterId}`}
-              />
+              <Link to={`/user/${userId}`}>
+                <img
+                  alt="twitter-avatar"
+                  src={`https://avatars.io/twitter/${twitterId}`}
+                />
+              </Link>
             </div>
           ) : null}
           <div className={styles.metadataText}>
