@@ -1,3 +1,6 @@
+.container {
+  display: inline-block;
+}
 .tagList {
   margin-left: 15px;
   margin-top: 5px;

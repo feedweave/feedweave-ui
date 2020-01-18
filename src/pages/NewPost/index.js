@@ -1,9 +1,15 @@
 import React from "react";
+import { Button } from "reactstrap";
 import TextEditor from "../../components/TextEditor";
 import { navigate } from "@reach/router";
 
+import unified from "unified";
+import parse from "remark-parse";
+import remark2react from "remark-react";
+
 import { UserContext, APP_NAME } from "../../util";
 import SaveTransactionWithConfirmationButton from "../../components/SaveTransactionWithConfirmationButton";
+import styles from "./index.module.css";
 
 const tags = {
   "App-Name": APP_NAME
@@ -16,15 +22,17 @@ const unescape = text => {
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { post: null };
+    this.state = { post: "", showPreview: false };
     this.handleTextChange = this.handleTextChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.togglePreview = this.togglePreview.bind(this);
   }
 
   static contextType = UserContext;
 
   handleTextChange = value => {
     const text = unescape(value());
+    console.log(text);
     this.setState({ post: text });
   };
 
@@ -32,20 +40,69 @@ class NewPost extends React.Component {
     navigate(`/post/${tx.id}`);
   }
 
-  render() {
+  togglePreview() {
+    this.setState({ showPreview: !this.state.showPreview });
+  }
+
+  renderEditor() {
+    const { post } = this.state;
+    return (
+      <div className={styles.editorContainer}>
+        <TextEditor
+          defaultValue={post}
+          handleTextChange={this.handleTextChange}
+        />
+        <div className={styles.buttonContainer}>
+          <Button
+            color="primary"
+            disabled={post === ""}
+            onClick={this.togglePreview}
+          >
+            Preview
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  renderPreview() {
     const { post } = this.state;
     const { user } = this.context;
     return (
-      <div>
-        <TextEditor handleTextChange={this.handleTextChange} />
-        <SaveTransactionWithConfirmationButton
-          data={post}
-          tags={tags}
-          user={user}
-          onSave={this.onSave}
-          buttonText="Publish"
-          color="primary"
-        />
+      <div className={styles.previewContainer}>
+        <div className={styles.previewPost}>
+          {
+            unified()
+              .use(parse)
+              .use(remark2react)
+              .processSync(post).contents
+          }
+        </div>
+        <div className={styles.buttonContainer}>
+          <Button
+            className={styles.continueEditingButton}
+            onClick={this.togglePreview}
+          >
+            Edit
+          </Button>
+          <SaveTransactionWithConfirmationButton
+            data={post}
+            tags={tags}
+            user={user}
+            onSave={this.onSave}
+            buttonText="Publish"
+            color="primary"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const { showPreview } = this.state;
+    return (
+      <div className={styles.container}>
+        {showPreview ? this.renderPreview() : this.renderEditor()}
       </div>
     );
   }

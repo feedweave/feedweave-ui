@@ -5,10 +5,12 @@ import styles from "./index.module.css";
 
 class TextEditor extends React.Component {
   render() {
+    const { defaultValue, handleTextChange } = this.props;
     return (
       <Editor
+        defaultValue={defaultValue}
         className={styles.editor}
-        onChange={this.props.handleTextChange}
+        onChange={handleTextChange}
         placeholder="# Write some markdown here!"
       />
     );

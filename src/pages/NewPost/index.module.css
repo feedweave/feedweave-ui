@@ -1,0 +1,17 @@
+.container {
+  margin-bottom: 15px;
+}
+.continueEditingButton {
+  margin-right: 15px;
+}
+.previewPost {
+  margin-bottom: 20px;
+}
+.buttonContainer {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.previewContainer img {
+  width: 100%;
+}

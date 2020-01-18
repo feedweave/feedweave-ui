@@ -100,7 +100,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
     const { buttonText, data, disabled, size } = this.props;
     const { isModalOpen, txData, isLoading } = this.state;
     return (
-      <div>
+      <div className={styles.container}>
         <Button
           color="primary"
           size={size}
