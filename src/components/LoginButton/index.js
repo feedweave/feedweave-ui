@@ -75,11 +75,10 @@ class LoginButton extends React.Component {
           <ModalBody>
             <div className={styles.dropArea} onClick={this.handleUploadClick}>
               <div>
-                Drop or{" "}
                 <Button className={styles.dropAreaLink} color="link">
-                  upload
+                  Upload
                 </Button>{" "}
-                a keyfile to log in.
+                an Arweave keyfile to log in.
               </div>
             </div>
             <div className={styles.getWalletCopy}>
