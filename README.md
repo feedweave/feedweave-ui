@@ -20,7 +20,7 @@ To offer a performant user experience on par with existing social media applicat
 
 _(The Arweave community maintains [openly accessible](https://docs.arweave.org/developers/server/http-api) gateways for developers to use. Anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).)_
 
-![Stack diagram](https://i.imgur.com/Q1jVA6C.png)
+![Stack diagram](https://i.imgur.com/7ejyNbr.png)
 
 ### What is Arweave?
 
