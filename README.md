@@ -1,16 +1,22 @@
 # FEEDweave
 
-FEEDweave is a decentralzied social media application built on top of the [Arweave](https://www.arweave.org/) blockchain.
+FEEDweave is a decentralized social media application built on top of the [Arweave](https://www.arweave.org/) blockchain.
 
-It is an attempt to demonstrate how a completely decentralized, yet performant and scalable, social media application can be built and deployed to production today.
+![](https://i.imgur.com/VJVrm64.png)
+
+It is a demonstration of how a completely decentralized, yet performant and scalable social media application can be built and deployed to production today.
 
 You can see it running live and try it out here: [http://social.arweave.co/](http://social.arweave.co/)
 
-FEEDweave does not use centralized infrastructure to persist its core data. The user accounts, posts, and social graph live on Arweave, a neutral backend that anyone can read and write from.
+FEEDweave does not use centralized infrastructure to persist its core data. The user accounts, posts, and social graph live on Arweave. Arweave functions as a neutral backend that anyone can read and write from.
 
-The application contained in this repo is a basic React app, and functions as a _view_ of the data. In other words, it is an example of one user interface that can be built, separate from the canonical _data_, which lives on the Arweave blockchain. Anyone can built a their own custom UI, with a different features, design, etc. This is a unique property of using a blockchain as a data backend—the blockchain serves as a guaranteed open API anyone can reuse and extend. ([Arweave App Explorer](http://explorer.arweave.co/) is another example of "view" application.)
+The application contained in this repo is a basic React app, and functions as a _view_ of the data. In other words, it is one example of the user interfaces that can be built on top of shared data. The view is completely separate from the canonical _data_, which lives on the Arweave blockchain. Anyone can built a their own custom UI, implementing different features, design, etc. This is a unique property of using a blockchain as a data backend—the blockchain is a guaranteed open and available database anyone can reuse and extend.
 
-For performance, and to offer a user experience on par with existing social media applications, FEEDweave is hosted on the web and communicates with an intermediary gateway that caches data the data, expose an HTTP API, and allow dynamic queries. Just like anyone can build their own UI on top of Arweave data, anyone can also run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
+_([Arweave App Explorer](http://explorer.arweave.co/)
+is another example of this kind of "view" app.
+It presents data from numerous apps built on Arweave, without needing to get their permission.)_
+
+To offer a performant user experience on par with existing social media applications, FEEDweave is hosted on the web and communicates with an intermediary gateway that ingests data from Arweave and caches it, exposes an HTTP API, and allows dynamic queries. Just like anyone can build their own UI on top of Arweave data, anyone can also run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways for developers to use, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
 
 ## FAQ
 
