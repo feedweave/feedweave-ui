@@ -16,7 +16,7 @@ _([Arweave App Explorer](http://explorer.arweave.co/)
 is another example of this kind of "view" app.
 It presents data from numerous apps built on Arweave, without needing to get their permission.)_
 
-To offer a performant user experience on par with existing social media applications, FEEDweave is hosted on the web and communicates with an intermediary gateway that ingests data from Arweave and caches it, exposes an HTTP API, and allows dynamic queries. Just like anyone can build their own UI on top of Arweave data, anyone can also run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways for developers to use, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
+To offer a performant user experience on par with existing social media applications, the FEEDweave UI is hosted on the web and communicates with an intermediary gateway that ingests and caches data from Arweave, exposes an HTTP API, and allows dynamic queries. Just like anyone can build their own UI on top of Arweave data, anyone can also run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways for developers to use, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
 
 ## What is Arweave?
 
