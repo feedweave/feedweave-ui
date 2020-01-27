@@ -10,7 +10,7 @@ You can see it running live and try it out here: [http://social.arweave.co/](htt
 
 FEEDweave does not use centralized infrastructure to persist its data. The user accounts, posts, and social graph live on Arweave. Arweave functions as a neutral backend that anyone can read and write from.
 
-Since the Arweave blockchain serves as the backend, the application in this repo is just the user interface. It is a basic React app and functions as a **view** of the data in Arweave. The view is completely separate from the canonical **data**, which lives on the Arweave blockchain. Anyone can built a their own custom UI, implementing different features, design, etc. This is a unique property of using a blockchain as a data backend—the blockchain is a guaranteed open and available database anyone can reuse and extend.
+The Arweave blockchain is the backend, and `feedweave-ui` is just one example of a user interface that can be built. This app represents the **view** layer, completely independent from the **data** layer on the blockchain. Anyone can built a their own custom UI, implementing different features, design, or hosting strategy. This is the disruptive property of using a blockchain as a datastore—it guarantees an always open and accessible database anyone can reuse and extend, unlike today's centralized APIs that rely on the good will of their operators.
 
 _([Arweave App Explorer](http://explorer.arweave.co/)
 is another example of this kind of "view" app.
