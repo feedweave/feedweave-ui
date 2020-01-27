@@ -2,13 +2,13 @@
 
 FEEDweave is a decentralized social media application built on top of the [Arweave](https://www.arweave.org/) blockchain.
 
-![](https://i.imgur.com/VJVrm64.png)
-
 It is a demonstration of how a completely decentralized, yet performant and scalable social media application can be built and deployed to production today.
 
 You can see it running live and try it out here: [http://social.arweave.co/](http://social.arweave.co/)
 
-FEEDweave does not use centralized infrastructure to persist its core data. The user accounts, posts, and social graph live on Arweave. Arweave functions as a neutral backend that anyone can read and write from.
+![](https://i.imgur.com/VJVrm64.png)
+
+FEEDweave does not use centralized infrastructure to persist its data. The user accounts, posts, and social graph live on Arweave. Arweave functions as a neutral backend that anyone can read and write from.
 
 The application contained in this repo is a basic React app, and functions as a _view_ of the data. In other words, it is one example of the user interfaces that can be built on top of shared data. The view is completely separate from the canonical _data_, which lives on the Arweave blockchain. Anyone can built a their own custom UI, implementing different features, design, etc. This is a unique property of using a blockchain as a data backend—the blockchain is a guaranteed open and available database anyone can reuse and extend.
 
@@ -18,11 +18,25 @@ It presents data from numerous apps built on Arweave, without needing to get the
 
 To offer a performant user experience on par with existing social media applications, FEEDweave is hosted on the web and communicates with an intermediary gateway that ingests data from Arweave and caches it, exposes an HTTP API, and allows dynamic queries. Just like anyone can build their own UI on top of Arweave data, anyone can also run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways for developers to use, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
 
-## FAQ
+## What is Arweave?
 
-### What is Arweave?
+Arweave is a blockchain-based storage network that enables permanently hosting arbitrary data.
 
-Arweave is a new blockchain that enables permanent hosting of files in a decentralized network. Users pay a one-time fee, denominated in AR tokens, to permanently host their files on the blockchain. Anyone can later retrieve the data through Arweave gateways.
+Users pay a one-time fee, denominated in AR tokens, to submit a transaction that permanently hosts a file on the blockchain. Anyone can later retrieve the data by querying the network.
+
+Arweave allows tagging its data-carrying transactions with arbitrary key-value pairs. Leveraging the tags feature, a standard has emerged in the Arweave community for using Arweave as an open, neutral, decentralized, and autonomous backend for Internet-scale social applications.
+
+## How do Arweave apps work?
+
+In order to distinguish one app's data from another app's, Arweave apps tag their transactions with a common `App-Name`.
+
+FEEDweave uses the `App-Name: FEEDweave` tag to distinguish it's post. It also versions the posts, starting with `App-Version: 0.0.1` to allow for schema changes that don't break UIs.
+
+[Arweave Board](https://bkxqaor2dlei.arweave.net/pvmiu4SZKQGWAYjrLWzE_mI70u1-v8zIzQ8WaxIYURk), a decentralized forum, is another application built on Arweave. It tags all of its transactions with `App-Name: ArBoard`, along with other application-specific tags. Because its data model is more complex, tags allow it to create a hierarchy between transactions, grouping them by `Categories`, `Posts`, and `Replies`.
+
+Anyone can query the data stored in Arweave by `App-Name` to retrieve all of the data that belongs to a specific application.
+
+Similar to traditional database management systems, transactions grouped by `App-Name` can be thought of as all the records in the canonical database of an internet service. Records organized by `App-Name` can be further grouped using more specifc tags, letting developers emulate database like tables and relationships.
 
 ## Development
 
