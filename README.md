@@ -1,3 +1,23 @@
+# FEEDweave
+
+FEEDweave is a decentralzied social media application built on top of the [Arweave](https://www.arweave.org/) blockchain.
+
+FEEDweave is a proof-of-concept to illustrate that a completely decentralized, yet performant, social media application can be built and deployed to production today.
+
+You can see it running live and try it out here: [http://social.arweave.co/](http://social.arweave.co/)
+
+FeedWEAVE does not use any centralized infrastructure to store its data, user accounts, or the social graph. Everything lives on Arweave, a neutral backend that anyone has permission to read and write from.
+
+This application doesn not implement any proprietary functionality, but rather is just a _view_ of the decentralized data on Arweave. In other words, it is an example of how anyone can build a UI on top of shared and open data on Arweave. FEEDweave uses an intermediary gateway to cache data the data, expose an http API, and allow dynamic queries. Just like anyone can build their own UI, anyone can run their own gateway. You can see the code for the gateway backing FEEDweave [here](https://github.com/denisnazarov/arweave-gateway). The Arweave community also maintains openly accessible gateways, and anyone can run their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).
+
+## FAQ
+
+### What is Arweave?
+
+Arweave is a new blockchain that enables permanent hosting of files in a decentralized network. Users pay a one-time fee, denominated in AR tokens, to permanently host their files on the blockchain. Anyone can later retrieve the data through Arweave gateways.
+
+## Development
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -26,43 +46,3 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
