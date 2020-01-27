@@ -32,17 +32,23 @@ Arweave allows tagging its data-carrying transactions with arbitrary key-value p
 
 ### How do Arweave apps work?
 
-In order to distinguish one app's data from another app's, Arweave apps tag their transactions with a common `App-Name`.
+In order to distinguish one application's data from another, Arweave apps tag their transactions with a common `App-Name`.
 
-FEEDweave uses the `App-Name: FEEDweave` tag to distinguish it's post. It also versions the posts, starting with `App-Version: 0.0.1` to allow for schema changes that don't break UIs.
+FEEDweave uses the `App-Name: FEEDweave` tag to distinguish its posts. It also versions the posts, starting with `App-Version: 0.0.1` to allow for schema changes that don't break UIs.
 
-[Arweave Board](https://bkxqaor2dlei.arweave.net/pvmiu4SZKQGWAYjrLWzE_mI70u1-v8zIzQ8WaxIYURk), a decentralized forum, is another application built on Arweave. It tags all of its transactions with `App-Name: ArBoard`, along with other application-specific tags. Because its data model is more complex, tags allow it to create a hierarchy between transactions, grouping them by `Categories`, `Posts`, and `Replies`.
+[Arweave Board](https://bkxqaor2dlei.arweave.net/pvmiu4SZKQGWAYjrLWzE_mI70u1-v8zIzQ8WaxIYURk), a decentralized forum, is another application built on Arweave. It tags all of its transactions with `App-Name: ArBoard`, along with other domain-specific tags. Since its data model is more complex, tags allow it to create a hierarchy between transactions, creating groups by `Categories`, `Posts`, and `Replies`.
 
 Anyone can query the data stored in Arweave by `App-Name` to retrieve all of the data that belongs to a specific application.
 
-Similar to traditional database management systems, transactions grouped by `App-Name` can be thought of as all the records in the canonical database of an internet service. Records organized by `App-Name` can be further grouped using more specifc tags, letting developers emulate database like tables and relationships.
+Similar to traditional database management systems, transactions grouped by `App-Name` can be thought of as all the records in the canonical database of an internet service. Records organized by `App-Name` can be further grouped using more specifc tags, letting developers emulate database like tables and relationships. Instead of living in disconnected silos, as is the case with traditional databases, all the data on Arweave shares a single, universally accessible datastore. You can read more about how Arweave works in detail in the [whitepaper](https://www.arweave.org/files/arweave-lightpaper.pdf).
 
-### Are Arweave apps composable?
+### Are Arweave apps composable and extensible?
+
+Composability in blockchain applications was first observed in the DeFi (decentralized finance) ecosystem on the Ethereum blockchain. Because of the open nature of programs deployed on Ethereum (known as smart contracts), developers saw immense benefit in reusing components deployed by others instead of rebuilding their own. Because of the trustworthy nature of a blockchain as a computational environment, developers could confidently rely on upstream APIs continuing to exist and remain accessible. For example, a user can lock up ETH in MakerDAO to mint DAI, then locking up DAI in Compound to get leverage on a bet placed in Augur.
+
+Arweave apps also demonstrate emergent composable behavior. FEEDweave is actually composed of multiple applications. While posts are stored in `App-Name: FEEDweave`, the application tapped into an existing identity system for human-readable names called `App-Name: arweave-id`. To add a social graph, FEEDweave taps into `App-Name: social-graph`, which is a shared social graph among multiple applications. FEEDweave also allows linking your Twitter account to your Arweave address using `App-Name: identity-link`. You can see the raw data for all of these apps in [Arweave App Explorer](https://explorer.arweave.co/).
+
+Arweave apps are also extensible. This means that third-party developers don't need to ask the initial creators of applications to add functionality. For example, if someone wanted to add the ability to post comments to FEEDweave, they could create another transaction type tagged `App-Name: post-comments`. They would then create a fork of the FEEDweave UI that implements the ability to read and write comments. Of course, it would be up to the new developer to convince users to use the new interface. Since it is a superset of functionality of the original FEEDweave, it wouldn't disrupt the original user experience of data.
 
 ## arweave-ui
 
