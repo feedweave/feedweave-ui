@@ -12,38 +12,38 @@ FEEDweave does not use centralized infrastructure to persist its data. The user 
 
 FEEDweave is also not a federated architecture, meaning there is a single source of truth for all data with strong guarantees of perpetual persistence and accessibility.
 
-`feedweave-ui` is a front-end application contained in this repo. It is an example of one of many user interfaces that can be built on top application data in Arweave. This app is the **view** layer of the application, completely independent from the **data** layer on the blockchain. Anyone can build a their own custom view to any data, implementing different features, interface design, or way of hosting the app. **This is what makes using a blockchain as a datastore disruptive—it guarantees an always open and accessible backend that anyone can reuse and extend, in contrast to today's centralized APIs that constantly restrict or limit developer access.**
+Decentralized applicatons like FEEDweave have a clean separation between their view layer and their data layer. The view layer is a visual presentation of the raw data on the blockchain to the user. Views can be implemented as a web, mobile, or desktop application and there can be many of them. Anyone can build a their own custom view to any data, implementing different features, interface design, or way of hosting the app. **This is what makes using a blockchain as a datastore disruptive—it guarantees an always open and accessible backend that anyone can reuse, extend, and build on, in contrast to today's centralized APIs that change the rules or limit developer access.**
+
+![Stack diagram](https://i.imgur.com/7ejyNbr.png)
 
 _([Arweave App Explorer](http://explorer.arweave.co/)
 is another example of a view layer application. It presents data from numerous apps built on Arweave, without needing to get their permission to access it.)_
 
-To offer a performant user experience on par with existing social media applications, the FEEDweave UI is hosted on the [web](https://www.netlify.com/) and communicates with an [intermediary gateway](https://www.netlify.com/). The gateway ingests and caches the app's data from Arweave, exposes an HTTP API, and allows for dynamic queries. Just like anyone can build their own UI, anyone can also run their own gateway.
+To offer a performant user experience on par with existing social media applications, the FEEDweave UI is hosted on the [web](https://www.netlify.com/) and communicates with an [intermediary gateway](https://www.netlify.com/). The gateway ingests and caches the app's data from Arweave, exposes an HTTP API, and allows for dynamic queries. Just like anyone can build their own UI, anyone can also run their own gateway to provide a snappy UX.
 
 _(The Arweave community also maintains [openly accessible](https://docs.arweave.org/developers/server/http-api) gateways for developers to use. Developers can host their own by running a full Arweave [node](https://github.com/ArweaveTeam/arweave).)_
-
-![Stack diagram](https://i.imgur.com/7ejyNbr.png)
 
 ### What is Arweave?
 
 Arweave is a blockchain-based storage network that enables permanently hosting arbitrary data.
 
-Users pay a one-time fee, proportional to the file size and denominated in AR tokens, to submit a transaction that indefinitely hosts a file on the Arweave network. Anyone can later retrieve the data by querying the network.
+Users pay a one-time fee, proportional to a file's size and denominated in AR tokens, to submit a transaction that indefinitely hosts a file on the Arweave network. Anyone can later retrieve the data by querying the network.
 
 Arweave allows tagging its data-carrying transactions with arbitrary key-value pairs. With the use of tags, a standard has emerged for using Arweave as an open, neutral, decentralized, and autonomous backend for Internet-scale social applications.
+
+_You can read about how Arweave works in detail in the [whitepaper](https://www.arweave.org/files/arweave-lightpaper.pdf)._
 
 ### How do Arweave apps work?
 
 In order to distinguish one application's data from another, Arweave apps tag their transactions with a common `App-Name`.
 
-FEEDweave uses the `App-Name: FEEDweave` tag to distinguish its posts from other data on Arweave. It also versions the posts, using a version tag in the form of `App-Version: 0.0.1`. This allows for schema updates that don't break legacy UIs.
+FEEDweave uses the `App-Name: FEEDweave` tag to distinguish its posts from other data on Arweave. It also versions the posts, using a version tag in the form of `App-Version: 0.0.1`. This allows for schema changes that don't break legacy views.
 
 [Arweave Board](https://bkxqaor2dlei.arweave.net/pvmiu4SZKQGWAYjrLWzE_mI70u1-v8zIzQ8WaxIYURk) is a decentralized forum built on Arweave. It tags all of its transactions with `App-Name: ArBoard`, along with other tags specific to its application. Since its data model is more complex, tags allow it to create a hierarchy between transactions, organizing them by `Categories`, `Posts`, and `Replies`.
 
-Anyone can query the data stored in Arweave by `App-Name` and retrieve all data belonging to a specific application. You can explore the data from different apps on [Arweave App Explorer](https://explorer.arweave.co/).
+Anyone can query the data stored in Arweave by `App-Name` and retrieve all data belonging to a specific application. You can explore the data from different apps on [Arweave App Explorer](https://explorer.arweave.co/), an app that utilizes querying by `App-Name` under the hood.
 
-Transactions grouped by `App-Name` can be thought of like the rows or records in a traditional database backing a centralized internet service. Records organized by `App-Name` can be further organized and filtered using more specifc tags, letting developers emulate database primitives like tables and relationships. Instead of traditional databases in centralized applications functioning as disconnected silos, all the applicatoin data on Arweave shares a single, universally accessible datastore. This has important implications for developer composability and extensibility.
-
-_You can read about how Arweave works in detail in the [whitepaper](https://www.arweave.org/files/arweave-lightpaper.pdf)._
+Transactions grouped by `App-Name` can be thought of like the rows or records in a traditional database backing a centralized internet service. Records organized by `App-Name` can be further organized and filtered using more specifc tags, letting developers emulate database primitives like tables and relationships. Traditional databases in centralized applications are disconnected silos, so developers cannot reuse or extend functionality across apps. In Arweave, all the application data shares a single, universally accessible datastore. This has important implications for developer composability and extensibility.
 
 ### How are Arweave apps composable and extensible?
 
