@@ -6,6 +6,7 @@ import { Button, Container, Navbar, Nav, NavItem, NavLink } from "reactstrap";
 import { UserContext } from "../../util";
 
 import LoginButton from "../LoginButton";
+import UserIcon from "../UserIcon";
 
 class Header extends React.Component {
   constructor(props) {
@@ -42,8 +43,8 @@ class Header extends React.Component {
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link active" to={`/user/${user.address}`}>
-                  Wallet
+                <Link to={`/user/${user.address}`}>
+                  <UserIcon user={user} />
                 </Link>
               </NavItem>
               <NavItem>

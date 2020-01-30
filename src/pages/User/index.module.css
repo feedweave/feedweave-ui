@@ -27,8 +27,7 @@
 }
 
 .twitterAvatar {
-  width: 65px;
-  height: 65px;
+  flex: 0 0 65px;
   margin-right: 10px;
 }
 .twitterAvatar img {
@@ -39,11 +38,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .userNameSubheading {
   font-size: 14px;
   color: #757575;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .idButtons {
   margin-bottom: 15px;
