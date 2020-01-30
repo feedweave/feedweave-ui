@@ -85,6 +85,11 @@ class LoginButton extends React.Component {
               Don't have a wallet? Get one{" "}
               <a href="https://tokens.arweave.org/">here</a>!
             </div>
+            <div className={styles.instructions}>
+              FEEDweave is built on the{" "}
+              <a href="https://arweave.org">Arweave </a> blockchain and uses
+              cryptographic keys for identity and authentication.
+            </div>
           </ModalBody>
         </Modal>
         <input
