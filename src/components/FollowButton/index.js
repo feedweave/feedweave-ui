@@ -33,7 +33,7 @@ class FollowButton extends React.Component {
     const updatedUserInfo = await getUserInfo(user.address).then(res =>
       res.json()
     );
-    handleUser({ ...user, userInfo: updatedUserInfo });
+    handleUser({ ...user, userInfo: updatedUserInfo.user });
   }
 
   render() {
