@@ -75,6 +75,10 @@ class VerifyTwitterButton extends React.Component {
           Link identity to Twitter
         </ModalHeader>
         <ModalBody>
+          <p>
+            Linking your Twitter account displays your avatar and verifies your
+            identity, so people know who you are.
+          </p>
           <ol>
             <li>Post a tweet with your Arweave address.</li>
             <li>Submit an Arweave transaction with your Twitter handle.</li>
@@ -94,7 +98,7 @@ class VerifyTwitterButton extends React.Component {
     const {
       user: { userInfo }
     } = this.context;
-    const msg = `I am linking my identity to @FEEDweave_! My Arweave address is ${userInfo.id}`;
+    const msg = `I am verifying myself on @FEEDweave_! My Arweave address is ${userInfo.id}`;
     window.open(
       `https://twitter.com/intent/tweet?text=${msg}`,
       "mywin",
