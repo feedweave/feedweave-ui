@@ -15,3 +15,8 @@
 .previewContainer img {
   width: 100%;
 }
+
+.previewWarning {
+  margin-top: 15px;
+  color: red;
+}

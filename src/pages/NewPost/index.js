@@ -95,6 +95,11 @@ class NewPost extends React.Component {
             color="primary"
           />
         </div>
+        <div className={styles.previewWarning}>
+          WARNING: FEEDweave uses a blockchain as a datastore, so all data is
+          immutable. Deleting or editing posts is not yet supported. Make sure
+          your post is formatted correctly before publishing.
+        </div>
       </div>
     );
   }
