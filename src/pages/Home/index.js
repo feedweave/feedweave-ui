@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 
-import { API_HOST, APP_NAME, APP_VERSION, UserContext } from "../../util";
+import { API_HOST, APP_NAME, UserContext } from "../../util";
 import PostFeed from "../../components/PostFeed";
 
 import styles from "./index.module.css";
@@ -20,9 +20,7 @@ class Home extends React.Component {
 
   async componentDidMount() {
     // TODO handle errors
-    const res = await fetch(
-      `${API_HOST}/transactions?app-name=${APP_NAME}&app-version=${APP_VERSION}`
-    );
+    const res = await fetch(`${API_HOST}/transactions?app-name=${APP_NAME}`);
     const json = await res.json();
     this.setState({ isLoaded: true, feed: json });
   }

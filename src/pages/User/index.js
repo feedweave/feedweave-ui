@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
 
-import { API_HOST, APP_NAME, APP_VERSION } from "../../util";
+import { API_HOST, APP_NAME } from "../../util";
 import PostFeed from "../../components/PostFeed";
 import FollowButton from "../../components/FollowButton";
 
@@ -69,7 +69,7 @@ class User extends React.Component {
     this.setState({ isLoaded: false });
     const { walletId } = this.props;
     const feed = await fetch(
-      `${API_HOST}/transactions?app-name=${APP_NAME}&app-version=${APP_VERSION}&wallet-id=${walletId}`
+      `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${walletId}`
     ).then(res => res.json());
 
     const { user, relatedUsers } = await fetch(
