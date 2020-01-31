@@ -9,7 +9,8 @@ export const arweave = Arweave.init({
 
 export const API_HOST = "https://gateway.arweave.co";
 
-export const APP_NAME = `arweave-blog-0.0.1`;
+export const APP_NAME = `FEEDweave`;
+export const APP_VERSION = `0.0.1`;
 export const SOCIAL_GRAPH_APP_NAME = `social-graph`;
 export const SOCIAL_GRAPH_APP_VERSION = `0.0.1`;
 

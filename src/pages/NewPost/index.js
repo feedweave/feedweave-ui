@@ -7,12 +7,13 @@ import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
 
-import { UserContext, APP_NAME } from "../../util";
+import { UserContext, APP_NAME, APP_VERSION } from "../../util";
 import SaveTransactionWithConfirmationButton from "../../components/SaveTransactionWithConfirmationButton";
 import styles from "./index.module.css";
 
 const tags = {
-  "App-Name": APP_NAME
+  "App-Name": APP_NAME,
+  "App-Version": APP_VERSION
 };
 
 const unescape = text => {
