@@ -83,7 +83,14 @@ class LoginButton extends React.Component {
             </div>
             <div className={styles.getWalletCopy}>
               Don't have a wallet? Get one{" "}
-              <a href="https://tokens.arweave.org/">here</a>!
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://tokens.arweave.org/"
+              >
+                here
+              </a>
+              !
             </div>
             <div className={styles.instructions}>
               FEEDweave is built on the{" "}
