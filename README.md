@@ -4,7 +4,7 @@ FEEDweave is a decentralized social media application built on top of the [Arwea
 
 It aims to demonstrate how a completely decentralized, yet performant and scalable social media application can be built and deployed in production today.
 
-You can see it running live and try it out here: [https://social.arweave.co/](https://social.arweave.co/)
+You can see it running live and try it out here: [https://feedweave.co/](https://feedweave.co/)
 
 ![](https://i.imgur.com/VJVrm64.png)
 
