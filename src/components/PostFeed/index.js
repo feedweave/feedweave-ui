@@ -5,30 +5,18 @@ import parse from "remark-parse";
 import remark2react from "remark-react";
 import classnames from "classnames";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
 import styles from "./index.module.css";
+import placeholderIcon from "../UserIcon/placeholder-icon.png";
+
+TimeAgo.addLocale(en);
+const timeAgo = new TimeAgo("en-US");
 
 function formatDate(unixtime) {
   var date = new Date(unixtime * 1000);
-  var monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec"
-  ];
-
-  var day = date.getDate();
-  var monthIndex = date.getMonth();
-  var year = date.getFullYear();
-
-  return `${monthNames[monthIndex]} ${day}, ${year}`;
+  return timeAgo.format(date, "twitter");
 }
 
 export class PostFeedItem extends React.Component {
@@ -39,57 +27,61 @@ export class PostFeedItem extends React.Component {
       fullSize
     } = this.props;
 
-    const userName = arweaveId ? `@${arweaveId}` : userId;
+    const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
+
+    const iconUrl = twitterId
+      ? `https://avatars.io/twitter/${twitterId}`
+      : placeholderIcon;
+
     const body = (
-      <div className={styles.itemBody}>
-        <div className={styles.itemContent}>
-          {
-            unified()
-              .use(parse)
-              .use(remark2react)
-              .processSync(
-                content.length > 241 && !fullSize
-                  ? content.substr(0, 240) + "..."
-                  : content
-              ).contents
-          }
+      <div className={styles.itemWrapper}>
+        <div className={styles.twitterAvatar}>
+          <Link to={`/user/${userId}`}>
+            <img alt="twitter-avatar" src={iconUrl} />
+          </Link>
         </div>
-        <div className={styles.itemMetadata}>
-          {twitterId ? (
-            <div className={styles.twitterAvatar}>
-              <Link to={`/user/${userId}`}>
-                <img
-                  alt="twitter-avatar"
-                  src={`https://avatars.io/twitter/${twitterId}`}
-                />
-              </Link>
+        <div className={styles.itemBody}>
+          <div className={styles.itemMetadata}>
+            <div className={styles.metadataText}>
+              <div className={styles.itemHeader}>
+                <Link to={`/user/${userId}`}>{userName}</Link>
+                <span className={styles.itemTime}>{formatDate(timestamp)}</span>
+              </div>
+              <div className={styles.itemDateAndStatus}>
+                {!blockHash ? (
+                  <div className={styles.itemPending}>Mining...</div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <div className={styles.itemContent}>
+            {
+              unified()
+                .use(parse)
+                .use(remark2react)
+                .processSync(
+                  content.length > 241 && !fullSize
+                    ? content.substr(0, 240) + "..."
+                    : content
+                ).contents
+            }
+          </div>
+          {fullSize ? (
+            <div>
+              <a href={`https://explorer.arweave.co/transaction/${id}`}>
+                Raw tx
+              </a>
             </div>
           ) : null}
-          <div className={styles.metadataText}>
-            <div className={styles.itemCredit}>
-              By: <Link to={`/user/${userId}`}>{userName}</Link>
-            </div>
-            <div className={styles.itemDateAndStatus}>
-              {formatDate(timestamp)}
-
-              {!blockHash ? (
-                <div className={styles.itemPending}>Mining...</div>
-              ) : null}
-            </div>
-          </div>
         </div>
-        {fullSize ? (
-          <div>
-            <a href={`https://explorer.arweave.co/transaction/${id}`}>Raw tx</a>
-          </div>
-        ) : null}
       </div>
     );
 
     return (
       <div
         className={classnames(styles.itemContainer, {
-          [styles.fullSizeContainer]: fullSize
+          [styles.fullSizeContainer]: fullSize,
+          [styles.feedContainer]: !fullSize
         })}
       >
         {fullSize ? body : <Link to={`/post/${id}`}>{body}</Link>}

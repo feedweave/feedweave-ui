@@ -22,6 +22,18 @@
 .itemContainer a {
   text-decoration: none;
 }
+
+.itemWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemBody {
+  padding-left: 10px;
+  flex-basis: 0px;
+  flex-grow: 1;
+}
+
 .itemContent {
   color: #646464;
   font-size: 15px;
@@ -50,26 +62,38 @@ h4 {
 .itemMetadata {
   font-size: 13px;
   display: flex;
+  margin-bottom: 5px;
 }
 .twitterAvatar {
-  width: 35px;
-  height: 35px;
+  width: 50px;
+  height: 50px;
+  flex-basis: 50px;
+  flex-grow: 0;
 }
 .twitterAvatar img {
   width: 100%;
+  border-radius: 25px;
 }
 .metadataText {
-  padding-left: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.itemCredit {
+.itemHeader {
+  font-size: 15px;
 }
 
-.itemCredit a {
+.itemHeader a {
+  text-decoration: none;
+  color: #444444;
+  font-weight: bold;
+}
+.itemHeader a:hover {
   text-decoration: underline;
-  color: black;
+}
+
+.itemTime {
+  margin-left: 5px;
 }
 
 .itemDateAndPending {
@@ -92,4 +116,15 @@ h4 {
 
 .itemContainer img {
   max-width: 100%;
+}
+
+.feedContainer h1,
+.feedContainer h2,
+.feedContainer h3,
+.feedContainer h4,
+.feedContainer h5,
+.feedContainer h6 {
+  font-size: 15px;
+
+  color: #646464;
 }
