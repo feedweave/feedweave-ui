@@ -1,5 +1,9 @@
 import React from "react";
 import Helmet from "react-helmet";
+import unified from "unified";
+import parse from "remark-parse";
+import remark2rehype from "remark-rehype";
+import html from "rehype-stringify";
 
 import { API_HOST } from "../../util";
 import { PostFeedItem } from "../../components/PostFeed";
@@ -18,23 +22,31 @@ const loadComments = async txId => {
   return { users, comments };
 };
 
+const extractPostMeta = post => {
+  const { content } = post;
+
+  const markdown = unified()
+    .use(parse)
+    .use(remark2rehype)
+    .processSync(content).contents;
+  console.log(markdown);
+  return {
+    title: "title",
+    description: "description",
+    image: "image",
+    url: "url",
+    username: "username"
+  };
+};
+
 const PostMetaTags = ({ post }) => {
-  const { title, description, image, url, username } = extractPostMeta(post);
+  const { title, description, imageUrl, url, username } = extractPostMeta(post);
   return (
     <Helmet>
       <title>{`${title} | FEEDweave`}</title>
-      <meta
-        property="og:description"
-        content="Offering tour packages for individuals or groups."
-      />
-      <meta
-        property="og:image"
-        content="http://euro-travel-example.com/thumbnail.jpg"
-      />
-      <meta
-        property="og:url"
-        content="http://euro-travel-example.com/index.htm"
-      />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:url" content={url} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta property="og:site_name" content="FEEDweave" />
       <meta name="twitter:site" content="@FEEDweave_" />
@@ -89,6 +101,7 @@ class Post extends React.Component {
     const { post, user, commentsData, isLoaded } = this.state;
     const element = isLoaded ? (
       <div>
+        <PostMetaTags post={post} />
         <PostFeedItem fullSize={true} post={post} user={user} />
         <SubmitComment txId={txId} onSave={this.reloadComments} />
         <Comments data={commentsData} />
