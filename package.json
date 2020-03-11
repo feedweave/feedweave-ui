@@ -19,7 +19,9 @@
     "remark-parse": "^7.0.2",
     "remark-react": "^6.0.0",
     "rich-markdown-editor": "^9.11.1",
-    "unified": "^8.4.2"
+    "unified": "^8.4.2",
+    "unist-util-remove": "^2.0.0",
+    "unist-util-visit": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

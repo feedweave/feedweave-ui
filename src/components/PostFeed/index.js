@@ -11,6 +11,8 @@ import en from "javascript-time-ago/locale/en";
 import styles from "./index.module.css";
 import placeholderIcon from "../UserIcon/placeholder-icon.png";
 
+import PostSnippet from "../PostSnippet";
+
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
@@ -55,16 +57,14 @@ export class PostFeedItem extends React.Component {
             </div>
           </div>
           <div className={styles.itemContent}>
-            {
+            {fullSize ? (
               unified()
                 .use(parse)
                 .use(remark2react)
-                .processSync(
-                  content.length > 241 && !fullSize
-                    ? content.substr(0, 240) + "..."
-                    : content
-                ).contents
-            }
+                .processSync(content).contents
+            ) : (
+              <PostSnippet post={content} />
+            )}
           </div>
           {fullSize ? (
             <div>
