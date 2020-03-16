@@ -11,6 +11,8 @@ import styles from "./index.module.css";
 import SetUpIDButton from "../../components/SetUpIDButton";
 import VerifyTwitterButton from "../../components/VerifyTwitterButton";
 
+import placeHolderIcon from "../../components/UserIcon/placeholder-icon.png";
+
 const FollowList = ({ ids, title, users }) => {
   return (
     <div>
@@ -110,10 +112,11 @@ class User extends React.Component {
         <div className={styles.userNameContainer}>
           {twitterId ? (
             <div className={styles.twitterAvatar}>
-              <img
+              {/* <img
                 alt="twitter-avatar"
                 src={`https://avatars.io/twitter/${twitterId}`}
-              />
+              /> */}
+              <img alt="twitter-avatar" src={placeHolderIcon} />
             </div>
           ) : null}
           <div className={styles.userNameText}>

@@ -4,13 +4,17 @@ import Arweave from "arweave/web";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 
+import unified from "unified";
+import parse from "remark-parse";
+import remark2react from "remark-react";
+
 export const arweave = Arweave.init({
   host: "gateway.arweave.co",
   port: 443,
   protocol: "https"
 });
 
-export const API_HOST = "http://localhost:4000";
+export const API_HOST = "https://gateway.arweave.co";
 
 export const APP_NAME = `FEEDweave`;
 export const APP_VERSION = `0.0.1`;
@@ -65,3 +69,10 @@ export function formatDate(unixtime) {
   var date = new Date(unixtime * 1000);
   return timeAgo.format(date, "twitter");
 }
+
+export const renderMarkdown = content => {
+  return unified()
+    .use(parse)
+    .use(remark2react)
+    .processSync(content).contents;
+};

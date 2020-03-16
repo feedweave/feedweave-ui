@@ -33,7 +33,6 @@ class NewPost extends React.Component {
 
   handleTextChange = value => {
     const text = unescape(value());
-    console.log(text);
     this.setState({ post: text });
   };
 

@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from "@reach/router";
-import unified from "unified";
-import parse from "remark-parse";
-import remark2react from "remark-react";
 import classnames from "classnames";
 
-import { formatDate } from "../../util";
+import { formatDate, renderMarkdown } from "../../util";
 
 import styles from "./index.module.css";
 import placeholderIcon from "../UserIcon/placeholder-icon.png";
@@ -22,9 +19,11 @@ export class PostFeedItem extends React.Component {
 
     const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
 
-    const iconUrl = twitterId
-      ? `https://avatars.io/twitter/${twitterId}`
-      : placeholderIcon;
+    // const iconUrl = twitterId
+    //   ? `https://avatars.io/twitter/${twitterId}`
+    //   : placeholderIcon;
+
+    const iconUrl = placeholderIcon;
 
     const body = (
       <div className={styles.itemWrapper}>
@@ -49,10 +48,7 @@ export class PostFeedItem extends React.Component {
           </div>
           <div className={styles.itemContent}>
             {fullSize ? (
-              unified()
-                .use(parse)
-                .use(remark2react)
-                .processSync(content).contents
+              renderMarkdown(content)
             ) : (
               <PostSnippet post={content} />
             )}
