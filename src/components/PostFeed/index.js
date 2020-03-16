@@ -5,21 +5,12 @@ import parse from "remark-parse";
 import remark2react from "remark-react";
 import classnames from "classnames";
 
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
+import { formatDate } from "../../util";
 
 import styles from "./index.module.css";
 import placeholderIcon from "../UserIcon/placeholder-icon.png";
 
 import PostSnippet from "../PostSnippet";
-
-TimeAgo.addLocale(en);
-const timeAgo = new TimeAgo("en-US");
-
-function formatDate(unixtime) {
-  var date = new Date(unixtime * 1000);
-  return timeAgo.format(date, "twitter");
-}
 
 export class PostFeedItem extends React.Component {
   render() {

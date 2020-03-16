@@ -2,6 +2,19 @@ import React from "react";
 
 import { API_HOST } from "../../util";
 import { PostFeedItem } from "../../components/PostFeed";
+import Comments from "../../components/Comments";
+
+const loadPost = async txId => {
+  const res = await fetch(`${API_HOST}/transaction/${txId}`);
+  const { user, transaction: post } = await res.json();
+  return { user, post };
+};
+
+const loadComments = async txId => {
+  const res = await fetch(`${API_HOST}/transaction/${txId}/comments`);
+  const { users, comments } = await res.json();
+  return { users, comments };
+};
 
 class Post extends React.Component {
   constructor(props) {
@@ -10,7 +23,8 @@ class Post extends React.Component {
       error: null,
       isLoaded: false,
       post: null,
-      user: null
+      user: null,
+      commentsData: null
     };
   }
 
@@ -27,16 +41,19 @@ class Post extends React.Component {
   async loadData() {
     // TODO handle errors
     const { txId } = this.props;
-    const res = await fetch(`${API_HOST}/transaction/${txId}`);
-    const json = await res.json();
-    const { user, transaction } = json;
-    this.setState({ isLoaded: true, post: transaction, user });
+    const { user, post } = await loadPost(txId);
+    const commentsData = await loadComments(txId);
+
+    this.setState({ isLoaded: true, post, user, commentsData });
   }
 
   render() {
-    const { post, user, isLoaded } = this.state;
+    const { post, user, commentsData, isLoaded } = this.state;
     const element = isLoaded ? (
-      <PostFeedItem fullSize={true} post={post} user={user} />
+      <div>
+        <PostFeedItem fullSize={true} post={post} user={user} />
+        <Comments data={commentsData} />
+      </div>
     ) : (
       "Loading..."
     );
