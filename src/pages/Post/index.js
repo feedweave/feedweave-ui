@@ -1,9 +1,6 @@
 import React from "react";
-import Helmet from "react-helmet";
-import unified from "unified";
-import parse from "remark-parse";
-import remark2rehype from "remark-rehype";
-import html from "rehype-stringify";
+
+import PostMetaTags from "../../components/PostMetaTags";
 
 import { API_HOST } from "../../util";
 import { PostFeedItem } from "../../components/PostFeed";
@@ -20,38 +17,6 @@ const loadComments = async txId => {
   const res = await fetch(`${API_HOST}/transaction/${txId}/comments`);
   const { users, comments } = await res.json();
   return { users, comments };
-};
-
-const extractPostMeta = post => {
-  const { content } = post;
-
-  const markdown = unified()
-    .use(parse)
-    .use(remark2rehype)
-    .processSync(content).contents;
-  console.log(markdown);
-  return {
-    title: "title",
-    description: "description",
-    image: "image",
-    url: "url",
-    username: "username"
-  };
-};
-
-const PostMetaTags = ({ post }) => {
-  const { title, description, imageUrl, url, username } = extractPostMeta(post);
-  return (
-    <Helmet>
-      <title>{`${title} | FEEDweave`}</title>
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:url" content={url} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta property="og:site_name" content="FEEDweave" />
-      <meta name="twitter:site" content="@FEEDweave_" />
-    </Helmet>
-  );
 };
 
 class Post extends React.Component {

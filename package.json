@@ -21,11 +21,13 @@
     "remark-parse": "^7.0.2",
     "remark-react": "^6.0.0",
     "remark-rehype": "^5.0.0",
+    "remark-stringify": "^7.0.4",
     "rich-markdown-editor": "^9.11.1",
     "semantic-ui-react": "^0.88.2",
     "unified": "^8.4.2",
     "unist-util-remove": "^2.0.0",
-    "unist-util-visit": "^2.0.2"
+    "unist-util-visit": "^2.0.2",
+    "unist-util-select": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
