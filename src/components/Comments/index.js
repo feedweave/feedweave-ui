@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@reach/router";
 import { Comment, Header } from "semantic-ui-react";
 
-import placeHolderIcon from "../UserIcon/placeholder-icon.png";
+import placeholderIcon from "../UserIcon/placeholder-icon.png";
 
 import { formatDate, renderMarkdown } from "../../util";
 
@@ -16,9 +16,15 @@ const CustomComment = ({
   users
 }) => {
   const user = users.find(u => u.id === ownerAddress);
+
+  const { twitterId } = user;
+
+  const iconUrl = twitterId
+    ? `https://avatars.io/twitter/${twitterId}`
+    : placeholderIcon;
   return (
     <Comment>
-      <Comment.Avatar src={placeHolderIcon} />
+      <Comment.Avatar src={iconUrl} />
       <Comment.Content>
         <Comment.Author as="span">{displayName(user)}</Comment.Author>
         <Comment.Metadata>

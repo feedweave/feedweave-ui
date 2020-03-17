@@ -19,11 +19,9 @@ export class PostFeedItem extends React.Component {
 
     const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
 
-    // const iconUrl = twitterId
-    //   ? `https://avatars.io/twitter/${twitterId}`
-    //   : placeholderIcon;
-
-    const iconUrl = placeholderIcon;
+    const iconUrl = twitterId
+      ? `https://avatars.io/twitter/${twitterId}`
+      : placeholderIcon;
 
     const body = (
       <div className={styles.itemWrapper}>
