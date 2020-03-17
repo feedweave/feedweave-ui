@@ -82,6 +82,9 @@ const PostMetaTags = ({ post }) => {
       {/* <meta property="og:image" content={imageUrl} /> */}
       <meta property="og:url" content={url} />
       {/* <meta name="twitter:card" content="summary_large_image" /> */}
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content={title} />
+      {/* <meta name="twitter:description" content="View the album on Flickr." /> */}
       <meta property="og:site_name" content="FEEDweave" />
       <meta name="twitter:site" content="@FEEDweave_" />
     </Helmet>
