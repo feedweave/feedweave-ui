@@ -30,11 +30,16 @@ const shorten = options => tree => {
   remove(tree, test);
 };
 
+const replace = options => tree => {
+  visit(tree, "root", function(node) {
+    node.children = [select.select("text", tree)];
+  });
+};
+
 const trim = options => tree => {
   let aggregateLength = 0;
   visit(tree, "text", function(node) {
     const valueLength = node.value.length;
-    console.log(valueLength);
     aggregateLength += valueLength;
     if (aggregateLength > characterLimit) {
       node.value =
@@ -42,12 +47,6 @@ const trim = options => tree => {
           .substring(0, valueLength - (aggregateLength - characterLimit))
           .trimEnd() + "...";
     }
-  });
-};
-
-const replace = options => tree => {
-  visit(tree, "root", function(node) {
-    node.children = select.selectAll("text", tree);
   });
 };
 
