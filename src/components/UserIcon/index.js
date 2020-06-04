@@ -5,11 +5,11 @@ import placeholderIcon from "./placeholder-icon.png";
 
 const UserIcon = ({ user }) => {
   const {
-    userInfo: { twitterId }
+    userInfo: { twitterId },
   } = user;
 
   const iconUrl = twitterId
-    ? `https://avatars.io/twitter/${twitterId}`
+    ? `https://unavatar.now.sh/twitter/${twitterId}`
     : placeholderIcon;
 
   return (

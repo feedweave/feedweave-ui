@@ -15,8 +15,8 @@ const FollowList = ({ ids, title, users }) => {
   return (
     <div>
       <div className={styles.followTitle}>{title}</div>
-      {ids.map(id => {
-        const relatedUser = users.find(user => user.id === id) || {};
+      {ids.map((id) => {
+        const relatedUser = users.find((user) => user.id === id) || {};
         const displayName =
           (relatedUser.arweaveId && `@${relatedUser.arweaveId}`) || id;
 
@@ -46,7 +46,7 @@ class User extends React.Component {
       isLoaded: false,
       user: {},
       relatedUsers: [],
-      feed: []
+      feed: [],
     };
 
     this.loadData = this.loadData.bind(this);
@@ -70,11 +70,11 @@ class User extends React.Component {
     const { walletId } = this.props;
     const feed = await fetch(
       `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${walletId}`
-    ).then(res => res.json());
+    ).then((res) => res.json());
 
     const { user, relatedUsers } = await fetch(
       `${API_HOST}/arweave-social/user/${walletId}`
-    ).then(res => res.json());
+    ).then((res) => res.json());
     this.setState({ isLoaded: true, feed, user, relatedUsers });
   }
   renderFollowButton() {
@@ -112,7 +112,7 @@ class User extends React.Component {
             <div className={styles.twitterAvatar}>
               <img
                 alt="twitter-avatar"
-                src={`https://avatars.io/twitter/${twitterId}`}
+                src={`https://unavatar.now.sh/twitter/${twitterId}`}
               />
             </div>
           ) : null}

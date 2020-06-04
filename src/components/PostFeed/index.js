@@ -14,13 +14,13 @@ export class PostFeedItem extends React.Component {
     const {
       post: { id, content, timestamp, blockHash },
       user: { id: userId, arweaveId, twitterId },
-      fullSize
+      fullSize,
     } = this.props;
 
     const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
 
     const iconUrl = twitterId
-      ? `https://avatars.io/twitter/${twitterId}`
+      ? `https://unavatar.now.sh/twitter/${twitterId}`
       : placeholderIcon;
 
     const body = (
@@ -66,7 +66,7 @@ export class PostFeedItem extends React.Component {
       <div
         className={classnames(styles.itemContainer, {
           [styles.fullSizeContainer]: fullSize,
-          [styles.feedContainer]: !fullSize
+          [styles.feedContainer]: !fullSize,
         })}
       >
         {fullSize ? body : <Link to={`/post/${id}`}>{body}</Link>}
@@ -80,8 +80,8 @@ const PostFeed = ({ feed }) => {
 
   return (
     <div>
-      {transactions.map(post => {
-        const user = users.find(u => u.id === post.ownerAddress);
+      {transactions.map((post) => {
+        const user = users.find((u) => u.id === post.ownerAddress);
         return <PostFeedItem key={post.id} post={post} user={user} />;
       })}
     </div>

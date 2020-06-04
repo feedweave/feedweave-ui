@@ -11,7 +11,7 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  InputGroupText
+  InputGroupText,
 } from "reactstrap";
 
 import styles from "./index.module.css";
@@ -22,7 +22,7 @@ import SaveTransactionWithConfirmationButton from "../SaveTransactionWithConfirm
 const tags = {
   "App-Name": "identity-link",
   "App-Version": "0.0.1",
-  Provider: "twitter"
+  Provider: "twitter",
 };
 
 class VerifyTwitterButton extends React.Component {
@@ -32,7 +32,7 @@ class VerifyTwitterButton extends React.Component {
     this.state = {
       isModalOpen: false,
       activePage: 0,
-      twitterHandle: ""
+      twitterHandle: "",
     };
 
     this.openModal = this.openModal.bind(this);
@@ -53,13 +53,13 @@ class VerifyTwitterButton extends React.Component {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
       activePage: 0,
-      twitterHandle: ""
+      twitterHandle: "",
     });
   }
 
   async openModal() {
     this.setState({
-      isModalOpen: true
+      isModalOpen: true,
     });
   }
 
@@ -96,7 +96,7 @@ class VerifyTwitterButton extends React.Component {
 
   postToTwitter() {
     const {
-      user: { userInfo }
+      user: { userInfo },
     } = this.context;
     const msg = `I am verifying myself on @FEEDweave_! My Arweave address is ${userInfo.id}`;
     window.open(
@@ -163,8 +163,8 @@ class VerifyTwitterButton extends React.Component {
   renderPageTwo() {
     const {
       user: {
-        userInfo: { id }
-      }
+        userInfo: { id },
+      },
     } = this.context;
     const { twitterHandle } = this.state;
     const headerChildren = (
@@ -172,7 +172,7 @@ class VerifyTwitterButton extends React.Component {
         <div className={styles.twitterWidgetAvatar}>
           <img
             alt="twitter-avatar"
-            src={`https://avatars.io/twitter/${twitterHandle}`}
+            src={`https://unavatar.now.sh/twitter/${twitterHandle}`}
           />
         </div>
         <div className={styles.twitterWidgetMetadata}>

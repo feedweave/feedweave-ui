@@ -13,14 +13,14 @@ const displayName = ({ id, arweaveId }) => {
 
 const CustomComment = ({
   comment: { content, timestamp, ownerAddress },
-  users
+  users,
 }) => {
-  const user = users.find(u => u.id === ownerAddress);
+  const user = users.find((u) => u.id === ownerAddress);
 
   const { twitterId } = user;
 
   const iconUrl = twitterId
-    ? `https://avatars.io/twitter/${twitterId}`
+    ? `https://unavatar.now.sh/twitter/${twitterId}`
     : placeholderIcon;
   return (
     <Comment>
@@ -39,7 +39,7 @@ const CustomComment = ({
 class Comments extends React.Component {
   render() {
     const {
-      data: { comments, users }
+      data: { comments, users },
     } = this.props;
 
     return (
@@ -48,7 +48,7 @@ class Comments extends React.Component {
           Comments
         </Header>
         {comments.length > 0 ? (
-          comments.map(c => (
+          comments.map((c) => (
             <CustomComment key={c.id} comment={c} users={users} />
           ))
         ) : (
