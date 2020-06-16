@@ -1,3 +1,10 @@
+.container {
+  margin-top: 15px;
+}
+
+.indexContainer {
+  margin-top: 45px;
+}
 .userName {
   font-size: 19px;
   font-weight: bold;

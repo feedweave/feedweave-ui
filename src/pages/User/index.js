@@ -4,12 +4,11 @@ import { Router, Link } from "@reach/router";
 import { API_HOST, APP_NAME } from "../../util";
 import PostFeed from "../../components/PostFeed";
 import FollowButton from "../../components/FollowButton";
+import ProfileHeader from "../../components/ProfileHeader";
 
 import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
-import SetUpIDButton from "../../components/SetUpIDButton";
-import VerifyTwitterButton from "../../components/VerifyTwitterButton";
 
 const FollowList = ({ ids, title, users }) => {
   return (
@@ -34,7 +33,11 @@ const Index = ({ feed }) => {
   if (feed.length === 0) {
     return "No posts yet!";
   } else {
-    return <PostFeed feed={feed} />;
+    return (
+      <div className={styles.indexContainer}>
+        <PostFeed feed={feed} />;
+      </div>
+    );
   }
 };
 
@@ -97,67 +100,25 @@ class User extends React.Component {
 
   render() {
     const { walletId } = this.props;
-    const { user: loggedInUser } = this.context;
     const { user, feed, isLoaded, relatedUsers } = this.state;
     const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
 
-    const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
+    const username = arweaveId ? `@${arweaveId}` : walletId;
+    const avatarUrl = twitterId
+      ? `https://unavatar.now.sh/twitter/${twitterId}`
+      : null;
 
-    const showIdButton = isLoggedInUser && !arweaveId;
-    const showTwitterButton = isLoggedInUser && !twitterId;
     const element = isLoaded ? (
-      <div>
-        <div className={styles.userNameContainer}>
-          {twitterId ? (
-            <div className={styles.twitterAvatar}>
-              <img
-                alt="twitter-avatar"
-                src={`https://unavatar.now.sh/twitter/${twitterId}`}
-              />
-            </div>
-          ) : null}
-          <div className={styles.userNameText}>
-            <h1 className={styles.userName}>
-              <Link to={`/user/${user.id}`}>
-                {arweaveId ? `@${arweaveId}` : walletId}
-              </Link>
-            </h1>
-            {arweaveId ? (
-              <div className={styles.userNameSubheading}>{walletId}</div>
-            ) : null}
-          </div>
-        </div>
-        {showIdButton || showTwitterButton ? (
-          <div className={styles.idButtons}>
-            {showIdButton ? <SetUpIDButton onSave={this.loadData} /> : null}
-            {showTwitterButton ? <VerifyTwitterButton /> : null}
-          </div>
-        ) : null}
-        <div className={styles.userStats}>
-          <div>
-            <Link to={`/user/${user.id}`}>Posts</Link>: {postCount}
-          </div>
-          <div>
-            <Link to={`/user/${user.id}/followers`}>Followers</Link>:{" "}
-            {followerIds.length}
-          </div>
-          <div>
-            <Link to={`/user/${user.id}/following`}>Following</Link>:{" "}
-            {followingIds.length}
-          </div>
-          {twitterId ? (
-            <div>
-              Twitter:{" "}
-              <a href={`https://twitter.com/${twitterId}`}>{`@${twitterId}`}</a>
-            </div>
-          ) : null}
-          <div>
-            <a href={`https://explorer.arweave.co/address/${user.id}`}>
-              Arweave activity
-            </a>
-          </div>
-          {this.renderFollowButton()}
-        </div>
+      <div className={styles.container}>
+        <ProfileHeader
+          username={username}
+          avatarUrl={avatarUrl}
+          walletAddress={walletId}
+          twitterHandle={twitterId}
+          postsCount={postCount}
+          followersCount={followerIds.length}
+          followingCount={followingIds.length}
+        />
         <Router primary={false}>
           <Index path="/" feed={feed} />
           <FollowList
