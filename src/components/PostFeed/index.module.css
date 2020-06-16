@@ -208,12 +208,23 @@ h4 {
   font-size: 15px;
 }
 
+.bodyContainer h1,
+.bodyContainer h2,
+.bodyContainer h3,
+.bodyContainer h4,
+.bodyContainer h5,
+.bodyContainer h6 {
+  font-size: 15px;
+  color: #656565;
+}
+
 .replyButton {
   font-family: "Roboto Mono", monospace;
   font-size: 13px;
   text-decoration-line: underline;
   color: #57943a;
   display: flex;
+  margin-top: 12px;
 }
 
 .replyButtonIcon {

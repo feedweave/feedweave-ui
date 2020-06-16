@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Container, Row, Col } from "reactstrap";
 import Sidebar from "../../components/Sidebar";
 
 import styles from "./index.module.css";
@@ -11,11 +10,9 @@ class Main extends React.Component {
     return (
       <>
         <Sidebar />
-        <Container>
-          <Row>
-            <Col sm={{ size: 8, offset: 2 }}>{children}</Col>
-          </Row>
-        </Container>
+        <div className={styles.contentContainer}>
+          <div className={styles.content}>{children}</div>
+        </div>
       </>
     );
   }

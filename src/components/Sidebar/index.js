@@ -7,7 +7,6 @@ import logo from "./feedweave-logo.png";
 import { UserContext } from "../../util";
 
 import LoginButton from "../LoginButton";
-import UserIcon from "../UserIcon";
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -32,7 +31,7 @@ class Sidebar extends React.Component {
         <div className={styles.logoParent}>
           <Link to="/">
             <div className={styles.logo}>
-              <img src={logo} />
+              <img alt="feedweave logo" src={logo} />
               <span>FeedWeave</span>
             </div>
           </Link>

@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "@reach/router";
 import { Button } from "reactstrap";
 
 import { API_HOST, UserContext } from "../../util";
 import PostFeed from "../../components/PostFeed";
+import PostsToggle from "../../components/PostsToggle";
 
 import styles from "./index.module.css";
 
-const fetchFeed = async cursor => {
+const fetchFeed = async (cursor) => {
   const queryParam = cursor ? `?cursor=${cursor}` : "";
   const res = await fetch(`${API_HOST}/post-feed${queryParam}`);
   const json = await res.json();
@@ -22,7 +22,7 @@ class Home extends React.Component {
       error: null,
       isLoaded: false,
       nextCursor: null,
-      feed: {}
+      feed: {},
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -33,16 +33,16 @@ class Home extends React.Component {
   async handleClick() {
     const {
       nextCursor,
-      feed: { transactions, users }
+      feed: { transactions, users },
     } = this.state;
     const json = await fetchFeed(nextCursor);
     this.setState({
       isLoaded: true,
       feed: {
         transactions: transactions.concat(json.transactions),
-        users: users.concat(json.users)
+        users: users.concat(json.users),
       },
-      nextCursor: json.nextCursor
+      nextCursor: json.nextCursor,
     });
   }
 
@@ -55,25 +55,9 @@ class Home extends React.Component {
 
   render() {
     const { isLoaded, feed, nextCursor } = this.state;
-    const { user } = this.context;
     return (
-      <div>
-        <nav className={styles.nav}>
-          {user ? (
-            <ul>
-              <li>
-                <Link to="/my-feed">Your feed</Link>
-              </li>
-              <li>
-                <Link to="/">Global feed</Link>
-              </li>
-            </ul>
-          ) : (
-            <ul>
-              <li>Global feed</li>
-            </ul>
-          )}
-        </nav>
+      <div className={styles.container}>
+        <PostsToggle />
         {isLoaded ? (
           <div>
             <PostFeed feed={feed} />
