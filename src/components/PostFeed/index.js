@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import classnames from "classnames";
 
 import { formatDate, renderMarkdown } from "../../util";
@@ -14,8 +14,9 @@ import placeholderIcon from "../UserIcon/placeholder-icon.png";
 import PostSnippet from "../PostSnippet";
 import UserIcon from "../UserIcon";
 
-function ActionHeader({ tx: { id, timestamp }, user }) {
+function ActionHeader({ tx, user }) {
   const { id: userId, arweaveId } = user;
+  const { id: txId, timestamp } = tx;
   const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
 
   const formattedTimestamp = formatDate(timestamp);
@@ -27,20 +28,30 @@ function ActionHeader({ tx: { id, timestamp }, user }) {
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
         <div className={styles.headerAvatar}>
-          <UserIcon size="22px" user={user} />
+          <Link to={`/user/${userId}`}>
+            <UserIcon size="22px" user={user} />
+          </Link>
         </div>
-        <div className={styles.headerUser}>{userName}</div>
+        <div className={styles.headerUser}>
+          <Link to={`/user/${userId}`}>{userName}</Link>
+        </div>
         <img
           className={styles.headerActionIcon}
           alt="new-post-icon"
           src={newPostIcon}
         />
-        <div className={styles.headerAction}>New Post</div>
+        <div className={styles.headerAction}>
+          <Link to={`/post/${txId}`}>New Post</Link>
+        </div>
       </div>
       <div className={styles.headerRight}>
         <div className={styles.headerInner}>
           <div className={styles.headerTimestamp}>{formattedTimestamp}</div>
-          <div className={styles.headerHash}>{id.substr(0, 9) + "..."}</div>
+          <div className={styles.headerHash}>
+            <a href={`https://explorer.arweave.co/transaction/${txId}`}>
+              {txId.substr(0, 9) + "..."}
+            </a>
+          </div>
         </div>
         <div className={styles.headerSocial}>
           <div className={styles.headerCountReply}>
@@ -62,11 +73,18 @@ function ActionHeader({ tx: { id, timestamp }, user }) {
 }
 
 function Action(props) {
+  const handleSnippetClick = (e) => {
+    if (e.target.tagName.toLowerCase() !== "a") {
+      navigate(`/post/${props.tx.id}`);
+    }
+  };
   return (
     <div className={styles.actionContainer}>
       <ActionHeader {...props} />
       <div className={styles.bodyContainer}>
-        <PostSnippet post={props.tx.content} />
+        <div className={styles.snippetContainer} onClick={handleSnippetClick}>
+          <PostSnippet post={props.tx.content} />
+        </div>
         <div className={styles.replyButton}>
           <img
             className={styles.replyButtonIcon}
