@@ -1,18 +1,19 @@
 import React from "react";
-import { Link, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 
 import { API_HOST, APP_NAME, UserContext } from "../../util";
 import PostFeed from "../../components/PostFeed";
+import PostsToggle from "../../components/PostsToggle";
 
 import styles from "../Home/index.module.css";
 
-class YourFeed extends React.Component {
+class Following extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoaded: false,
-      feed: {}
+      feed: {},
     };
   }
 
@@ -35,11 +36,12 @@ class YourFeed extends React.Component {
   renderFeed() {
     const {
       user: {
-        userInfo: { followingIds }
-      }
+        userInfo: { followingIds },
+      },
     } = this.context;
 
     const { feed } = this.state;
+
     if (followingIds.length === 0) {
       return "You're not following anyone yet!";
     }
@@ -49,23 +51,19 @@ class YourFeed extends React.Component {
 
   render() {
     const { isLoaded } = this.state;
-    const { user } = this.context;
     return (
-      <div>
-        <nav className={styles.nav}>
-          <ul>
-            <li>
-              <Link to="/my-feed">Your feed</Link>
-            </li>
-            <li>
-              <Link to="/">Global feed</Link>
-            </li>
-          </ul>
-        </nav>
-        {isLoaded && user ? this.renderFeed() : "Loading..."}
+      <div className={styles.container}>
+        {isLoaded ? (
+          <div>
+            <PostsToggle />
+            {this.renderFeed()}
+          </div>
+        ) : (
+          "Loading..."
+        )}
       </div>
     );
   }
 }
 
-export default YourFeed;
+export default Following;

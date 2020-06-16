@@ -53,22 +53,31 @@ class Home extends React.Component {
     this.setState({ isLoaded: true, feed: json, nextCursor });
   }
 
+  renderLoadMoreButton() {
+    return (
+      <Button className={styles.loadMoreButton} onClick={this.handleClick}>
+        Load more posts
+      </Button>
+    );
+  }
+
+  renderFeed() {
+    const { feed, nextCursor } = this.state;
+    return (
+      <div>
+        <PostFeed feed={feed} />
+        {nextCursor ? this.renderLoadMoreButton() : null}
+      </div>
+    );
+  }
+
   render() {
-    const { isLoaded, feed, nextCursor } = this.state;
+    const { isLoaded } = this.state;
     return (
       <div className={styles.container}>
-        <PostsToggle />
         {isLoaded ? (
           <div>
-            <PostFeed feed={feed} />
-            {nextCursor ? (
-              <Button
-                className={styles.loadMoreButton}
-                onClick={this.handleClick}
-              >
-                Load more posts
-              </Button>
-            ) : null}
+            <PostsToggle /> {this.renderFeed()}
           </div>
         ) : (
           "Loading..."

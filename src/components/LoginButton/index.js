@@ -29,16 +29,16 @@ class LoginButton extends React.Component {
 
   async openModal() {
     this.setState({
-      isModalOpen: true
+      isModalOpen: true,
     });
   }
 
-  handleUploadClick = e => {
+  handleUploadClick = (e) => {
     e.preventDefault();
     this.inputFileRef.current.click();
   };
 
-  handleFileChange = e => {
+  handleFileChange = (e) => {
     e.preventDefault();
 
     const file = this.inputFileRef.current.files[0];
@@ -50,12 +50,12 @@ class LoginButton extends React.Component {
       try {
         const wallet = JSON.parse(reader.result);
         const address = await arweave.wallets.jwkToAddress(wallet);
-        const { user: userInfo } = await getUserInfo(address).then(res =>
+        const { user: userInfo } = await getUserInfo(address).then((res) =>
           res.json()
         );
         handleUser({ wallet, address, userInfo });
         this.toggleModal();
-        navigate("/my-feed");
+        navigate("/following");
       } catch (error) {
         alert(error.toString());
       }

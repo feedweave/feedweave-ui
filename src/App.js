@@ -8,8 +8,7 @@ import Home from "./pages/Home";
 import Post from "./pages/Post";
 import NewPost from "./pages/NewPost";
 import User from "./pages/User";
-import YourFeed from "./pages/YourFeed";
-// import Following from "./pages/Following";
+import Following from "./pages/Following";
 
 import { UserContext } from "./util";
 
@@ -22,7 +21,7 @@ class App extends React.Component {
     const cachedUser = JSON.parse(window.localStorage.getItem("user"));
     this.state = {
       user: cachedUser,
-      handleUser: this.handleUser
+      handleUser: this.handleUser,
     };
   }
 
@@ -37,7 +36,7 @@ class App extends React.Component {
         <Router primary={false}>
           <Main path="/">
             <Home path="/" />
-            <YourFeed path="/my-feed" />
+            <Following path="/following" />
             <Post path="/post/:txId" />
             <NewPost path="/new-post" />
             <User path="/user/:walletId/*" />

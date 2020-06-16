@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
                 <Link to="/">Activity on Arweave</Link>
               </div>
               <div className={styles.menuItem}>
-                <Link to="/my-feed">Following</Link>
+                <Link to="/following">Following</Link>
               </div>
             </div>
 
