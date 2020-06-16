@@ -1,33 +1,15 @@
 import React from "react";
-import { Router, Link } from "@reach/router";
+import { Router } from "@reach/router";
 
 import { API_HOST, APP_NAME } from "../../util";
 import PostFeed from "../../components/PostFeed";
 import FollowButton from "../../components/FollowButton";
 import ProfileHeader from "../../components/ProfileHeader";
+import FollowList from "../../components/FollowList";
 
 import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
-
-const FollowList = ({ ids, title, users }) => {
-  return (
-    <div>
-      <div className={styles.followTitle}>{title}</div>
-      {ids.map((id) => {
-        const relatedUser = users.find((user) => user.id === id) || {};
-        const displayName =
-          (relatedUser.arweaveId && `@${relatedUser.arweaveId}`) || id;
-
-        return (
-          <div>
-            <Link to={`/user/${id}`}>{displayName}</Link>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 const Index = ({ feed }) => {
   if (feed.length === 0) {
@@ -104,15 +86,12 @@ class User extends React.Component {
     const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
 
     const username = arweaveId ? `@${arweaveId}` : walletId;
-    const avatarUrl = twitterId
-      ? `https://unavatar.now.sh/twitter/${twitterId}`
-      : null;
 
     const element = isLoaded ? (
       <div className={styles.container}>
         <ProfileHeader
           username={username}
-          avatarUrl={avatarUrl}
+          user={user}
           walletAddress={walletId}
           twitterHandle={twitterId}
           postsCount={postCount}
@@ -123,15 +102,13 @@ class User extends React.Component {
           <Index path="/" feed={feed} />
           <FollowList
             path="/following"
-            ids={user.followingIds}
-            users={relatedUsers}
-            title="Following"
+            displayIds={user.followingIds}
+            allUsers={relatedUsers}
           />
           <FollowList
             path="/followers"
-            ids={user.followerIds}
-            users={relatedUsers}
-            title="Followers"
+            displayIds={user.followerIds}
+            allUsers={relatedUsers}
           />
         </Router>
       </div>

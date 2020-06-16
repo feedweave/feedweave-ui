@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "@reach/router";
 
+import UserIcon from "../UserIcon";
 import styles from "./index.module.css";
 
-function FollowButton() {
+export function FollowButton() {
   return <div className={styles.followButton}>Follow</div>;
 }
 
 export default function ProfileHeader({
   username,
-  avatarUrl,
+  user,
   walletAddress,
   twitterHandle,
   postsCount,
@@ -21,7 +22,7 @@ export default function ProfileHeader({
       <div className={styles.upperRectangle}></div>
       <div className={styles.userInfo}>
         <div className={styles.avatarContainer}>
-          <img alt="avatar" src={avatarUrl} />
+          <UserIcon size="44px" user={user} />
         </div>
         <div className={styles.userInfoText}>
           <div className={styles.username}>{username}</div>

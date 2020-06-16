@@ -1,0 +1,21 @@
+.container {
+  margin-top: 33px;
+  margin-bottom: 15px;
+  font-family: "Roboto Mono", monospace;
+  padding: 0 12px;
+  width: 738px;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.username {
+  margin-left: 13px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000000;
+}

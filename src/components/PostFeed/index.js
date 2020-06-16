@@ -12,16 +12,11 @@ import replyButtonIcon from "./reply-button-icon.svg";
 import placeholderIcon from "../UserIcon/placeholder-icon.png";
 
 import PostSnippet from "../PostSnippet";
+import UserIcon from "../UserIcon";
 
-function ActionHeader({
-  tx: { id, timestamp },
-  user: { id: userId, arweaveId, twitterId },
-}) {
+function ActionHeader({ tx: { id, timestamp }, user }) {
+  const { id: userId, arweaveId } = user;
   const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
-
-  const avatarUrl = twitterId
-    ? `https://unavatar.now.sh/twitter/${twitterId}`
-    : placeholderIcon;
 
   const formattedTimestamp = formatDate(timestamp);
 
@@ -32,7 +27,7 @@ function ActionHeader({
     <div className={styles.headerContainer}>
       <div className={styles.headerLeft}>
         <div className={styles.headerAvatar}>
-          <img alt="twitter-avatar" src={avatarUrl} />
+          <UserIcon size="22px" user={user} />
         </div>
         <div className={styles.headerUser}>{userName}</div>
         <img
