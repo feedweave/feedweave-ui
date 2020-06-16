@@ -3,17 +3,17 @@ import React from "react";
 import PostMetaTags from "../../components/PostMetaTags";
 
 import { API_HOST } from "../../util";
-import { PostFeedItem } from "../../components/PostFeed";
+import { FeedItem } from "../../components/PostFeed";
 import Comments from "../../components/Comments";
 import SubmitComment from "../../components/SubmitComment";
 
-const loadPost = async txId => {
+const loadPost = async (txId) => {
   const res = await fetch(`${API_HOST}/transaction/${txId}`);
   const { user, transaction: post } = await res.json();
   return { user, post };
 };
 
-const loadComments = async txId => {
+const loadComments = async (txId) => {
   const res = await fetch(`${API_HOST}/transaction/${txId}/comments`);
   const { users, comments } = await res.json();
   return { users, comments };
@@ -27,7 +27,7 @@ class Post extends React.Component {
       isLoaded: false,
       post: null,
       user: null,
-      commentsData: null
+      commentsData: null,
     };
 
     this.reloadComments = this.reloadComments.bind(this);
@@ -67,7 +67,7 @@ class Post extends React.Component {
     const element = isLoaded ? (
       <div>
         <PostMetaTags post={post} />
-        <PostFeedItem fullSize={true} post={post} user={user} />
+        <FeedItem fullSize={true} post={post} user={user} />
         <SubmitComment txId={txId} onSave={this.reloadComments} />
         <Comments data={commentsData} />
       </div>

@@ -129,3 +129,124 @@ h4 {
 
   color: #646464;
 }
+
+.actionContainer {
+  margin-bottom: 36px;
+}
+
+.headerContainer {
+  display: flex;
+  border: 1px solid #d7d7d7;
+  justify-content: space-between;
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.headerLeft,
+.headerRight {
+  display: flex;
+}
+
+.headerLeft > *,
+.headerInner > *,
+.headerSocial > * {
+  margin: 0 5px;
+}
+
+.headerRight {
+  color: #8c8c8c;
+}
+
+.headerInner,
+.headerLeft,
+.headerSocial {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+}
+
+.headerAvatar {
+  margin-left: 0;
+}
+
+.headerUser,
+.headerAction {
+  font-weight: 500;
+}
+
+.headerUser {
+  color: #222222;
+}
+
+.headerAction {
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.headerAvatar img {
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+}
+
+.headerActionIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.headerHash {
+  text-decoration: underline;
+}
+
+.headerSocial {
+  border-left: 1px solid #d7d7d7;
+}
+
+.bodyContainer {
+  padding: 0 8px;
+  font-size: 15px;
+}
+
+.replyButton {
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  text-decoration-line: underline;
+  color: #57943a;
+  display: flex;
+}
+
+.replyButtonIcon {
+  margin-right: 11px;
+}
+
+.replyIcon {
+  width: 12px;
+  margin-top: -2px;
+}
+
+.likeIcon {
+  width: 14px;
+  height: 12px;
+}
+
+.headerCountReply,
+.headerCountLike {
+  display: flex;
+  align-items: center;
+}
+
+.headerCountReply {
+  margin-left: 4px;
+  margin-right: 7px;
+}
+
+.headerCountLike {
+  margin-left: 7px;
+  margin-right: 4px;
+}
+
+.headerCountReply img,
+.headerCountLike img {
+  margin-right: 5px;
+}

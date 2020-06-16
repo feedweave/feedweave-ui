@@ -9,14 +9,14 @@ class Main extends React.Component {
   render() {
     const { children } = this.props;
     return (
-      <div className={styles.container}>
+      <>
         <Sidebar />
         <Container>
           <Row>
-            <Col sm={{ size: 6, offset: 3 }}>{children}</Col>
+            <Col sm={{ size: 8, offset: 2 }}>{children}</Col>
           </Row>
         </Container>
-      </div>
+      </>
     );
   }
 }

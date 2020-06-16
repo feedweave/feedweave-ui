@@ -1,7 +1,11 @@
 .container {
+  position: fixed;
+  top: 0;
+  left: 0;
   font-family: "Roboto Mono", monospace;
   font-size: 13px;
-  flex: 0 0 290px;
+  width: 290px;
+  /* flex: 0 0 290px; */
   padding: 15px;
 }
 
