@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.headerTop {
+  height: 128px;
+  border-top: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+}
+
+.body {
+  font-size: 15px;
+  color: #505050;
+  line-height: 150%;
+}
+
+.body h1,
+.body h2,
+.body h3,
+.body h4,
+.body h5,
+.body h6 {
+  font-size: 18px;
+  color: #222222;
+  font-weight: 700;
+}

@@ -14,7 +14,7 @@ import placeholderIcon from "../UserIcon/placeholder-icon.png";
 import PostSnippet from "../PostSnippet";
 import UserIcon from "../UserIcon";
 
-function ActionHeader({ tx, user }) {
+export function ActionHeader({ tx, user }) {
   const { id: userId, arweaveId } = user;
   const { id: txId, timestamp } = tx;
   const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";

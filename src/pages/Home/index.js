@@ -1,19 +1,11 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-import { API_HOST, UserContext } from "../../util";
+import { fetchFeed, UserContext } from "../../util";
 import PostFeed from "../../components/PostFeed";
 import PostsToggle from "../../components/PostsToggle";
 
 import styles from "./index.module.css";
-
-const fetchFeed = async (cursor) => {
-  const queryParam = cursor ? `?cursor=${cursor}` : "";
-  const res = await fetch(`${API_HOST}/post-feed${queryParam}`);
-  const json = await res.json();
-
-  return json;
-};
 
 class Home extends React.Component {
   constructor(props) {
