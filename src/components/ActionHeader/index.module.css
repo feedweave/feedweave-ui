@@ -33,6 +33,7 @@
 .headerMainRight {
   display: flex;
   align-items: center;
+  color: #8c8c8c;
 }
 
 .headerMainLeft > *,
