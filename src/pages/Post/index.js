@@ -5,7 +5,7 @@ import PostMetaTags from "../../components/PostMetaTags";
 import { loadPost, loadComments, renderMarkdown } from "../../util";
 import Comments from "../../components/Comments";
 import SubmitComment from "../../components/SubmitComment";
-import { PostActionHeader } from "../../components/ActionHeader";
+import { PostDetailHeader } from "../../components/ActionHeader";
 
 import styles from "./index.module.css";
 
@@ -43,7 +43,7 @@ function Post({ txId }) {
       <PostMetaTags post={post} />
       <div className={styles.header}>
         <div className={styles.headerTop}></div>
-        <PostActionHeader tx={post} user={user} />
+        <PostDetailHeader tx={post} user={user} />
       </div>
       <div className={styles.body}>{renderMarkdown(post.content)}</div>
       <SubmitComment txId={txId} onSave={reloadComments} />

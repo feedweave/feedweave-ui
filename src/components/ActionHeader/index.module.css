@@ -110,3 +110,26 @@
 .headerCountLike img {
   margin-right: 5px;
 }
+
+.headerLike {
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.headerLike .likeIcon {
+  margin-right: 8px;
+}
+
+.headerOptions {
+  margin-left: 16px;
+  margin-right: 4px;
+}
+
+.optionsIcon {
+  width: 15px;
+  height: 3px;
+  cursor: pointer;
+}

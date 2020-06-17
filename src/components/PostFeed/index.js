@@ -9,7 +9,7 @@ import replyButtonIcon from "./reply-button-icon.svg";
 import placeholderIcon from "../UserIcon/placeholder-icon.png";
 
 import PostSnippet from "../PostSnippet";
-import { PostActionHeader } from "../ActionHeader";
+import { NewPostFeedAction } from "../ActionHeader";
 
 function Action(props) {
   const handleSnippetClick = (e) => {
@@ -19,7 +19,7 @@ function Action(props) {
   };
   return (
     <div className={styles.actionContainer}>
-      <PostActionHeader {...props} />
+      <NewPostFeedAction {...props} />
       <div className={styles.bodyContainer}>
         <div className={styles.snippetContainer} onClick={handleSnippetClick}>
           <PostSnippet post={props.tx.content} />
