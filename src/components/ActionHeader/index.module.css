@@ -1,0 +1,112 @@
+.headerContainer {
+  display: flex;
+  border: 1px solid #d7d7d7;
+  justify-content: space-between;
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.headerMain,
+.headerControls {
+  display: flex;
+  padding: 8px;
+}
+
+.headerMain {
+  display: flex;
+  flex-basis: 100%;
+}
+.headerControls {
+  border-left: 1px solid #d7d7d7;
+}
+
+/* ---HEADER MAIN------- */
+
+.headerMainContainer {
+  display: flex;
+  flex-basis: 100%;
+  justify-content: space-between;
+}
+
+.headerMainLeft,
+.headerMainRight {
+  display: flex;
+  align-items: center;
+}
+
+.headerMainLeft > *,
+.headerMainRight > * {
+  margin: 0 5px;
+}
+
+.headerAvatar {
+  margin-left: 0;
+}
+
+.headerHash {
+  margin-right: 0;
+}
+
+.headerUser,
+.headerAction {
+  font-weight: 500;
+}
+
+.headerUser a {
+  color: #222222;
+}
+
+.headerAction a {
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.headerActionIcon {
+  width: 15px;
+  height: 15px;
+}
+
+.headerHash a {
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+/* ----- HEADER CONTROLS --------  */
+
+.headerSocial {
+  display: flex;
+  align-items: center;
+  color: #8c8c8c;
+}
+
+.replyIcon {
+  width: 12px;
+  margin-top: -2px;
+}
+
+.likeIcon {
+  width: 14px;
+  height: 12px;
+}
+
+.headerCountReply,
+.headerCountLike {
+  display: flex;
+  align-items: center;
+}
+
+.headerCountReply {
+  margin-left: 4px;
+  margin-right: 7px;
+}
+
+.headerCountLike {
+  margin-left: 7px;
+  margin-right: 4px;
+}
+
+.headerCountReply img,
+.headerCountLike img {
+  margin-right: 5px;
+}

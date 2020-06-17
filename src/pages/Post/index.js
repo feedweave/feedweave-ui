@@ -3,10 +3,9 @@ import React, { useState, useEffect } from "react";
 import PostMetaTags from "../../components/PostMetaTags";
 
 import { loadPost, loadComments, renderMarkdown } from "../../util";
-import { FeedItem } from "../../components/PostFeed";
 import Comments from "../../components/Comments";
 import SubmitComment from "../../components/SubmitComment";
-import { ActionHeader } from "../../components/PostFeed";
+import { PostActionHeader } from "../../components/ActionHeader";
 
 import styles from "./index.module.css";
 
@@ -44,7 +43,7 @@ function Post({ txId }) {
       <PostMetaTags post={post} />
       <div className={styles.header}>
         <div className={styles.headerTop}></div>
-        <ActionHeader tx={post} user={user} />
+        <PostActionHeader tx={post} user={user} />
       </div>
       <div className={styles.body}>{renderMarkdown(post.content)}</div>
       <SubmitComment txId={txId} onSave={reloadComments} />
