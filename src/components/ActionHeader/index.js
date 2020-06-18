@@ -181,3 +181,19 @@ export function PostDetailHeader({ tx, user }) {
 
   return <ActionHeaderTemplate main={main} controls={controls} />;
 }
+
+export function CommentActionHeader({ tx, user, parentUser }) {
+  const main = (
+    <div className={styles.headerMainContainer}>
+      <div className={styles.headerMainLeft}>
+        <UserDetails user={user} />
+        <CommentSignifier tx={tx} user={parentUser} />
+      </div>
+      <div className={styles.headerMainRight}>
+        <TransactionMetadata tx={tx} />
+      </div>
+    </div>
+  );
+  const controls = <LikeAndOptionsControls />;
+  return <ActionHeaderTemplate main={main} controls={controls} />;
+}

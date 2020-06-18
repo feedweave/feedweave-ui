@@ -5,7 +5,8 @@ import styles from "./index.module.css";
 import replyButtonIcon from "./reply-button-icon.svg";
 
 import PostSnippet from "../PostSnippet";
-import { NewPostFeedAction, CommentFeedAction } from "../ActionHeader";
+import PostBody from "../PostBody";
+import { NewPostFeedAction, CommentActionHeader } from "../ActionHeader";
 
 export function ReplyButton() {
   return (
@@ -20,37 +21,43 @@ export function ReplyButton() {
   );
 }
 
+function ActionWithBodyAndReply({ action, body, reply }) {
+  return (
+    <div className={styles.actionContainer}>
+      {action}
+      <div className={styles.bodyContainer}>
+        {body}
+        {reply}
+      </div>
+    </div>
+  );
+}
+
 function PostAction({ tx, user }) {
   const handleSnippetClick = (e) => {
     if (e.target.tagName.toLowerCase() !== "a") {
       navigate(`/post/${tx.id}`);
     }
   };
-  return (
-    <div className={styles.actionContainer}>
-      <NewPostFeedAction tx={tx} user={user} />
-      <div className={styles.bodyContainer}>
-        <div className={styles.snippetContainer} onClick={handleSnippetClick}>
-          <PostSnippet post={tx.content} />
-        </div>
-        <ReplyButton />
-      </div>
+
+  const action = <NewPostFeedAction tx={tx} user={user} />;
+  const body = (
+    <div className={styles.snippetContainer} onClick={handleSnippetClick}>
+      <PostSnippet post={tx.content} />
     </div>
   );
+  const reply = <ReplyButton />;
+
+  return <ActionWithBodyAndReply action={action} body={body} reply={reply} />;
 }
 
 export function CommentAction({ tx, user, parentUser }) {
-  return (
-    <div className={styles.actionContainer}>
-      <CommentFeedAction tx={tx} user={user} parentUser={parentUser} />
-      <div className={styles.bodyContainer}>
-        <div className={styles.snippetContainer}>
-          <PostSnippet post={tx.content} />
-        </div>
-        <ReplyButton />
-      </div>
-    </div>
+  const action = (
+    <CommentActionHeader tx={tx} user={user} parentUser={parentUser} />
   );
+  const body = <PostBody content={tx.content} />;
+  const reply = <ReplyButton />;
+  return <ActionWithBodyAndReply action={action} body={body} reply={reply} />;
 }
 
 const Feed = ({ feed }) => {
