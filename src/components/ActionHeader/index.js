@@ -12,6 +12,11 @@ import replyIcon from "./reply-icon.svg";
 
 import styles from "./index.module.css";
 
+function getUserName(user) {
+  const { id: userId, arweaveId } = user;
+  return arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
+}
+
 function ActionHeaderTemplate({ main, controls }) {
   return (
     <div className={styles.headerContainer}>
@@ -24,8 +29,8 @@ function ActionHeaderTemplate({ main, controls }) {
 }
 
 function UserDetails({ user }) {
-  const { id: userId, arweaveId } = user;
-  const userName = arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
+  const { id: userId } = user;
+  const userName = getUserName(user);
   return (
     <>
       <div className={styles.headerAvatar}>
@@ -44,12 +49,24 @@ function NewPostSignifier({ tx: { id } }) {
   return (
     <>
       <img
-        className={styles.headerActionIcon}
+        className={styles.newPostIcon}
         alt="new-post-icon"
         src={newPostIcon}
       />
       <div className={styles.headerAction}>
         <Link to={`/post/${id}`}>New Post</Link>
+      </div>
+    </>
+  );
+}
+
+function CommentSignifier({ tx: { id }, user }) {
+  const userName = getUserName(user);
+  return (
+    <>
+      <img className={styles.replyIcon} alt="reply-icon" src={replyIcon} />
+      <div className={styles.headerAction}>
+        <Link to={`/post/${id}`}>{`${userName}'s Post`}</Link>
       </div>
     </>
   );
@@ -125,6 +142,18 @@ function FeedActionHeaderTemplate({ tx, user, typeComponent }) {
 
 export function NewPostFeedAction({ tx, user }) {
   const typeComponent = <NewPostSignifier tx={tx} />;
+
+  return (
+    <FeedActionHeaderTemplate
+      tx={tx}
+      user={user}
+      typeComponent={typeComponent}
+    />
+  );
+}
+
+export function CommentFeedAction({ tx, user, parentUser }) {
+  const typeComponent = <CommentSignifier tx={tx} user={parentUser} />;
 
   return (
     <FeedActionHeaderTemplate

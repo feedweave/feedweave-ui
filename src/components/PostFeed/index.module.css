@@ -160,6 +160,7 @@ h4 {
   color: #57943a;
   display: flex;
   margin-top: 12px;
+  cursor: pointer;
 }
 
 .replyButtonIcon {

@@ -6,6 +6,7 @@ import { loadPost, loadComments, renderMarkdown } from "../../util";
 import Comments from "../../components/Comments";
 import SubmitComment from "../../components/SubmitComment";
 import { PostDetailHeader } from "../../components/ActionHeader";
+import { ReplyButton } from "../../components/PostFeed";
 
 import styles from "./index.module.css";
 
@@ -46,8 +47,9 @@ function Post({ txId }) {
         <PostDetailHeader tx={post} user={user} />
       </div>
       <div className={styles.body}>{renderMarkdown(post.content)}</div>
+      <ReplyButton />
+      <Comments data={commentsData} parentUser={user} />
       <SubmitComment txId={txId} onSave={reloadComments} />
-      <Comments data={commentsData} />
     </div>
   );
 }
