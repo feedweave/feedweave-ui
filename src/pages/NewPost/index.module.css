@@ -1,5 +1,9 @@
 .container {
-  margin-bottom: 15px;
+  padding-top: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .continueEditingButton {
   margin-right: 15px;
@@ -19,4 +23,85 @@
 .previewWarning {
   margin-top: 15px;
   color: red;
+}
+
+.newPostHeaderContainer,
+.newPostHeaderLeft,
+.newPostHeaderRight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.newPostHeaderContainer {
+  font-family: "Roboto Mono", monospace;
+  color: #8c8c8c;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #d7d7d7;
+  font-size: 13px;
+}
+
+.newPostHeaderLeft > *,
+.dataGroup > * {
+  margin: 0 6px;
+}
+
+.newPostHeaderRight {
+  color: #626262;
+  opacity: 0.5;
+}
+.dataGroup {
+  display: flex;
+  margin: 0 6px;
+}
+
+.footerContainer {
+  border-top: 1px solid #dedede;
+  padding-top: 12px;
+  padding-bottom: 50px;
+}
+
+.footerContentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editorControlsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.editorControlsContainer img {
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.editorControlsContainer .underlineIcon {
+  margin-top: 3px;
+}
+
+.editorControlsContainer .italicIcon {
+  margin-top: -1px;
+}
+
+.editorControlsContainer .strikethroughIcon {
+  margin-top: 1px;
+}
+
+.editorControlsContainer .ulIcon,
+.editorControlsContainer .codeIcon {
+  margin-top: 1px;
+}
+
+.publishButton {
+  font-family: Roboto Mono;
+  color: #57943a;
+  border: 1px solid #57943a;
+  padding: 7px 11px;
+  font-size: 13px;
+  cursor: pointer;
 }

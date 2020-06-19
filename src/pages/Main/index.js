@@ -6,11 +6,11 @@ import styles from "./index.module.css";
 
 export default function Main({ children }) {
   return (
-    <>
+    <div className={styles.container}>
       <Sidebar />
-      <div className={styles.container}>
+      <div className={styles.childrenContainer}>
         <div className={styles.content}>{children}</div>
       </div>
-    </>
+    </div>
   );
 }

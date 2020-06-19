@@ -45,14 +45,16 @@ function UserDetails({ user }) {
   );
 }
 
+export function NewPostIcon() {
+  return (
+    <img className={styles.newPostIcon} alt="new-post-icon" src={newPostIcon} />
+  );
+}
+
 function NewPostSignifier({ tx: { id } }) {
   return (
     <>
-      <img
-        className={styles.newPostIcon}
-        alt="new-post-icon"
-        src={newPostIcon}
-      />
+      <NewPostIcon />
       <div className={styles.headerAction}>
         <Link to={`/post/${id}`}>New Post</Link>
       </div>

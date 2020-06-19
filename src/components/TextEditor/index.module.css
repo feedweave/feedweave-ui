@@ -1,5 +1,13 @@
 .editor {
-  margin-bottom: 20px;
+  display: block;
+  margin: 20px 0;
+  font-size: 15px;
+  padding: 0 10px;
+}
+
+.editor h1 {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .editor img {

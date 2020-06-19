@@ -1,8 +1,16 @@
 .container {
+  height: 100%;
+}
+.childrenContainer {
+  height: 100%;
   display: flex;
   justify-content: center;
 }
 
 .content {
   width: 738px;
+}
+
+.content > div {
+  height: 100%;
 }

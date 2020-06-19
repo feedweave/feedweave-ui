@@ -33,7 +33,7 @@ class App extends React.Component {
   render() {
     return (
       <UserContext.Provider value={this.state}>
-        <Router primary={false}>
+        <Router style={{ height: "100%" }} primary={false}>
           <Main path="/">
             <Home path="/" />
             <Following path="/following" />
