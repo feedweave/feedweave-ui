@@ -1,15 +1,23 @@
 .dropArea {
-  height: 200px;
-  border: 2px dashed #62666f;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: auto;
-  max-width: 300px;
+  padding: 17px 13px;
+  border: 1px dashed #68717a;
+  margin-bottom: 13px;
   cursor: pointer;
 }
+.uploadText {
+  display: flex;
+  margin-bottom: 8px;
+}
+.uploadButton {
+  text-decoration-line: underline;
+}
+.fileNameExampleText {
+  color: rgba(0, 0, 0, 0.6);
+}
+.uploaderDescription a {
+  text-decoration: underline;
+}
+
 .dropAreaLink {
   padding: 0;
   vertical-align: unset;

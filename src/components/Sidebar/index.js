@@ -69,7 +69,7 @@ class Sidebar extends React.Component {
             <div></div>
           </div>
         ) : (
-          <div>
+          <div className={styles.loginContainer}>
             <LoginButton />
           </div>
         )}

@@ -1,50 +1,43 @@
-import React from "react";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import React, { useState, useRef, useContext } from "react";
 
 import { navigate } from "@reach/router";
 import { arweave, getUserInfo } from "../../util";
 
+import Button from "../Button";
 import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
 
-class LoginButton extends React.Component {
-  constructor(props) {
-    super(props);
+function KeyUploader({ handleUser }) {
+  const inputEl = useRef(null);
 
-    this.state = { isModalOpen: false };
-
-    this.inputFileRef = React.createRef();
-    this.handleUploadClick = this.handleUploadClick.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  static contextType = UserContext;
-
-  toggleModal() {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
-  }
-
-  async openModal() {
-    this.setState({
-      isModalOpen: true,
-    });
-  }
-
-  handleUploadClick = (e) => {
+  const handleDrag = (e) => {
     e.preventDefault();
-    this.inputFileRef.current.click();
+    e.stopPropagation();
   };
 
-  handleFileChange = (e) => {
+  const handleUploadClick = (e) => {
+    e.preventDefault();
+    inputEl.current.click();
+  };
+
+  const handleFileInput = (e) => {
     e.preventDefault();
 
-    const file = this.inputFileRef.current.files[0];
-    const reader = new FileReader();
+    const file = inputEl.current.files[0];
+    handleFile(file);
+  };
 
-    const { handleUser } = this.context;
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const file = e.dataTransfer.files[0];
+    handleFile(file);
+  };
+
+  const handleFile = (file) => {
+    const reader = new FileReader();
 
     reader.onload = async () => {
       try {
@@ -53,9 +46,9 @@ class LoginButton extends React.Component {
         const { user: userInfo } = await getUserInfo(address).then((res) =>
           res.json()
         );
-        handleUser({ wallet, address, userInfo });
-        this.toggleModal();
-        navigate("/following");
+        const user = { wallet, address, userInfo };
+        handleUser(user);
+        navigate("/");
       } catch (error) {
         alert(error.toString());
       }
@@ -63,52 +56,59 @@ class LoginButton extends React.Component {
     reader.readAsText(file);
   };
 
-  render() {
-    const { isModalOpen } = this.state;
-    return (
-      <div>
-        <Button color="link" onClick={this.openModal}>
-          Log in/Sign up
-        </Button>
-        <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>Log in</ModalHeader>
-          <ModalBody>
-            <div className={styles.dropArea} onClick={this.handleUploadClick}>
-              <div>
-                <Button className={styles.dropAreaLink} color="link">
-                  Upload
-                </Button>{" "}
-                an Arweave keyfile to log in.
-              </div>
-            </div>
-            <div className={styles.getWalletCopy}>
-              Don't have a wallet? Get one{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://tokens.arweave.org/"
-              >
-                here
-              </a>
-              !
-            </div>
-            <div className={styles.instructions}>
-              FEEDweave is built on the{" "}
-              <a href="https://arweave.org">Arweave </a> blockchain and uses
-              cryptographic keys for identity and authentication.
-            </div>
-          </ModalBody>
-        </Modal>
-        <input
-          ref={this.inputFileRef}
-          type="file"
-          style={{ display: "none" }}
-          accept="application/json"
-          onChange={this.handleFileChange}
-        />
+  return (
+    <div className={styles.keyUploaderContainer}>
+      <div
+        className={styles.dropArea}
+        onClick={handleUploadClick}
+        onDrop={handleFileDrop}
+        onDragOver={handleDrag}
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+      >
+        <div className={styles.uploadText}>
+          <div className={styles.uploadButton}>Upload</div>
+          &nbsp;or Drag In
+        </div>
+        <div className={styles.fileNameExampleText}>
+          arweave-keyfile-a1b2c3.json
+        </div>
       </div>
-    );
+      <div className={styles.uploaderDescription}>
+        Don’t have a keyfile or Arweave wallet?{" "}
+        <a
+          href="https://www.arweave.org/wallet"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get one here.
+        </a>
+      </div>
+      <input
+        ref={inputEl}
+        type="file"
+        style={{ display: "none" }}
+        accept="application/json"
+        onChange={handleFileInput}
+      />
+    </div>
+  );
+}
+
+function LoginWizard() {
+  const [loginState, setLoginState] = useState("loggedOut");
+  const { handleUser } = useContext(UserContext);
+
+  const showKeyUpload = () => {
+    setLoginState("uploadKey");
+  };
+  if (loginState === "loggedOut") {
+    return <Button onClick={showKeyUpload}>Log in / Sign up</Button>;
+  }
+
+  if (loginState === "uploadKey") {
+    return <KeyUploader handleUser={handleUser} />;
   }
 }
 
-export default LoginButton;
+export default LoginWizard;
