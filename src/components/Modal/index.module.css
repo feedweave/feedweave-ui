@@ -1,0 +1,35 @@
+.overlay {
+  z-index: 98;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: rgba(250, 250, 250, 0.75);
+}
+
+.modal {
+  z-index: 99;
+  /* Everything below is optional styling */
+  position: relative;
+}
+
+.modalClose {
+  position: absolute;
+  top: -24px;
+  right: 0;
+  padding: 5px;
+  border: 0;
+  -webkit-appearance: none;
+  background: none;
+  color: black;
+  cursor: pointer;
+}
+
+.modalBody {
+}

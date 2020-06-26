@@ -7,6 +7,8 @@ import logo from "./feedweave-logo.png";
 import { UserContext } from "../../util";
 
 import LoginButton from "../LoginButton";
+import Modal from "../Modal";
+import Onboarding from "../Onboarding";
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -73,6 +75,9 @@ class Sidebar extends React.Component {
             <LoginButton />
           </div>
         )}
+        {/* <Modal initialShow={true}>
+          <Onboarding user={user} />
+        </Modal> */}
       </div>
     );
   }
