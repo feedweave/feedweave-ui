@@ -6,7 +6,7 @@ import Button from "../Button";
 
 import styles from "./index.module.css";
 
-function ConfirmTx() {
+export function ConfirmTx() {
   return (
     <div className={styles.confirmTxContainer}>
       <div className={styles.heading}>Submit Proof of Identity</div>

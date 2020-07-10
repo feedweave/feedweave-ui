@@ -1,12 +1,21 @@
-import React from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { useState, useContext } from "react";
+import {
+  Button,
+  Modal as OldModal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
+
 import styles from "./index.module.css";
 
-import { arweave, createTransaction, publishTransaction } from "../../util";
-
-const winstonToAr = winston => {
-  return winston && arweave.ar.winstonToAr(winston) + " AR";
-};
+import {
+  UserContext,
+  arweave,
+  createTransaction,
+  publishTransaction,
+  winstonToAr,
+} from "../../util";
 
 class SaveTransactionWithConfirmationButton extends React.Component {
   constructor(props) {
@@ -15,7 +24,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
     this.state = {
       isLoading: false,
       isModalOpen: false,
-      txData: null
+      txData: null,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -23,12 +32,16 @@ class SaveTransactionWithConfirmationButton extends React.Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
+  static contextType = UserContext;
+
   toggleModal() {
     this.setState({ isModalOpen: !this.state.isModalOpen });
   }
 
   async openModal() {
-    const { data, tags, user } = this.props;
+    const { user } = this.context;
+
+    const { data, tags } = this.props;
     this.setState({ isLoading: true });
     const tx = await createTransaction(data, tags, user.wallet);
     const balance = await arweave.wallets.getBalance(user.address);
@@ -37,13 +50,13 @@ class SaveTransactionWithConfirmationButton extends React.Component {
     this.setState({
       isModalOpen: true,
       isLoading: false,
-      txData: { tx, balance, balanceAfter }
+      txData: { tx, balance, balanceAfter },
     });
   }
 
   async handleSave() {
     const {
-      txData: { tx }
+      txData: { tx },
     } = this.state;
     await publishTransaction(tx);
     this.toggleModal();
@@ -52,9 +65,10 @@ class SaveTransactionWithConfirmationButton extends React.Component {
   }
 
   renderModalBody() {
-    const { data, user, tags } = this.props;
+    const { user } = this.context;
+    const { data, tags } = this.props;
     const {
-      txData: { tx, balance, balanceAfter }
+      txData: { tx, balance, balanceAfter },
     } = this.state;
 
     const dataSize = new Blob([data]).size;
@@ -70,7 +84,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
           <strong>Tags</strong>:
           <div className={styles.tagList}>
             <code>
-              {Object.keys(tags).map(key => {
+              {Object.keys(tags).map((key) => {
                 return (
                   <div key={key}>
                     {key}: {tags[key]}
@@ -109,7 +123,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
         >
           {isLoading ? "Loading..." : buttonText}
         </Button>
-        <Modal isOpen={isModalOpen} toggle={this.toggleModal}>
+        <OldModal isOpen={isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>
             Confirm transaction
           </ModalHeader>
@@ -122,7 +136,7 @@ class SaveTransactionWithConfirmationButton extends React.Component {
               Cancel
             </Button>
           </ModalFooter>
-        </Modal>
+        </OldModal>
       </div>
     );
   }

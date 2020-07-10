@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import TextEditor from "../../components/TextEditor";
+import PostButton from "../../components/PostButton";
 // import { Button } from "reactstrap";
 // import { navigate } from "@reach/router";
 
@@ -7,8 +8,7 @@ import TextEditor from "../../components/TextEditor";
 // import parse from "remark-parse";
 // import remark2react from "remark-react";
 
-// import { UserContext, APP_NAME, APP_VERSION } from "../../util";
-// import SaveTransactionWithConfirmationButton from "../../components/SaveTransactionWithConfirmationButton";
+import { UserContext, APP_NAME, APP_VERSION } from "../../util";
 import { NewPostIcon } from "../../components/ActionHeader";
 import styles from "./index.module.css";
 
@@ -23,10 +23,10 @@ import ulIcon from "./ul-icon.svg";
 import codeIcon from "./code-icon.svg";
 import quoteIcon from "./quote-icon.svg";
 
-// const tags = {
-//   "App-Name": APP_NAME,
-//   "App-Version": APP_VERSION,
-// };
+const tags = {
+  "App-Name": APP_NAME,
+  "App-Version": APP_VERSION,
+};
 
 // const unescape = (text) => {
 //   return text.replace(/\\([\\`*{}[\]()#+\-.!_>])/g, "$1");
@@ -144,17 +144,6 @@ function NewPostHeader() {
   );
 }
 
-function NewPostFooter() {
-  return (
-    <div className={styles.footerContainer}>
-      <div className={styles.footerContentContainer}>
-        <EditorControls />
-        <PublishButton />
-      </div>
-    </div>
-  );
-}
-
 function EditorControls() {
   return (
     <div className={styles.editorControlsContainer}>
@@ -180,16 +169,33 @@ function EditorControls() {
   );
 }
 
-function PublishButton() {
-  return <div className={styles.publishButton}>Publish to Arweave</div>;
+function PublishButton({ post }) {
+  const onSave = () => {
+    console.log(post);
+  };
+  return (
+    <PostButton data={post} onSave={onSave} buttonText="Publish to Arweave" />
+  );
 }
 
 function NewPost() {
+  const [post, setPost] = useState("");
+
+  const handleTextChange = (value) => {
+    const text = unescape(value());
+    setPost(text);
+  };
+
   return (
     <div className={styles.container}>
       <NewPostHeader />
-      <TextEditor />
-      <NewPostFooter />
+      <TextEditor defaultValue={post} handleTextChange={handleTextChange} />
+      <div className={styles.footerContainer}>
+        <div className={styles.footerContentContainer}>
+          <EditorControls />
+          <PublishButton post={post} />
+        </div>
+      </div>
     </div>
   );
 }

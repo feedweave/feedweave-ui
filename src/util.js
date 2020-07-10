@@ -24,8 +24,6 @@ export const SOCIAL_GRAPH_APP_VERSION = `0.0.1`;
 export const createTransaction = async (post, tags, wallet) => {
   const tx = await arweave.createTransaction({ data: post }, wallet);
 
-  tx["last_tx"] = await arweave.api.get("/tx_anchor").then((x) => x.data);
-
   for (const [tagKey, tagValue] of Object.entries(tags)) {
     tx.addTag(tagKey, tagValue);
   }
@@ -92,4 +90,23 @@ export function formatDate(unixtime) {
 
 export const renderMarkdown = (content) => {
   return unified().use(parse).use(remark2react).processSync(content).contents;
+};
+
+const tags = {
+  "App-Name": APP_NAME,
+  "App-Version": APP_VERSION,
+};
+
+export async function generatePostTx(data, user) {
+  const [tx, balance] = await Promise.all([
+    createTransaction(data, tags, user.wallet),
+    arweave.wallets.getBalance(user.address),
+  ]);
+  const balanceAfter = arweave.ar.sub(balance, tx.reward);
+
+  return { tx, balance, balanceAfter, tags, data, user };
+}
+
+export const winstonToAr = (winston) => {
+  return winston && arweave.ar.winstonToAr(winston) + " AR";
 };
