@@ -8,15 +8,21 @@ import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
 
+const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
+const API_PORT = process.env.REACT_APP_API_PORT;
+
+const API_PROTOCOL = process.env.REACT_APP_API_PROTOCOL;
+
+export const API_HOST = process.env.REACT_APP_API_HOST;
+
 export const arweave = Arweave.init({
-  host: "gateway.arweave.co",
-  port: 443,
-  protocol: "https",
+  host: API_DOMAIN,
+  port: API_PORT,
+  protocol: API_PROTOCOL,
 });
 
-export const API_HOST = "https://gateway.arweave.co";
+export const APP_NAME = process.env.REACT_APP_APP_NAME;
 
-export const APP_NAME = `FEEDweave-staging`;
 export const APP_VERSION = `0.0.1`;
 export const SOCIAL_GRAPH_APP_NAME = `social-graph`;
 export const SOCIAL_GRAPH_APP_VERSION = `0.0.1`;

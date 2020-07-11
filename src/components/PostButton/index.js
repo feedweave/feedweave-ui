@@ -34,12 +34,12 @@ function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
           <div className={confirmStyles.dataValue}>{tx.id}</div>
         </div>
         <div className={confirmStyles.dataRow}>
-          <div className={confirmStyles.dataKey}>Data:</div>
-          <div className={confirmStyles.dataValue}>{`${dataSize}  Bytes`}</div>
-        </div>
-        <div className={confirmStyles.dataRow}>
           <div className={confirmStyles.dataKey}>Wallet:</div>
           <div className={confirmStyles.dataValue}>{user.address}</div>
+        </div>
+        <div className={confirmStyles.dataRow}>
+          <div className={confirmStyles.dataKey}>Size:</div>
+          <div className={confirmStyles.dataValue}>{`${dataSize}  Bytes`}</div>
         </div>
         <div className={confirmStyles.dataRow}>
           <div className={confirmStyles.dataKey}>Price:</div>
