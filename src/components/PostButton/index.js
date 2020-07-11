@@ -1,19 +1,29 @@
 import React, { useState, useContext } from "react";
 
-import styles from "./index.module.css";
 import confirmStyles from "../Onboarding/index.module.css";
 
-import { UserContext, generatePostTx, winstonToAr } from "../../util";
+import {
+  UserContext,
+  generatePostTx,
+  publishTransaction,
+  winstonToAr,
+} from "../../util";
 
 import Modal, { ModalBody } from "../Modal";
 import Button from "../Button";
 
-function ConfirmTxModal({ txData, ...props }) {
+function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
+  const [isLoading, setIsLoading] = useState(false);
   const { tx, balance, data, user } = txData;
 
   const dataSize = new Blob([data]).size;
 
-  const handleConfirmTx = () => {};
+  const handleConfirmTx = async () => {
+    setIsLoading(true);
+    await publishTransaction(tx);
+    setIsLoading(false);
+    onSave();
+  };
 
   const top = (
     <div className={confirmStyles.confirmTxContainer}>
@@ -48,7 +58,9 @@ function ConfirmTxModal({ txData, ...props }) {
   const bottom = (
     <>
       <div></div>
-      <Button onClick={handleConfirmTx}>Confirm Transaction</Button>
+      <Button onClick={handleConfirmTx} isLoading={isLoading}>
+        Confirm Transaction
+      </Button>
     </>
   );
 
@@ -60,23 +72,26 @@ function ConfirmTxModal({ txData, ...props }) {
 }
 
 function PostButton({ data, onSave, buttonText }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [tx, setTx] = useState(null);
   const { user } = useContext(UserContext);
 
   const handleClick = async () => {
+    setIsLoading(true);
     const tx = await generatePostTx(data, user);
     setTx(tx);
+    setIsLoading(false);
   };
 
   return (
     <>
-      <div onClick={handleClick} className={styles.publishButton}>
+      <Button isLoading={isLoading} onClick={handleClick}>
         Publish to Arweave
-      </div>
+      </Button>
       {tx ? (
         <ConfirmTxModal
-          initialShow={true}
           txData={tx}
+          onSave={onSave}
           onClose={() => setTx(null)}
         />
       ) : null}

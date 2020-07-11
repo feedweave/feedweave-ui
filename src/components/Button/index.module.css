@@ -18,3 +18,7 @@
   color: #8c8c8c;
   text-decoration: underline;
 }
+
+.loading {
+  cursor: default;
+}
