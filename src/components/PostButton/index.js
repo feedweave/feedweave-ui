@@ -12,20 +12,10 @@ import {
 import Modal, { ModalBody } from "../Modal";
 import Button from "../Button";
 
-function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
-  const [isLoading, setIsLoading] = useState(false);
+function ConfirmTx({ txData }) {
   const { tx, balance, data, user } = txData;
-
   const dataSize = new Blob([data]).size;
-
-  const handleConfirmTx = async () => {
-    setIsLoading(true);
-    await publishTransaction(tx);
-    setIsLoading(false);
-    onSave();
-  };
-
-  const top = (
+  return (
     <div className={confirmStyles.confirmTxContainer}>
       <div className={confirmStyles.heading}>Submit transaction</div>
       <div className={confirmStyles.txData}>
@@ -54,6 +44,20 @@ function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
       </div>
     </div>
   );
+}
+
+function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const { tx } = txData;
+
+  const handleConfirmTx = async () => {
+    setIsLoading(true);
+    await publishTransaction(tx);
+    setIsLoading(false);
+    onSave();
+  };
+
+  const top = <ConfirmTx txData={txData} />;
 
   const bottom = (
     <>

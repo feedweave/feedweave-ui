@@ -4,7 +4,7 @@ import PostMetaTags from "../../components/PostMetaTags";
 
 import { loadPost, loadComments } from "../../util";
 import Comments from "../../components/Comments";
-import SubmitComment from "../../components/SubmitComment";
+import CommentComposer from "../../components/CommentComposer";
 import PostBody from "../../components/PostBody";
 import { PostDetailHeader } from "../../components/ActionHeader";
 import { ReplyButton } from "../../components/PostFeed";
@@ -50,9 +50,8 @@ function Post({ txId }) {
       <div className={styles.body}>
         <PostBody content={post.content} />
       </div>
-      <ReplyButton />
+      <CommentComposer tx={post} onSave={reloadComments} />
       <Comments data={commentsData} parentUser={user} />
-      {/* <SubmitComment txId={txId} onSave={reloadComments} /> */}
     </div>
   );
 }

@@ -51,6 +51,10 @@ export function NewPostIcon() {
   );
 }
 
+export function ReplyIcon() {
+  return <img className={styles.replyIcon} alt="reply-icon" src={replyIcon} />;
+}
+
 function NewPostSignifier({ tx: { id } }) {
   return (
     <>
@@ -107,6 +111,13 @@ function LikeAndOptionsControls() {
     </div>
   );
 }
+export function TruncatedHashLink({ txId }) {
+  return (
+    <a href={`https://explorer.arweave.co/transaction/${txId}`}>
+      {txId.substr(0, 9) + "..."}
+    </a>
+  );
+}
 
 function TransactionMetadata({ tx }) {
   const { id: txId, timestamp } = tx;
@@ -116,9 +127,7 @@ function TransactionMetadata({ tx }) {
     <>
       <div className={styles.headerTimestamp}>{formattedTimestamp}</div>
       <div className={styles.headerHash}>
-        <a href={`https://explorer.arweave.co/transaction/${txId}`}>
-          {txId.substr(0, 9) + "..."}
-        </a>
+        <TruncatedHashLink txId={txId} />
       </div>
     </>
   );

@@ -6,10 +6,15 @@
   height: 100%;
 }
 
+.editorModule {
+  border-bottom: 1px solid #dedede;
+  border-left: 1px solid #dedede;
+  border-right: 1px solid #dedede;
+}
+
 .footerContainer {
   border-top: 1px solid #dedede;
-  padding-top: 12px;
-  padding-bottom: 50px;
+  padding: 12px;
 }
 
 .footerContentContainer {
