@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { navigate } from "@reach/router";
 
+import { APP_NAME, APP_VERSION } from "../../util";
+
 import TextEditor from "../../components/TextEditor";
 import PostButton from "../../components/PostButton";
 
@@ -10,6 +12,11 @@ import { NewPostHeader, EditorControls } from "../../components/TextComposer";
 
 const unescape = (text) => {
   return text.replace(/\\([\\`*{}[\]()#+\-.!_>])/g, "$1");
+};
+
+const tags = {
+  "App-Name": APP_NAME,
+  "App-Version": APP_VERSION,
 };
 
 function NewPost() {
@@ -33,6 +40,7 @@ function NewPost() {
           <EditorControls />
           <PostButton
             data={post}
+            tags={tags}
             onSave={onSave}
             buttonText="Publish to Arweave"
           />

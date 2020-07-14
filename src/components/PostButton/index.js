@@ -12,9 +12,19 @@ import {
 import Modal, { ModalBody } from "../Modal";
 import Button from "../Button";
 
+function Tags({ tags }) {
+  return Object.keys(tags).map((k) => (
+    <div>
+      {k}: {tags[k]}
+    </div>
+  ));
+}
+
 function ConfirmTx({ txData }) {
-  const { tx, balance, data, user } = txData;
+  const { tx, balance, data, user, tags } = txData;
+
   const dataSize = new Blob([data]).size;
+
   return (
     <div className={confirmStyles.confirmTxContainer}>
       <div className={confirmStyles.heading}>Submit transaction</div>
@@ -26,6 +36,12 @@ function ConfirmTx({ txData }) {
         <div className={confirmStyles.dataRow}>
           <div className={confirmStyles.dataKey}>Wallet:</div>
           <div className={confirmStyles.dataValue}>{user.address}</div>
+        </div>
+        <div className={confirmStyles.dataRow}>
+          <div className={confirmStyles.dataKey}>Tags:</div>
+          <div className={confirmStyles.dataValue}>
+            <Tags tags={tags} />
+          </div>
         </div>
         <div className={confirmStyles.dataRow}>
           <div className={confirmStyles.dataKey}>Size:</div>
@@ -75,14 +91,14 @@ function ConfirmTxModal({ txData, onClose, onSave, ...props }) {
   );
 }
 
-function PostButton({ data, onSave, buttonText }) {
+function PostButton({ data, tags, onSave, buttonText }) {
   const [isLoading, setIsLoading] = useState(false);
   const [tx, setTx] = useState(null);
   const { user } = useContext(UserContext);
 
   const handleClick = async () => {
     setIsLoading(true);
-    const tx = await generatePostTx(data, user);
+    const tx = await generatePostTx(data, tags, user);
     setTx(tx);
     setIsLoading(false);
   };
@@ -90,7 +106,7 @@ function PostButton({ data, onSave, buttonText }) {
   return (
     <>
       <Button isLoading={isLoading} onClick={handleClick}>
-        Publish to Arweave
+        {buttonText}
       </Button>
       {tx ? (
         <ConfirmTxModal

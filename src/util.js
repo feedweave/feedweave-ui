@@ -98,12 +98,7 @@ export const renderMarkdown = (content) => {
   return unified().use(parse).use(remark2react).processSync(content).contents;
 };
 
-const tags = {
-  "App-Name": APP_NAME,
-  "App-Version": APP_VERSION,
-};
-
-export async function generatePostTx(data, user) {
+export async function generatePostTx(data, tags, user) {
   const [tx, balance] = await Promise.all([
     createTransaction(data, tags, user.wallet),
     arweave.wallets.getBalance(user.address),

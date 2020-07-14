@@ -4,26 +4,23 @@ import TextEditor from "../TextEditor";
 import { NewCommentHeader, EditorControls } from "../TextComposer";
 import PostButton from "../PostButton";
 
-import styles from "./index.module.css";
+import { APP_NAME } from "../../util";
 
-const PostCommentButton = PostButton;
+import styles from "./index.module.css";
 
 const tags = {
   "App-Name": "transaction-comment",
   "App-Version": "0.0.1",
-  "Parent-App-Name": "FEEDweave",
-  "Transaction-ID": "FuZ3PwN1HGv_Fm6du-367sCHFlPYbSu4DDHBIBZtAok",
+  "Parent-App-Name": APP_NAME,
 };
 
-export default function CommentComposer({ parentTx }) {
+export default function CommentComposer({ parentTx, onSave }) {
   const [comment, setComment] = useState("");
 
   const handleTextChange = (value) => {
     const text = unescape(value());
     setComment(text);
   };
-
-  const onSave = () => {};
 
   return (
     <div className={styles.container}>
@@ -36,8 +33,9 @@ export default function CommentComposer({ parentTx }) {
         <div className={styles.footerContainer}>
           <div className={styles.footerContentContainer}>
             <EditorControls />
-            <PostCommentButton
+            <PostButton
               data={comment}
+              tags={{ ...tags, "Transaction-ID": parentTx.id }}
               onSave={onSave}
               buttonText="Publish to Arweave"
             />

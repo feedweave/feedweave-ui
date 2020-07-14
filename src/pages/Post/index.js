@@ -50,7 +50,7 @@ function Post({ txId }) {
       <div className={styles.body}>
         <PostBody content={post.content} />
       </div>
-      <CommentComposer tx={post} onSave={reloadComments} />
+      <CommentComposer parentTx={post} onSave={reloadComments} />
       <Comments data={commentsData} parentUser={user} />
     </div>
   );
