@@ -39,14 +39,13 @@ export function NewPostHeader() {
   );
 }
 
-export function NewCommentHeader() {
-  const txId = "TfyZK6X-Hi0Heq-heZXji4IL7iaJCC_1fdbw6oqrEJ0";
+export function NewCommentHeader({ parentId }) {
   return (
     <div className={styles.newPostHeaderContainer}>
       <div className={styles.newPostHeaderLeft}>
         <ReplyIcon />
         <div className={styles.newPostText}>
-          Reply to <TruncatedHashLink txId={txId} />
+          Reply to <TruncatedHashLink txId={parentId} />
         </div>
       </div>
       <div className={styles.newPostHeaderRight}>

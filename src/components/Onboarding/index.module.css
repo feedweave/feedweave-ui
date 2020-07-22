@@ -139,3 +139,23 @@
   width: 75px;
   color: rgba(98, 98, 98, 0.7);
 }
+
+.dataValue,
+.dataTags {
+  width: 405px;
+}
+
+.dataTags > * {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.loadingIndicator {
+  font-weight: bold;
+  font-size: 13px;
+  color: #626262;
+  height: 182px;
+  line-height: 200px;
+  text-align: center;
+}

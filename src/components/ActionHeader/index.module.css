@@ -115,7 +115,6 @@
 .headerLike {
   display: flex;
   align-items: center;
-  text-decoration: underline;
   cursor: pointer;
   margin-left: 8px;
 }
@@ -133,4 +132,9 @@
   width: 15px;
   height: 3px;
   cursor: pointer;
+}
+
+.hashLink {
+  color: #8c8c8c;
+  text-decoration: underline;
 }

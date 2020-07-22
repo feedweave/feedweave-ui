@@ -11,7 +11,8 @@ class TextEditor extends React.Component {
         defaultValue={defaultValue}
         className={styles.editor}
         onChange={handleTextChange}
-        placeholder="# Write some markdown here!"
+        placeholder="Write something here"
+        autoFocus={true}
       />
     );
   }

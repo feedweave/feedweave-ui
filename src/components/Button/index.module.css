@@ -3,7 +3,7 @@
   font-family: Roboto Mono;
   font-weight: normal;
   font-size: 13px;
-  padding: 4px 11px;
+  padding: 8px 10px;
   color: #57943a;
   cursor: pointer;
 }
@@ -17,6 +17,12 @@
   background: #e1e1e1;
   color: #8c8c8c;
   text-decoration: underline;
+}
+
+.secondary {
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration-line: underline;
 }
 
 .loading {

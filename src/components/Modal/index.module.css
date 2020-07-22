@@ -35,7 +35,7 @@
 }
 
 .container {
-  width: 607px;
+  width: 521px;
   background: #ffffff;
   border: 1px solid #68717a;
   font-size: 15px;
@@ -94,7 +94,7 @@
   display: flex;
   flex-flow: row;
   justify-content: space-between;
-  padding: 12px 18px;
+  padding: 12px 12px;
 }
 
 .uploadKeyfile {

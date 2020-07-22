@@ -50,34 +50,13 @@ export function ModalBody({ top, middle, bottom }) {
   );
 }
 
-export default function Modal({
-  children,
-  activator,
-  initialShow = false,
-  onClose = () => {},
-}) {
-  const [show, setShow] = useState(initialShow);
-  const content = show && (
+export default function Modal({ children, onClose = () => {} }) {
+  const content = (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <button
-          className={styles.modalClose}
-          type="button"
-          onClick={() => {
-            onClose();
-            setShow(false);
-          }}
-        >
-          X
-        </button>
         <div className={styles.modalBody}>{children}</div>
       </div>
     </div>
   );
-  return (
-    <>
-      {activator ? activator({ setShow }) : null}{" "}
-      {createPortal(content, document.body)}
-    </>
-  );
+  return createPortal(content, document.body);
 }

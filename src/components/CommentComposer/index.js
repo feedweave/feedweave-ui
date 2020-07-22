@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import TextEditor from "../TextEditor";
 import { NewCommentHeader, EditorControls } from "../TextComposer";
-import PostButton from "../PostButton";
+import Button from "../Button";
+import { PostButtonWrapper } from "../PostButton";
 
 import { APP_NAME } from "../../util";
 
@@ -14,7 +15,7 @@ const tags = {
   "Parent-App-Name": APP_NAME,
 };
 
-export default function CommentComposer({ parentTx, onSave }) {
+export default function CommentComposer({ parentTx, onSave, onCancel }) {
   const [comment, setComment] = useState("");
 
   const handleTextChange = (value) => {
@@ -24,7 +25,7 @@ export default function CommentComposer({ parentTx, onSave }) {
 
   return (
     <div className={styles.container}>
-      <NewCommentHeader />
+      <NewCommentHeader parentId={parentTx.id} />
       <div className={styles.editorModule}>
         <TextEditor
           defaultValue={comment}
@@ -33,12 +34,19 @@ export default function CommentComposer({ parentTx, onSave }) {
         <div className={styles.footerContainer}>
           <div className={styles.footerContentContainer}>
             <EditorControls />
-            <PostButton
-              data={comment}
-              tags={{ ...tags, "Transaction-ID": parentTx.id }}
-              onSave={onSave}
-              buttonText="Publish to Arweave"
-            />
+            <div className={styles.buttons}>
+              <Button theme="secondary" onClick={onCancel}>
+                Cancel
+              </Button>
+              <div className={styles.spacerButton}></div>
+              <PostButtonWrapper
+                data={comment}
+                tags={{ ...tags, "Transaction-ID": parentTx.id }}
+                onSave={onSave}
+              >
+                <Button>Publish to Arweave</Button>
+              </PostButtonWrapper>
+            </div>
           </div>
         </div>
       </div>

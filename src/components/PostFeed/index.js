@@ -2,24 +2,10 @@ import React from "react";
 import { navigate } from "@reach/router";
 
 import styles from "./index.module.css";
-import replyButtonIcon from "./reply-button-icon.svg";
 
 import PostSnippet from "../PostSnippet";
-import PostBody from "../PostBody";
-import { NewPostFeedAction, CommentActionHeader } from "../ActionHeader";
-
-export function ReplyButton() {
-  return (
-    <div className={styles.replyButton}>
-      <img
-        className={styles.replyButtonIcon}
-        alt="reply-icon"
-        src={replyButtonIcon}
-      />
-      <div>Reply</div>
-    </div>
-  );
-}
+import ReplyButton from "../ReplyButton";
+import { NewPostFeedAction } from "../ActionHeader";
 
 function ActionWithBodyAndReply({ action, body, reply }) {
   return (
@@ -48,15 +34,6 @@ function PostAction({ tx, user }) {
   );
   const reply = <ReplyButton />;
 
-  return <ActionWithBodyAndReply action={action} body={body} reply={reply} />;
-}
-
-export function CommentAction({ tx, user, parentUser }) {
-  const action = (
-    <CommentActionHeader tx={tx} user={user} parentUser={parentUser} />
-  );
-  const body = <PostBody content={tx.content} />;
-  const reply = <ReplyButton />;
   return <ActionWithBodyAndReply action={action} body={body} reply={reply} />;
 }
 

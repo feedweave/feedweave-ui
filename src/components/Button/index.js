@@ -9,9 +9,9 @@ export default function Button({
   onClick = () => {},
   isLoading,
 }) {
-  const handleClick = () => {
+  const handleClick = (e) => {
     if (!isLoading) {
-      onClick();
+      onClick(e);
     }
   };
 
@@ -21,6 +21,7 @@ export default function Button({
       className={classnames(styles.container, {
         [styles.green]: theme === "green",
         [styles.gray]: theme === "gray",
+        [styles.secondary]: theme === "secondary",
         [styles.loading]: isLoading,
       })}
     >

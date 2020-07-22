@@ -4,7 +4,8 @@ import { navigate } from "@reach/router";
 import { APP_NAME, APP_VERSION } from "../../util";
 
 import TextEditor from "../../components/TextEditor";
-import PostButton from "../../components/PostButton";
+import Button from "../../components/Button";
+import { PostButtonWrapper } from "../../components/PostButton";
 
 import styles from "./index.module.css";
 
@@ -38,12 +39,9 @@ function NewPost() {
       <div className={styles.footerContainer}>
         <div className={styles.footerContentContainer}>
           <EditorControls />
-          <PostButton
-            data={post}
-            tags={tags}
-            onSave={onSave}
-            buttonText="Publish to Arweave"
-          />
+          <PostButtonWrapper data={post} tags={tags} onSave={onSave}>
+            <Button>Publish to Arweave</Button>
+          </PostButtonWrapper>
         </div>
       </div>
     </div>

@@ -152,17 +152,3 @@ h4 {
 .snippetContainer {
   cursor: pointer;
 }
-
-.replyButton {
-  font-family: "Roboto Mono", monospace;
-  font-size: 13px;
-  text-decoration-line: underline;
-  color: #57943a;
-  display: flex;
-  margin-top: 12px;
-  cursor: pointer;
-}
-
-.replyButtonIcon {
-  margin-right: 11px;
-}

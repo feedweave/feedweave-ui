@@ -1,5 +1,5 @@
 .container {
-  padding-top: 35px;
+  margin-top: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,4 +22,20 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.spacerButton {
+  width: 12px;
+}
+
+.cancelButton {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #8c8c8c;
+  margin-right: 24px;
 }
