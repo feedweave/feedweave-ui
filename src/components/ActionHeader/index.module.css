@@ -86,13 +86,7 @@
   margin-top: -1px;
 }
 
-.likeIcon {
-  width: 14px;
-  height: 12px;
-}
-
-.headerCountReply,
-.headerCountLike {
+.headerCountReply {
   display: flex;
   align-items: center;
 }
@@ -107,20 +101,12 @@
   margin-right: 4px;
 }
 
-.headerCountReply img,
-.headerCountLike img {
+.headerCountReply img {
   margin-right: 5px;
 }
 
 .headerLike {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
   margin-left: 8px;
-}
-
-.headerLike .likeIcon {
-  margin-right: 8px;
 }
 
 .headerOptions {
@@ -137,4 +123,9 @@
 .hashLink {
   color: #8c8c8c;
   text-decoration: underline;
+}
+
+.likeIcon {
+  width: 14px;
+  height: 12px;
 }

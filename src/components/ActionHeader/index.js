@@ -1,20 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "@reach/router";
 
-import { PostButtonWrapper } from "../PostButton";
-
-import { formatDate, APP_NAME, UserContext } from "../../util";
+import { formatDate } from "../../util";
 
 import UserIcon from "../UserIcon";
+import { LikeCountButton } from "../CountButtons";
 
 import newPostIcon from "./new-post-icon.png";
-import likeIcon from "./like-icon.png";
-import activeLikeIcon from "./active-like-icon.png";
 import optionsIcon from "./post-options.png";
 import replyIcon from "./reply-icon.svg";
+import likeIcon from "../LikeCountButton/like-icon.png";
 
 import styles from "./index.module.css";
-import { useState } from "react";
 
 function getUserName(user) {
   const { id: userId, arweaveId } = user;
@@ -70,85 +67,61 @@ function NewPostSignifier({ tx: { id } }) {
   );
 }
 
-function CommentSignifier({ parentTx: { id }, user, parentType }) {
-  const userName = getUserName(user);
+function CommentSignifier({ tx, parentUser, parentType }) {
+  const parentTxId = tx.parentTxId || "";
+  let text = truncateHash(parentTxId);
+
+  if (parentUser) {
+    const userName = getUserName(parentUser);
+    text = `${userName}'s ${parentType}`;
+  }
+
   return (
     <>
       <img className={styles.replyIcon} alt="reply-icon" src={replyIcon} />
       <div className={styles.headerAction}>
-        <Link to={`/post/${id}`}>{`${userName}'s ${parentType}`}</Link>
+        <Link to={`/post/${parentTxId}`}>{text}</Link>
       </div>
     </>
   );
 }
 
-function ReplyAndLikeControls({ tx: { likes, comments } }) {
+function LikeSignifier({ tx }) {
+  const parentTxId = tx.parentTxId || "";
+  let text = truncateHash(parentTxId);
+
+  return (
+    <>
+      <img className={styles.likeIcon} alt="like-icon" src={likeIcon} />
+      <div className={styles.headerAction}>
+        <Link to={`/post/${parentTxId}`}>{text}</Link>
+      </div>
+    </>
+  );
+}
+
+function ReplyAndLikeControls({ tx }) {
+  const { comments, commentsCount } = tx;
+
   return (
     <div className={styles.headerSocial}>
       <div className={styles.headerCountReply}>
         <img className={styles.replyIcon} alt="reply-icon" src={replyIcon} />
-        <div>{comments}</div>
+        <div>{(comments && comments.length) || commentsCount}</div>
       </div>
       <div className={styles.headerCountLike}>
-        <img className={styles.likeIcon} alt="like-icon" src={likeIcon} />
-        <div>{likes}</div>
+        <LikeCountButton tx={tx} />
       </div>
     </div>
   );
 }
 
-function generateLikeTags(tx, user) {
-  const hasUserLiked = !!tx.likes.find(
-    (like) => like.ownerAddress === user.address
-  );
-
-  const action = hasUserLiked ? "unlike" : "like";
-
-  return {
-    "App-Name": "transaction-like",
-    "App-Version": "0.0.1",
-    Action: action,
-    "Parent-App-Name": APP_NAME,
-    "Transaction-ID": tx.id,
-  };
-}
-
 function LikeAndOptionsControls({ tx }) {
-  const { likes } = tx;
-  const { user } = useContext(UserContext);
-  const [likesCount, setLikesCount] = useState(likes.length);
-  const [didUserLike, setDidUserLike] = useState(
-    user && !!likes.find(({ ownerAddress }) => ownerAddress === user.address)
-  );
-
-  const tags = generateLikeTags(tx, user);
-
-  const onSave = () => {
-    if (tags["Action"] === "like") {
-      setLikesCount(likesCount + 1);
-      setDidUserLike(true);
-    } else {
-      setLikesCount(likesCount - 1);
-      setDidUserLike(false);
-    }
-  };
   return (
     <div className={styles.headerSocial}>
-      <PostButtonWrapper data="like" tags={tags} onSave={onSave}>
-        <div className={styles.headerLike}>
-          {didUserLike ? (
-            <img
-              className={styles.likeIcon}
-              alt="active-like-icon"
-              src={activeLikeIcon}
-            />
-          ) : (
-            <img className={styles.likeIcon} alt="like-icon" src={likeIcon} />
-          )}
-
-          <div>{likesCount}</div>
-        </div>
-      </PostButtonWrapper>
+      <div className={styles.headerLike}>
+        <LikeCountButton tx={tx} />
+      </div>
       <div className={styles.headerOptions}>
         <img
           className={styles.optionsIcon}
@@ -159,13 +132,18 @@ function LikeAndOptionsControls({ tx }) {
     </div>
   );
 }
+
+function truncateHash(hash) {
+  return hash.substr(0, 9) + "...";
+}
+
 export function TruncatedHashLink({ txId }) {
   return (
     <a
       className={styles.hashLink}
       href={`https://explorer.arweave.co/transaction/${txId}`}
     >
-      {txId.substr(0, 9) + "..."}
+      {truncateHash(txId)}
     </a>
   );
 }
@@ -214,18 +192,6 @@ export function NewPostFeedAction({ tx, user }) {
   );
 }
 
-export function CommentFeedAction({ tx, user, parentUser }) {
-  const typeComponent = <CommentSignifier tx={tx} user={parentUser} />;
-
-  return (
-    <FeedActionHeaderTemplate
-      tx={tx}
-      user={user}
-      typeComponent={typeComponent}
-    />
-  );
-}
-
 export function PostDetailHeader({ tx, user }) {
   const main = (
     <div className={styles.headerMainContainer}>
@@ -255,11 +221,7 @@ export function CommentActionHeader({
     <div className={styles.headerMainContainer}>
       <div className={styles.headerMainLeft}>
         <UserDetails user={user} />
-        <CommentSignifier
-          parentTx={parentTx}
-          user={parentUser}
-          parentType={parentType}
-        />
+        <CommentSignifier tx={tx} user={parentUser} parentType={parentType} />
       </div>
       <div className={styles.headerMainRight}>
         <TransactionMetadata tx={tx} />

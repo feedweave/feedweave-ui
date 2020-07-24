@@ -78,9 +78,17 @@ export const loadComments = async (txId) => {
   return { users, comments };
 };
 
-export const fetchFeed = async (cursor) => {
+export const fetchPostFeed = async (cursor) => {
   const queryParam = cursor ? `?cursor=${cursor}` : "";
   const res = await fetch(`${API_HOST}/post-feed${queryParam}`);
+  const json = await res.json();
+
+  return json;
+};
+
+export const fetchActivityFeed = async (cursor) => {
+  const queryParam = cursor ? `?cursor=${cursor}` : "";
+  const res = await fetch(`${API_HOST}/activity-feed${queryParam}`);
   const json = await res.json();
 
   return json;
@@ -111,3 +119,12 @@ export async function generatePostTx(data, tags, user) {
 export const winstonToAr = (winston) => {
   return winston && arweave.ar.winstonToAr(winston) + " AR";
 };
+
+export function getUserName(user) {
+  const { id: userId, arweaveId } = user;
+  return arweaveId ? `@${arweaveId}` : userId.substr(0, 8) + "...";
+}
+
+export function truncateHash(hash) {
+  return hash.substr(0, 9) + "...";
+}

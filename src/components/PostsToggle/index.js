@@ -4,15 +4,20 @@ import classnames from "classnames";
 
 import styles from "./index.module.css";
 
-export default function PostsToggle() {
+export default function PostsToggle({ onClick }) {
   const [isPostsOnly, setIsPostsOnly] = useState(true);
+
+  const internalOnClick = () => {
+    setIsPostsOnly(!isPostsOnly);
+    onClick();
+  };
 
   return (
     <div
       className={classnames(styles.container, {
         [styles.switchOn]: isPostsOnly,
       })}
-      onClick={() => setIsPostsOnly(!isPostsOnly)}
+      onClick={internalOnClick}
     >
       <div className={styles.toggleBackground}>
         <div className={styles.toggleSwitch}></div>

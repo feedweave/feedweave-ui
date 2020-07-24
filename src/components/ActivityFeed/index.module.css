@@ -1,3 +1,6 @@
+.container > * {
+  margin-bottom: 36px;
+}
 .itemBody {
   color: black;
 }
@@ -130,10 +133,6 @@ h4 {
   color: #646464;
 }
 
-.actionContainer {
-  margin-bottom: 36px;
-}
-
 .bodyContainer {
   padding: 0 8px;
   font-size: 15px;
@@ -150,5 +149,6 @@ h4 {
 }
 
 .snippetContainer {
+  margin: 12px 0;
   cursor: pointer;
 }

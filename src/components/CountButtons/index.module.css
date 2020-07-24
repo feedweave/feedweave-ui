@@ -1,0 +1,10 @@
+.countButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.counter {
+  margin-left: 6px;
+}
