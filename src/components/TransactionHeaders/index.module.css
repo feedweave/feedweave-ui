@@ -9,6 +9,9 @@
   font-size: 13px;
   color: #8c8c8c;
 }
+.grayHeaderContainer {
+  background: #fafafa;
+}
 
 .innerContainer,
 .flexContainer {

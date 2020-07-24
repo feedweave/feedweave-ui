@@ -5,7 +5,11 @@ import classnames from "classnames";
 import { formatDate, truncateHash, getUserName } from "../../util";
 
 import UserIcon from "../UserIcon";
-import { LikeCountButton, CommentCountButton } from "../CountButtons";
+import {
+  LikeCountButton,
+  CommentCountButton,
+  OptionsButton,
+} from "../CountButtons";
 
 import { PostIcon, CommentIcon, LikeIcon, FollowIcon } from "../Icons";
 
@@ -42,6 +46,15 @@ function ReplyAndLike({ tx }) {
     <div className={styles.innerContainer}>
       <CommentCountButton tx={tx} />
       <LikeCountButton tx={tx} />
+    </div>
+  );
+}
+
+function LikeAndOptions({ tx }) {
+  return (
+    <div className={styles.innerContainer}>
+      <LikeCountButton tx={tx} />
+      <OptionsButton />
     </div>
   );
 }
@@ -85,13 +98,9 @@ function Username({ user, theme = "black" }) {
   );
 }
 
-function Container({ children }) {
-  return <div className={styles.headerContainer}>{children}</div>;
-}
-
-export function PostHeader({ tx, user }) {
+export function FeedPostHeader({ tx, user }) {
   return (
-    <Container>
+    <div className={styles.headerContainer}>
       <div className={styles.innerContainer}>
         <Avatar user={user} />
         <Username user={user} />
@@ -105,13 +114,13 @@ export function PostHeader({ tx, user }) {
         <VerticalBreak />
         <ReplyAndLike tx={tx} />
       </div>
-    </Container>
+    </div>
   );
 }
 
-export function LikeHeader({ tx, user }) {
+export function FeedLikeHeader({ tx, user }) {
   return (
-    <Container>
+    <div className={styles.headerContainer}>
       <div className={styles.innerContainer}>
         <Avatar user={user} />
         <Username user={user} />
@@ -121,12 +130,12 @@ export function LikeHeader({ tx, user }) {
       <div className={styles.innerContainer}>
         <DateAndHash tx={tx} />
       </div>
-    </Container>
+    </div>
   );
 }
-export function CommentHeader({ tx, user }) {
+export function FeedCommentHeader({ tx, user }) {
   return (
-    <Container>
+    <div className={styles.headerContainer}>
       <div className={styles.innerContainer}>
         <Avatar user={user} />
         <Username user={user} />
@@ -138,12 +147,12 @@ export function CommentHeader({ tx, user }) {
         <VerticalBreak />
         <ReplyAndLike tx={tx} />
       </div>
-    </Container>
+    </div>
   );
 }
-export function FollowHeader({ tx, user }) {
+export function FeedFollowHeader({ tx, user }) {
   return (
-    <Container>
+    <div className={styles.headerContainer}>
       <div className={styles.innerContainer}>
         <Avatar user={user} />
         <Username user={user} />
@@ -153,6 +162,27 @@ export function FollowHeader({ tx, user }) {
       <div className={styles.innerContainer}>
         <DateAndHash tx={tx} />
       </div>
-    </Container>
+    </div>
   );
 }
+
+export function PostPageHeader({ tx, user }) {
+  return (
+    <div
+      className={classnames(styles.headerContainer, styles.grayHeaderContainer)}
+    >
+      <div className={styles.innerContainer}>
+        <Avatar user={user} />
+        <Username user={user} />
+        <div>Original Post</div>
+      </div>
+      <div className={styles.innerContainer}>
+        <DateAndHash tx={tx} />
+        <VerticalBreak />
+        <LikeAndOptions tx={tx} />
+      </div>
+    </div>
+  );
+}
+
+export function PostPageCommentHeader({ tx, user }) {}

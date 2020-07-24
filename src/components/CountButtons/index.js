@@ -3,9 +3,7 @@ import React, { useContext, useState } from "react";
 import { UserContext, APP_NAME } from "../../util";
 import { PostButtonWrapper } from "../PostButton";
 
-import { CommentIcon, LikeIcon, ActiveLikeIcon } from "../Icons";
-import likeIcon from "./like-icon.png";
-import activeLikeIcon from "./active-like-icon.png";
+import { CommentIcon, LikeIcon, ActiveLikeIcon, OptionsIcon } from "../Icons";
 
 import styles from "./index.module.css";
 
@@ -26,11 +24,21 @@ function generateLikeTags(tx, user) {
   };
 }
 
+export function OptionsButton({ tx }) {
+  return (
+    <div>
+      <div className={styles.buttonContainer}>
+        <OptionsIcon />
+      </div>
+    </div>
+  );
+}
+
 export function CommentCountButton({ tx }) {
   const { comments, commentsCount: txCommentCount } = tx;
   const commentCount = (comments && comments.length) || txCommentCount || 0;
   return (
-    <div className={styles.countButtonContainer}>
+    <div className={styles.buttonContainer}>
       <CommentIcon />
       <div className={styles.counter}>{commentCount}</div>
     </div>
@@ -60,7 +68,7 @@ export function LikeCountButton({ tx, onSave = () => {} }) {
 
   return (
     <PostButtonWrapper data="like" tags={tags} onSave={internalOnSave}>
-      <div className={styles.countButtonContainer}>
+      <div className={styles.buttonContainer}>
         {didUserLike ? <ActiveLikeIcon /> : <LikeIcon />}
 
         <div className={styles.counter}>{likesCount}</div>

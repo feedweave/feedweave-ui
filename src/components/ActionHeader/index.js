@@ -192,24 +192,6 @@ export function NewPostFeedAction({ tx, user }) {
   );
 }
 
-export function PostDetailHeader({ tx, user }) {
-  const main = (
-    <div className={styles.headerMainContainer}>
-      <div className={styles.headerMainLeft}>
-        <UserDetails user={user} />
-        <div>Original Post</div>
-      </div>
-      <div className={styles.headerMainRight}>
-        <TransactionMetadata tx={tx} />
-      </div>
-    </div>
-  );
-
-  const controls = <LikeAndOptionsControls tx={tx} />;
-
-  return <ActionHeaderTemplate main={main} controls={controls} />;
-}
-
 export function CommentActionHeader({
   tx,
   user,

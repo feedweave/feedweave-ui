@@ -6,11 +6,11 @@ import styles from "./index.module.css";
 import PostSnippet from "../PostSnippet";
 import ReplyButton from "../ReplyButton";
 import {
-  PostHeader,
-  LikeHeader,
-  CommentHeader,
-  FollowHeader,
-} from "../FeedHeaders";
+  FeedPostHeader,
+  FeedLikeHeader,
+  FeedCommentHeader,
+  FeedFollowHeader,
+} from "../TransactionHeaders";
 
 function HeaderWithBody({ Header, tx, user }) {
   const handleSnippetClick = (e) => {
@@ -37,13 +37,13 @@ function FeedItem({ tx, user }) {
 
   switch (appName) {
     case "transaction-comment":
-      return <HeaderWithBody Header={CommentHeader} tx={tx} user={user} />;
+      return <HeaderWithBody Header={FeedCommentHeader} tx={tx} user={user} />;
     case "transaction-like":
-      return <LikeHeader tx={tx} user={user} />;
+      return <FeedLikeHeader tx={tx} user={user} />;
     case "social-graph":
-      return <FollowHeader tx={tx} user={user} />;
+      return <FeedFollowHeader tx={tx} user={user} />;
     default:
-      return <HeaderWithBody Header={PostHeader} tx={tx} user={user} />;
+      return <HeaderWithBody Header={FeedPostHeader} tx={tx} user={user} />;
   }
 }
 

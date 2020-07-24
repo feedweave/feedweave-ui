@@ -5,7 +5,7 @@ import PostMetaTags from "../../components/PostMetaTags";
 import { loadPost, loadComments } from "../../util";
 import Comments from "../../components/Comments";
 import PostBody from "../../components/PostBody";
-import { PostDetailHeader } from "../../components/ActionHeader";
+import { PostPageHeader } from "../../components/TransactionHeaders";
 
 import styles from "./index.module.css";
 import ReplyButtonWithComposer from "../../components/ReplyButtonWithComposer";
@@ -46,7 +46,7 @@ function Post({ txId }) {
       <PostMetaTags post={post} />
       <div className={styles.header}>
         <div className={styles.headerTop}></div>
-        <PostDetailHeader tx={post} user={user} />
+        <PostPageHeader tx={post} user={user} />
       </div>
       <div className={styles.body}>
         <PostBody content={post.content} />
