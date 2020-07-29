@@ -185,4 +185,20 @@ export function PostPageHeader({ tx, user }) {
   );
 }
 
-export function PostPageCommentHeader({ tx, user }) {}
+export function PostPageCommentHeader({ tx, user }) {
+  return (
+    <div className={styles.headerContainer}>
+      <div className={styles.innerContainer}>
+        <Avatar user={user} />
+        <Username user={user} />
+        <CommentIcon />
+        <ActionDescription tx={tx} />
+      </div>
+      <div className={styles.innerContainer}>
+        <DateAndHash tx={tx} />
+        <VerticalBreak />
+        <LikeAndOptions tx={tx} />
+      </div>
+    </div>
+  );
+}

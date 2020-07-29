@@ -1,62 +1,69 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 
-import SaveTransactionWithConfirmationButton from "../SaveTransactionWithConfirmationButton";
+import Button from "../Button";
+import { PostButtonWrapper } from "../PostButton";
+import { UserContext } from "../../util";
 
 import {
-  UserContext,
-  getUserInfo,
   SOCIAL_GRAPH_APP_NAME,
   SOCIAL_GRAPH_APP_VERSION,
-  APP_NAME
+  APP_NAME,
 } from "../../util";
 
-const generateTags = action => {
+const generateTags = (action) => {
   return {
     "App-Name": SOCIAL_GRAPH_APP_NAME,
     "App-Version": SOCIAL_GRAPH_APP_VERSION,
     Action: action,
-    "App-Filter": APP_NAME
+    "App-Filter": APP_NAME,
   };
 };
 
-class FollowButton extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onSave = this.onSave.bind(this);
+export function FollowButton({ user: userToFollow, onSave = () => {} }) {
+  const { user: loggedInUser, reloadUser } = useContext(UserContext);
+  const loggedInUserInfo = (loggedInUser && loggedInUser.userInfo) || {};
+  const followingIds = loggedInUserInfo.followingIds || [];
+  const [isFollowing, setIsFollowing] = useState(
+    followingIds.indexOf(userToFollow.id) > -1
+  );
+  if (userToFollow.id === loggedInUserInfo.id) {
+    return null;
   }
-
-  static contextType = UserContext;
-
-  async onSave() {
-    const { user, handleUser } = this.context;
-    const updatedUserInfo = await getUserInfo(user.address).then(res =>
-      res.json()
-    );
-    handleUser({ ...user, userInfo: updatedUserInfo.user });
+  if (!loggedInUser) {
+    return <Button theme="greenFilled">Follow</Button>;
   }
+  const action = isFollowing ? "unfollow" : "follow";
+  const tags = generateTags(action);
 
-  render() {
-    const { walletId: followAddress } = this.props;
-    const { user } = this.context;
-    const {
-      userInfo: { followingIds }
-    } = user;
+  const internalOnSave = async () => {
+    if (action === "follow") {
+      setIsFollowing(true);
+    } else {
+      setIsFollowing(false);
+    }
+    reloadUser();
+    onSave();
+  };
 
-    const isFollowing = followingIds.indexOf(followAddress) > -1;
-
-    const action = isFollowing ? "unfollow" : "follow";
-
+  if (isFollowing) {
     return (
-      <SaveTransactionWithConfirmationButton
-        data={followAddress}
-        tags={generateTags(action)}
-        user={user}
-        onSave={this.onSave}
-        buttonText={action.charAt(0).toUpperCase() + action.slice(1)}
-        color="primary"
-        size="sm"
-      />
+      <PostButtonWrapper
+        data={userToFollow.id}
+        tags={tags}
+        onSave={internalOnSave}
+      >
+        <Button theme="grayFilled">Following</Button>
+      </PostButtonWrapper>
+    );
+  } else {
+    return (
+      <PostButtonWrapper
+        data={userToFollow.id}
+        tags={tags}
+        onSave={internalOnSave}
+      >
+        <Button theme="greenFilled">Follow</Button>
+      </PostButtonWrapper>
     );
   }
 }

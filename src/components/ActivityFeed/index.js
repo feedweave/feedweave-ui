@@ -3,7 +3,7 @@ import { navigate } from "@reach/router";
 
 import styles from "./index.module.css";
 
-import PostSnippet from "../PostSnippet";
+import { PostSnippet } from "../PostBody";
 import ReplyButton from "../ReplyButton";
 import {
   FeedPostHeader,

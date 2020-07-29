@@ -2,7 +2,7 @@ import React from "react";
 import { navigate } from "@reach/router";
 
 import { API_HOST, APP_NAME, UserContext } from "../../util";
-import PostFeed from "../../components/PostFeed";
+import ActivityFeed from "../../components/ActivityFeed";
 import PostsToggle from "../../components/PostsToggle";
 
 import styles from "../Home/index.module.css";
@@ -46,7 +46,7 @@ class Following extends React.Component {
       return "You're not following anyone yet!";
     }
 
-    return <PostFeed feed={feed} />;
+    return <ActivityFeed feed={feed} />;
   }
 
   render() {

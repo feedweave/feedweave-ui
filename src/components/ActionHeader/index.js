@@ -9,7 +9,7 @@ import { LikeCountButton } from "../CountButtons";
 import newPostIcon from "./new-post-icon.png";
 import optionsIcon from "./post-options.png";
 import replyIcon from "./reply-icon.svg";
-import likeIcon from "../LikeCountButton/like-icon.png";
+import likeIcon from "../Icons/like.svg";
 
 import styles from "./index.module.css";
 

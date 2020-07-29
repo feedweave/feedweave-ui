@@ -8,6 +8,9 @@ import { CommentIcon, LikeIcon, ActiveLikeIcon, OptionsIcon } from "../Icons";
 import styles from "./index.module.css";
 
 function generateLikeTags(tx, user) {
+  if (!user) {
+    return {};
+  }
   const likes = tx.likes || [];
   const hasUserLiked = !!likes.find(
     (like) => like.ownerAddress === user.address

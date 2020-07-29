@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 
-import { API_HOST, APP_NAME } from "../../util";
-import PostFeed from "../../components/PostFeed";
-import FollowButton from "../../components/FollowButton";
+import { fetchUserFeed, fetchUser } from "../../util";
+import ActivityFeed from "../../components/ActivityFeed";
 import ProfileHeader from "../../components/ProfileHeader";
 import FollowList from "../../components/FollowList";
-
-import { UserContext } from "../../util";
 
 import styles from "./index.module.css";
 
@@ -17,106 +14,65 @@ const Index = ({ feed }) => {
   } else {
     return (
       <div className={styles.indexContainer}>
-        <PostFeed feed={feed} />;
+        <ActivityFeed feed={feed} />
       </div>
     );
   }
 };
 
-class User extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      user: {},
-      relatedUsers: [],
-      feed: [],
-    };
+function User({ address }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState({});
+  const [relatedUsers, setRelatedUsers] = useState([]);
+  const [feed, setFeed] = useState([]);
 
-    this.loadData = this.loadData.bind(this);
-  }
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
 
-  static contextType = UserContext;
+      const [feed, { user, relatedUsers }] = await Promise.all([
+        fetchUserFeed(address),
+        fetchUser(address),
+      ]);
 
-  async componentDidMount() {
-    await this.loadData();
-  }
+      setFeed(feed);
+      setUser(user);
+      setRelatedUsers(relatedUsers);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.walletId !== prevProps.walletId) {
-      this.loadData();
-    }
-  }
-
-  async loadData() {
-    // TODO handle errors
-    this.setState({ isLoaded: false });
-    const { walletId } = this.props;
-    const feed = await fetch(
-      `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${walletId}`
-    ).then((res) => res.json());
-
-    const { user, relatedUsers } = await fetch(
-      `${API_HOST}/arweave-social/user/${walletId}`
-    ).then((res) => res.json());
-    this.setState({ isLoaded: true, feed, user, relatedUsers });
-  }
-  renderFollowButton() {
-    const { walletId } = this.props;
-    const { user: loggedInUser } = this.context;
-    if (!loggedInUser) {
-      return;
+      setIsLoading(false);
     }
 
-    if (loggedInUser.address === walletId) {
-      return;
-    }
+    fetchData();
+  }, [address]);
 
-    return (
-      <div className={styles.followButton}>
-        <FollowButton walletId={walletId} />
-      </div>
-    );
-  }
+  const reloadUser = async () => {
+    const { user, relatedUsers } = await fetchUser(address);
+    setUser(user);
+    setRelatedUsers(relatedUsers);
+  };
 
-  render() {
-    const { walletId } = this.props;
-    const { user, feed, isLoaded, relatedUsers } = this.state;
-    const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
-
-    const username = arweaveId ? `@${arweaveId}` : walletId;
-
-    const element = isLoaded ? (
-      <div className={styles.container}>
-        <ProfileHeader
-          username={username}
-          user={user}
-          walletAddress={walletId}
-          twitterHandle={twitterId}
-          postsCount={postCount}
-          followersCount={followerIds.length}
-          followingCount={followingIds.length}
+  return isLoading ? (
+    "Loading..."
+  ) : (
+    <div className={styles.container}>
+      <ProfileHeader user={user} reloadUser={reloadUser} />
+      <Router primary={false}>
+        <Index path="/" feed={feed} />
+        <FollowList
+          path="/following"
+          displayIds={user.followingIds}
+          allUsers={relatedUsers}
+          reloadUser={reloadUser}
         />
-        <Router primary={false}>
-          <Index path="/" feed={feed} />
-          <FollowList
-            path="/following"
-            displayIds={user.followingIds}
-            allUsers={relatedUsers}
-          />
-          <FollowList
-            path="/followers"
-            displayIds={user.followerIds}
-            allUsers={relatedUsers}
-          />
-        </Router>
-      </div>
-    ) : (
-      "Loading..."
-    );
-    return element;
-  }
+        <FollowList
+          path="/followers"
+          displayIds={user.followerIds}
+          allUsers={relatedUsers}
+          reloadUser={reloadUser}
+        />
+      </Router>
+    </div>
+  );
 }
 
 export default User;

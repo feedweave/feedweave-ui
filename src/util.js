@@ -43,9 +43,10 @@ export const publishTransaction = async (tx) => {
   return tx;
 };
 
-export const getUserInfo = async (address) => {
-  const info = await fetch(`${API_HOST}/arweave-social/user/${address}`);
-  return info;
+export const fetchUser = async (address) => {
+  const response = await fetch(`${API_HOST}/arweave-social/user/${address}`);
+  const data = await response.json();
+  return data;
 };
 
 export const UserContext = React.createContext({
@@ -92,6 +93,14 @@ export const fetchActivityFeed = async (cursor) => {
   const json = await res.json();
 
   return json;
+};
+
+export const fetchUserFeed = async (address) => {
+  const response = await fetch(
+    `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${address}`
+  );
+  const data = await response.json();
+  return data;
 };
 
 TimeAgo.addLocale(en);

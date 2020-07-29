@@ -12,9 +12,19 @@
   margin-bottom: 16px;
 }
 
+.iconAndName {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .username {
   margin-left: 13px;
   font-weight: 500;
   font-size: 15px;
   color: #000000;
+}
+
+.iconAndName:hover .username {
+  opacity: 50%;
 }

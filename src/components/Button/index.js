@@ -20,6 +20,8 @@ export default function Button({
       onClick={handleClick}
       className={classnames(styles.container, {
         [styles.green]: theme === "green",
+        [styles.greenFilled]: theme === "greenFilled",
+        [styles.grayFilled]: theme === "grayFilled",
         [styles.gray]: theme === "gray",
         [styles.secondary]: theme === "secondary",
         [styles.loading]: isLoading,

@@ -58,19 +58,6 @@
   margin-left: 30px;
 }
 
-.followButton {
-  width: 96px;
-  height: 30px;
-  background: #57943a;
-  border-radius: 2px;
-  text-decoration-line: underline;
-  color: #fafafa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
 .navigation {
   display: flex;
   flex-direction: row;

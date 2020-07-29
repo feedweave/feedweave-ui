@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 
 import UserIcon from "../UserIcon";
+import FollowButton from "../FollowButton";
 import styles from "./index.module.css";
 
-export function FollowButton() {
-  return <div className={styles.followButton}>Follow</div>;
-}
-
-export default function ProfileHeader({
-  username,
-  user,
-  walletAddress,
-  twitterHandle,
-  postsCount,
-  followersCount,
-  followingCount,
-}) {
+export default function ProfileHeader({ user, reloadUser }) {
+  const {
+    postCount,
+    followerIds,
+    followingIds,
+    arweaveId,
+    twitterId,
+    id,
+  } = user;
+  const username = arweaveId ? `@${arweaveId}` : id;
   return (
     <div className={styles.container}>
       <div className={styles.upperRectangle}></div>
@@ -29,37 +27,27 @@ export default function ProfileHeader({
           <div className={styles.addressTwitterFollow}>
             <div className={styles.addressTwitter}>
               <div className={styles.address}>
-                <a
-                  href={`https://explorer.arweave.co/address/${walletAddress}`}
-                >
-                  {walletAddress}
-                </a>
+                <a href={`https://explorer.arweave.co/address/${id}`}>{id}</a>
               </div>
-              {twitterHandle ? (
+              {twitterId ? (
                 <div className={styles.twitter}>
-                  <a href={`https://twitter.com/${twitterHandle}`}>Twitter</a>
+                  <a href={`https://twitter.com/${twitterId}`}>Twitter</a>
                 </div>
               ) : null}
             </div>
-            <FollowButton />
+            <FollowButton user={user} onSave={reloadUser} />
           </div>
         </div>
       </div>
       <div className={styles.navigation}>
-        <Link className={styles.navigationButton} to={`/user/${walletAddress}`}>
-          {postsCount} Posts
+        <Link className={styles.navigationButton} to={`/user/${id}`}>
+          {postCount} Posts
         </Link>
-        <Link
-          className={styles.navigationButton}
-          to={`/user/${walletAddress}/followers`}
-        >
-          {followersCount} Followers
+        <Link className={styles.navigationButton} to={`/user/${id}/followers`}>
+          {followerIds.length} Followers
         </Link>
-        <Link
-          className={styles.navigationButton}
-          to={`/user/${walletAddress}/following`}
-        >
-          {followingCount} Following
+        <Link className={styles.navigationButton} to={`/user/${id}/following`}>
+          {followingIds.length} Following
         </Link>
       </div>
     </div>

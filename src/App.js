@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Router } from "@reach/router";
 
 import "./App.css";
@@ -10,41 +10,37 @@ import NewPost from "./pages/NewPost";
 import User from "./pages/User";
 import Following from "./pages/Following";
 
-import { UserContext } from "./util";
+import { UserContext, fetchUser } from "./util";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleUser = this.handleUser.bind(this);
+function NewApp() {
+  const cachedUser = JSON.parse(window.localStorage.getItem("user"));
+  const [user, setUser] = useState(cachedUser);
 
-    const cachedUser = JSON.parse(window.localStorage.getItem("user"));
-    this.state = {
-      user: cachedUser,
-      handleUser: this.handleUser,
-    };
-  }
+  const handleUser = (updatedUser) => {
+    window.localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
 
-  handleUser(user) {
-    window.localStorage.setItem("user", JSON.stringify(user));
-    this.setState({ user });
-  }
+  const reloadUser = async () => {
+    if (cachedUser) {
+      const updatedUserInfo = await fetchUser(cachedUser.address);
+      handleUser({ ...cachedUser, userInfo: updatedUserInfo.user });
+    }
+  };
 
-  render() {
-    return (
-      <UserContext.Provider value={this.state}>
-        <Router style={{ height: "100%" }} primary={false}>
-          <Main path="/">
-            <Home path="/" />
-            <Following path="/following" />
-            <Post path="/post/:txId" />
-            <NewPost path="/new-post" />
-            <User path="/user/:walletId/*" />
-          </Main>
-        </Router>
-      </UserContext.Provider>
-    );
-  }
+  return (
+    <UserContext.Provider value={{ user, handleUser, reloadUser }}>
+      <Router style={{ height: "100%" }} primary={false}>
+        <Main path="/">
+          <Home path="/" />
+          <Following path="/following" />
+          <Post path="/post/:txId" />
+          <NewPost path="/new-post" />
+          <User path="/user/:address/*" />
+        </Main>
+      </Router>
+    </UserContext.Provider>
+  );
 }
 
-export default App;
+export default NewApp;

@@ -2,7 +2,7 @@ import React from "react";
 
 import PostBody from "../PostBody";
 import ReplyButtonWithComposer from "../ReplyButtonWithComposer";
-import { CommentActionHeader } from "../ActionHeader";
+import { PostPageCommentHeader } from "../TransactionHeaders";
 
 import styles from "./index.module.css";
 
@@ -12,13 +12,7 @@ function Comment({ comment, users, parentUser, onSave, parentTx, parentType }) {
 
   return (
     <div className={styles.actionContainer}>
-      <CommentActionHeader
-        tx={comment}
-        user={user}
-        parentUser={parentUser}
-        parentTx={parentTx}
-        parentType={parentType}
-      />
+      <PostPageCommentHeader tx={comment} user={user} />
       <div className={styles.bodyContainer}>
         <PostBody content={comment.content} />
       </div>

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 
 import { navigate } from "@reach/router";
-import { arweave, getUserInfo } from "../../util";
+import { arweave, fetchUser } from "../../util";
 
 import Button from "../Button";
 import { UserContext } from "../../util";
@@ -43,9 +43,7 @@ function KeyUploader({ handleUser }) {
       try {
         const wallet = JSON.parse(reader.result);
         const address = await arweave.wallets.jwkToAddress(wallet);
-        const { user: userInfo } = await getUserInfo(address).then((res) =>
-          res.json()
-        );
+        const { user: userInfo } = await fetchUser(address);
         const user = { wallet, address, userInfo };
         handleUser(user);
         navigate("/");

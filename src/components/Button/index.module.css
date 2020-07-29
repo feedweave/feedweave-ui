@@ -28,3 +28,29 @@
 .loading {
   cursor: default;
 }
+
+.greenFilled {
+  width: 96px;
+  height: 30px;
+  background: #57943a;
+  border-radius: 2px;
+  text-decoration-line: underline;
+  color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.grayFilled {
+  width: 96px;
+  height: 30px;
+  background: #e1e1e1;
+  border-radius: 2px;
+  text-decoration-line: underline;
+  color: #8c8c8c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
