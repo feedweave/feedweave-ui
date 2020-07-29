@@ -13,16 +13,22 @@ export default function PostsToggle({ onClick }) {
   };
 
   return (
-    <div
-      className={classnames(styles.container, {
-        [styles.switchOn]: isPostsOnly,
-      })}
-      onClick={internalOnClick}
-    >
-      <div className={styles.toggleBackground}>
-        <div className={styles.toggleSwitch}></div>
+    <div className={styles.container} onClick={internalOnClick}>
+      <div
+        className={classnames(styles.toggleSwitch, {
+          [styles.switchOn]: isPostsOnly,
+        })}
+      >
+        Posts
       </div>
-      <div className={styles.postsText}>Posts Only</div>
+
+      <div
+        className={classnames(styles.toggleSwitch, {
+          [styles.switchOn]: !isPostsOnly,
+        })}
+      >
+        Activity
+      </div>
     </div>
   );
 }

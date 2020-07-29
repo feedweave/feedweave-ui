@@ -1,7 +1,9 @@
+.container {
+  margin: 16px 0 32px 0;
+}
 .header {
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
 }
 
 .headerTop {

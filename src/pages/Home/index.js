@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "reactstrap";
 
 import { fetchPostFeed, fetchActivityFeed } from "../../util";
 import ActivityFeed from "../../components/ActivityFeed";
 import PostsToggle from "../../components/PostsToggle";
+import Button from "../../components/Button";
 
 import styles from "./index.module.css";
 
-function LoadMoreButton({ onClick }) {
+function LoadMoreButton({ onClick, isLoading }) {
   return (
-    <Button className={styles.loadMoreButton} onClick={onClick}>
-      Load more posts
-    </Button>
+    <div className={styles.loadMoreButtonContainer}>
+      <Button onClick={onClick} isLoading={isLoading}>
+        Load more posts
+      </Button>
+    </div>
   );
 }
 
@@ -71,15 +73,15 @@ function Home() {
   return (
     <div className={styles.container}>
       <div>
-        <PostsToggle onClick={toggleFeedType} />
-        {isLoading ? (
-          "Loading..."
-        ) : (
-          <div>
-            <ActivityFeed feed={feed} />
-            {nextCursor ? <LoadMoreButton onClick={loadMorePosts} /> : null}
-          </div>
-        )}
+        <div className={styles.toggleContainer}>
+          <PostsToggle onClick={toggleFeedType} />
+        </div>
+        <div>
+          <ActivityFeed feed={feed} />
+          {nextCursor ? (
+            <LoadMoreButton onClick={loadMorePosts} isLoading={isLoading} />
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,22 @@ import quoteIcon from "./quote-icon.svg";
 
 import styles from "./index.module.css";
 
-export function NewPostHeader() {
+function countWords(s) {
+  s = s.replace(/(^\s*)|(\s*$)/gi, ""); //exclude  start and end white-space
+  s = s.replace(/[ ]{2,}/gi, " "); //2 or more space to 1
+  s = s.replace(/\n /, "\n"); // exclude newline with a start spacing
+  return s.split(" ").filter(function (str) {
+    return str != "";
+  }).length;
+  //return s.split(' ').filter(String).length; - this can also be used
+}
+
+export function NewPostHeader({ text, bytePrice }) {
+  const characterCount = text.length;
+  const wordCount = countWords(text);
+  const byteCount = new TextEncoder().encode(text).length;
+  const arCount = Math.round(byteCount * 1000 * bytePrice * 100) / 100;
+
   return (
     <div className={styles.newPostHeaderContainer}>
       <div className={styles.newPostHeaderLeft}>
@@ -24,12 +39,14 @@ export function NewPostHeader() {
       </div>
       <div className={styles.newPostHeaderRight}>
         <div className={styles.dataGroup}>
-          <div className={styles.characterCount}>1,339 characters</div>
-          <div className={styles.wordCount}>23 words</div>
+          <div className={styles.characterCount}>
+            {characterCount} characters
+          </div>
+          <div className={styles.wordCount}>{wordCount} words</div>
         </div>
         <div className={styles.dataGroup}>
-          <div className={styles.byteCount}>0kb</div>
-          <div className={styles.arCount}>0.000000 AR</div>
+          <div className={styles.byteCount}>{byteCount / 1000}kb</div>
+          <div className={styles.arCount}>~{arCount} AR</div>
         </div>
         <div className={styles.dataGroup}>
           <div className={styles.date}>May 8, 2020</div>

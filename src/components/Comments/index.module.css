@@ -16,17 +16,6 @@
   margin-left: 40px;
 }
 
-.noComments {
-  width: 100%;
-  border: 1px solid #d7d7d7;
-  text-align: center;
-  padding: 65px 0;
-  line-height: 17px;
-  font-family: "Roboto Mono";
-  color: #68717a;
-  font-size: 13px;
-}
-
 .noCommentsBold {
   font-weight: bold;
   margin-bottom: 17px;

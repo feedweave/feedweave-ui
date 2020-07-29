@@ -5,6 +5,7 @@ import PostMetaTags from "../../components/PostMetaTags";
 import { loadPost, loadComments } from "../../util";
 import Comments from "../../components/Comments";
 import PostBody from "../../components/PostBody";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { PostPageHeader } from "../../components/TransactionHeaders";
 
 import styles from "./index.module.css";
@@ -40,9 +41,9 @@ function Post({ txId }) {
   };
 
   return isLoading ? (
-    "Loading..."
+    <LoadingSpinner />
   ) : (
-    <div>
+    <div className={styles.container}>
       <PostMetaTags post={post} />
       <div className={styles.header}>
         <div className={styles.headerTop}></div>

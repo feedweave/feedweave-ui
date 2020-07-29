@@ -96,9 +96,13 @@ export const fetchActivityFeed = async (cursor) => {
 };
 
 export const fetchUserFeed = async (address) => {
-  const response = await fetch(
-    `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${address}`
-  );
+  const response = await fetch(`${API_HOST}/post-feed?address=${address}`);
+  const data = await response.json();
+  return data;
+};
+
+export const fetchFollowingFeed = async (address) => {
+  const response = await fetch(`${API_HOST}/post-feed?followed-by=${address}`);
   const data = await response.json();
   return data;
 };
@@ -136,4 +140,13 @@ export function getUserName(user) {
 
 export function truncateHash(hash) {
   return hash.substr(0, 9) + "...";
+}
+
+export async function fetchBytePrice() {
+  const response = await fetch("https://arweave.net/price/1");
+  const price = await response.text();
+  const parsed = parseInt(price, 10);
+  const inAr = winstonToAr(parsed);
+  console.log(inAr, "inAr");
+  return parseFloat(inAr.substring(0, inAr.length - 3));
 }

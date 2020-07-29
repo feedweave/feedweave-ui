@@ -1,3 +1,7 @@
 .container {
   margin: 12px 0;
 }
+
+.container img {
+  max-width: 100%;
+}

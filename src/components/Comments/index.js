@@ -2,6 +2,7 @@ import React from "react";
 
 import PostBody from "../PostBody";
 import ReplyButtonWithComposer from "../ReplyButtonWithComposer";
+import EmptyState from "../EmptyState";
 import { PostPageCommentHeader } from "../TransactionHeaders";
 
 import styles from "./index.module.css";
@@ -63,12 +64,12 @@ export default function Comments({
           />
         ))
       ) : (
-        <div className={styles.noComments}>
+        <EmptyState>
           <div className={styles.noCommentsBold}>
             There are no comments yet.
           </div>
           <div>Be the first to share your thoughts.</div>
-        </div>
+        </EmptyState>
       )}
     </div>
   );

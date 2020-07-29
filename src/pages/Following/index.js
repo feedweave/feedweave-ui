@@ -1,9 +1,10 @@
 import React from "react";
 import { navigate } from "@reach/router";
 
-import { API_HOST, APP_NAME, UserContext } from "../../util";
+import { UserContext, fetchFollowingFeed } from "../../util";
 import ActivityFeed from "../../components/ActivityFeed";
-import PostsToggle from "../../components/PostsToggle";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import EmptyState from "../../components/EmptyState";
 
 import styles from "../Home/index.module.css";
 
@@ -25,11 +26,8 @@ class Following extends React.Component {
     if (!user) {
       await navigate("/");
     } else {
-      const res = await fetch(
-        `${API_HOST}/transactions?app-name=${APP_NAME}&user-feed=${user.address}`
-      );
-      const json = await res.json();
-      this.setState({ isLoaded: true, feed: json });
+      const feed = await fetchFollowingFeed(user.address);
+      this.setState({ isLoaded: true, feed });
     }
   }
 
@@ -43,7 +41,12 @@ class Following extends React.Component {
     const { feed } = this.state;
 
     if (followingIds.length === 0) {
-      return "You're not following anyone yet!";
+      return (
+        <EmptyState>
+          <div>You're not following anyone yet.</div>
+          <div>Follow a few accounts to see posts appear here.</div>
+        </EmptyState>
+      );
     }
 
     return <ActivityFeed feed={feed} />;
@@ -53,14 +56,7 @@ class Following extends React.Component {
     const { isLoaded } = this.state;
     return (
       <div className={styles.container}>
-        {isLoaded ? (
-          <div>
-            <PostsToggle />
-            {this.renderFeed()}
-          </div>
-        ) : (
-          "Loading..."
-        )}
+        {isLoaded ? <div>{this.renderFeed()}</div> : <LoadingSpinner />}
       </div>
     );
   }

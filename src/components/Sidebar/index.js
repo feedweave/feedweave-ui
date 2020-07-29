@@ -37,7 +37,6 @@ class Sidebar extends React.Component {
               <span>FeedWeave</span>
             </div>
           </Link>
-          <span className={styles.subHeading}>Arweave publishing</span>
         </div>
         {user ? (
           <div className={styles.menu}>

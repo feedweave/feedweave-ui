@@ -1,7 +1,8 @@
 .container {
-  margin-top: 33px;
-  margin-bottom: 15px;
   font-family: "Roboto Mono", monospace;
+}
+
+.followersContainer {
   padding: 0 12px;
 }
 
@@ -10,6 +11,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 16px;
+  min-height: 30px;
 }
 
 .iconAndName {
