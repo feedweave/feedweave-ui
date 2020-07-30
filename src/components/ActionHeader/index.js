@@ -9,7 +9,6 @@ import { LikeCountButton } from "../CountButtons";
 import newPostIcon from "./new-post-icon.png";
 import optionsIcon from "./post-options.png";
 import replyIcon from "./reply-icon.svg";
-import likeIcon from "../Icons/like.svg";
 
 import styles from "./index.module.css";
 
@@ -79,20 +78,6 @@ function CommentSignifier({ tx, parentUser, parentType }) {
   return (
     <>
       <img className={styles.replyIcon} alt="reply-icon" src={replyIcon} />
-      <div className={styles.headerAction}>
-        <Link to={`/post/${parentTxId}`}>{text}</Link>
-      </div>
-    </>
-  );
-}
-
-function LikeSignifier({ tx }) {
-  const parentTxId = tx.parentTxId || "";
-  let text = truncateHash(parentTxId);
-
-  return (
-    <>
-      <img className={styles.likeIcon} alt="like-icon" src={likeIcon} />
       <div className={styles.headerAction}>
         <Link to={`/post/${parentTxId}`}>{text}</Link>
       </div>
