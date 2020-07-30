@@ -28,5 +28,5 @@
 }
 
 .iconAndName:hover .username {
-  opacity: 50%;
+  opacity: 0.5;
 }
