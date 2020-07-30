@@ -27,6 +27,8 @@ export function FollowIcon() {
   return <img alt="post-icon" src={followIcon} />;
 }
 
-export function OptionsIcon() {
-  return <img alt="options-icon" src={optionsIcon} />;
+export function OptionsIcon({ ref, onClick = () => {} }) {
+  return (
+    <img ref={ref} alt="options-icon" src={optionsIcon} onClick={onClick} />
+  );
 }

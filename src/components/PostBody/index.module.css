@@ -1,7 +1,12 @@
 .container {
   margin: 12px 0;
+  font-family: "Roboto";
 }
 
 .container img {
   max-width: 100%;
+}
+
+.container > p:empty {
+  display: none;
 }

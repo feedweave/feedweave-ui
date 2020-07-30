@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 
 import { UserContext, APP_NAME } from "../../util";
 import { PostButtonWrapper } from "../PostButton";
+import HeaderOptions from "../HeaderOptions";
 
 import { CommentIcon, LikeIcon, ActiveLikeIcon, OptionsIcon } from "../Icons";
 
@@ -28,10 +29,41 @@ function generateLikeTags(tx, user) {
 }
 
 export function OptionsButton({ tx }) {
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleClick = () => {
+    setShowOptions(true);
+  };
+
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef]);
+
   return (
     <div>
       <div className={styles.buttonContainer}>
-        <OptionsIcon />
+        <OptionsIcon onClick={handleClick} />
+        {showOptions ? (
+          <div ref={wrapperRef} className={styles.optionsContainer}>
+            <HeaderOptions />
+          </div>
+        ) : null}
       </div>
     </div>
   );

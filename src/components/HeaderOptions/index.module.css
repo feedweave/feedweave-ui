@@ -1,0 +1,17 @@
+.container {
+  border: 1px solid #68717a;
+  padding: 10px;
+  display: inline-flex;
+  flex-direction: column;
+}
+.container > * {
+  margin: 4px 0;
+}
+
+.container > *:first-child {
+  margin-top: 0;
+}
+
+.container > *:last-child {
+  margin-bottom: 0;
+}

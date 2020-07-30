@@ -129,8 +129,8 @@ h4 {
 .feedContainer h5,
 .feedContainer h6 {
   font-size: 15px;
-
   color: #646464;
+  font-weight: bold;
 }
 
 .bodyContainer {
@@ -145,7 +145,7 @@ h4 {
 .bodyContainer h5,
 .bodyContainer h6 {
   font-size: 15px;
-  color: #656565;
+  font-weight: bold;
 }
 
 .snippetContainer {

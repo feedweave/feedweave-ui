@@ -10,7 +10,7 @@ import { renderMarkdown } from "../../util";
 
 import styles from "./index.module.css";
 
-const characterLimit = 160;
+const characterLimit = 400;
 
 const shorten = (options) => (tree) => {
   let aggregateLength = 0;
