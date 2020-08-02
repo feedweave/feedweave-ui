@@ -7,20 +7,30 @@ import activeLikeIcon from "./like-active.svg";
 import followIcon from "./follow.svg";
 import optionsIcon from "./options.svg";
 
+import styles from "./index.module.css";
+
 export function PostIcon() {
   return <img alt="post-icon" src={postIcon} />;
 }
 
 export function CommentIcon() {
-  return <img alt="comment-icon" src={commentIcon} />;
+  return (
+    <img className={styles.iconStyle} alt="comment-icon" src={commentIcon} />
+  );
 }
 
 export function LikeIcon() {
-  return <img alt="like-icon" src={likeIcon} />;
+  return <img className={styles.iconStyle} alt="like-icon" src={likeIcon} />;
 }
 
 export function ActiveLikeIcon() {
-  return <img alt="active-like-icon" src={activeLikeIcon} />;
+  return (
+    <img
+      style={{ filter: "none" }}
+      alt="active-like-icon"
+      src={activeLikeIcon}
+    />
+  );
 }
 
 export function FollowIcon() {

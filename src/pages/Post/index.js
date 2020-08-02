@@ -11,12 +11,14 @@ import { PostPageHeader } from "../../components/TransactionHeaders";
 import styles from "./index.module.css";
 import ReplyButtonWithComposer from "../../components/ReplyButtonWithComposer";
 
-function Post({ txId }) {
+function Post({ txId, location }) {
   const [postData, setPostData] = useState({});
   const [commentsData, setCommentsData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { post, user } = postData;
+
+  const showReplyComposer = location.state.activateReply === txId;
 
   useEffect(() => {
     async function fetchData() {
@@ -52,7 +54,12 @@ function Post({ txId }) {
       <div className={styles.body}>
         <PostBody content={post.content} />
       </div>
-      <ReplyButtonWithComposer parentTx={post} onSave={reloadComments} />
+      <ReplyButtonWithComposer
+        parentTx={post}
+        onSave={reloadComments}
+        indentComposer={true}
+        initialShowComposer={showReplyComposer}
+      />
       <Comments
         parentTx={post}
         data={commentsData}

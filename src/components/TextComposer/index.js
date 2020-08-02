@@ -24,12 +24,28 @@ function countWords(s) {
   }).length;
 }
 
-export function NewPostHeader({ text, bytePrice }) {
+function TextCounters({ text, bytePrice }) {
   const characterCount = text.length;
   const wordCount = countWords(text);
   const byteCount = new TextEncoder().encode(text).length;
-  const arCount = Math.round(byteCount * 1000 * bytePrice * 100) / 100;
+  const arCount = Number(byteCount * bytePrice).toFixed(6);
+  return (
+    <div className={styles.textCounters}>
+      <div className={styles.dataGroup}>
+        <div className={styles.characterCount}>{characterCount} characters</div>
+        <div className={styles.wordCount}>{wordCount} words</div>
+      </div>
+      <div className={styles.dataGroup}>
+        <div className={styles.byteCount}>
+          ~{Number(byteCount / 1000).toFixed(2)} KB
+        </div>
+        <div className={styles.arCount}>~{arCount} AR</div>
+      </div>
+    </div>
+  );
+}
 
+export function NewPostHeader({ text, bytePrice }) {
   return (
     <div className={styles.newPostHeaderContainer}>
       <div className={styles.newPostHeaderLeft}>
@@ -37,16 +53,7 @@ export function NewPostHeader({ text, bytePrice }) {
         <div className={styles.newPostText}>New Post</div>
       </div>
       <div className={styles.newPostHeaderRight}>
-        <div className={styles.dataGroup}>
-          <div className={styles.characterCount}>
-            {characterCount} characters
-          </div>
-          <div className={styles.wordCount}>{wordCount} words</div>
-        </div>
-        <div className={styles.dataGroup}>
-          <div className={styles.byteCount}>{byteCount / 1000}kb</div>
-          <div className={styles.arCount}>~{arCount} AR</div>
-        </div>
+        <TextCounters text={text} bytePrice={bytePrice} />
         <div className={styles.dataGroup}>
           <div className={styles.date}>May 8, 2020</div>
         </div>
@@ -55,7 +62,7 @@ export function NewPostHeader({ text, bytePrice }) {
   );
 }
 
-export function NewCommentHeader({ parentId }) {
+export function NewCommentHeader({ parentId, text, bytePrice = 0 }) {
   return (
     <div className={styles.newPostHeaderContainer}>
       <div className={styles.newPostHeaderLeft}>
@@ -65,14 +72,7 @@ export function NewCommentHeader({ parentId }) {
         </div>
       </div>
       <div className={styles.newPostHeaderRight}>
-        <div className={styles.dataGroup}>
-          <div className={styles.characterCount}>1,339 characters</div>
-          <div className={styles.wordCount}>23 words</div>
-        </div>
-        <div className={styles.dataGroup}>
-          <div className={styles.byteCount}>0kb</div>
-          <div className={styles.arCount}>0.000000 AR</div>
-        </div>
+        <TextCounters text={text} bytePrice={bytePrice} />
       </div>
     </div>
   );

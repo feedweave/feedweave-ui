@@ -46,13 +46,18 @@
   text-decoration-line: underline;
 }
 
-.link {
+.link,
+.boldLink {
   color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.link:hover,
+.boldLink:hover {
+  color: #505050;
   text-decoration: underline;
 }
 
 .boldLink {
   font-weight: 500;
-  color: #8c8c8c;
-  text-decoration: underline;
 }

@@ -75,6 +75,10 @@
   justify-content: center;
   align-items: center;
 }
+.navigationButton:hover {
+  background: rgba(104, 113, 122, 0.2);
+}
+
 .navigationButton[aria-current="page"] {
   background: #68717a;
   color: #fafafa;

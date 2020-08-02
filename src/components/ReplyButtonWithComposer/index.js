@@ -10,8 +10,9 @@ export default function ReplyButtonWithComposer({
   parentTx,
   indentComposer = false,
   onSave,
+  initialShowComposer = false,
 }) {
-  const [showComposer, setShowComposer] = useState(false);
+  const [showComposer, setShowComposer] = useState(initialShowComposer);
 
   const onClick = () => {
     setShowComposer(true);

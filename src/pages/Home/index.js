@@ -57,12 +57,11 @@ function Home() {
     setCurrentCursor(nextCursor);
   }
 
-  function toggleFeedType() {
-    if (feedType === "posts") {
-      setFeedType("all");
-    } else {
-      setFeedType("posts");
+  function typeChanged(type) {
+    if (feedType === type) {
+      return;
     }
+    setFeedType(type);
     setFeedData({
       feed: { users: [], transactions: [] },
       nextCursor: null,
@@ -74,7 +73,7 @@ function Home() {
     <div className={styles.container}>
       <div>
         <div className={styles.toggleContainer}>
-          <PostsToggle onClick={toggleFeedType} />
+          <PostsToggle onToggle={typeChanged} />
         </div>
         <div>
           <ActivityFeed feed={feed} />

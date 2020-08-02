@@ -4,6 +4,16 @@
   flex-direction: row;
   align-items: center;
   cursor: pointer;
+  color: #8c8c8c;
+}
+
+.buttonContainer:hover img {
+  filter: invert(31%) sepia(1%) saturate(0%) hue-rotate(350deg) brightness(95%)
+    contrast(91%);
+}
+
+.buttonContainer:hover {
+  color: #505050;
 }
 
 .counter {

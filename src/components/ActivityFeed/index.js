@@ -1,5 +1,5 @@
 import React from "react";
-import { navigate } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 
 import styles from "./index.module.css";
 
@@ -26,7 +26,9 @@ function HeaderWithBody({ Header, tx, user }) {
         <div className={styles.snippetContainer} onClick={handleSnippetClick}>
           <PostSnippet post={tx.content} />
         </div>
-        <ReplyButton />
+        <Link to={`/post/${tx.id}`} state={{ activateReply: tx.id }}>
+          <ReplyButton />
+        </Link>
       </div>
     </div>
   );

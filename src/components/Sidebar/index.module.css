@@ -70,12 +70,13 @@
   visibility: hidden;
 }
 
+.menuItem:hover a::before {
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.1);
+}
 .menuItem a[aria-current="page"]::before {
   visibility: visible;
-}
-
-.logOut {
-  margin-left: 19px;
+  background-color: black;
 }
 
 .loginContainer {

@@ -147,6 +147,5 @@ export async function fetchBytePrice() {
   const price = await response.text();
   const parsed = parseInt(price, 10);
   const inAr = winstonToAr(parsed);
-  console.log(inAr, "inAr");
   return parseFloat(inAr.substring(0, inAr.length - 3));
 }

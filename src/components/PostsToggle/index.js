@@ -4,17 +4,23 @@ import classnames from "classnames";
 
 import styles from "./index.module.css";
 
-export default function PostsToggle({ onClick }) {
+export default function PostsToggle({ onToggle }) {
   const [isPostsOnly, setIsPostsOnly] = useState(true);
 
-  const internalOnClick = () => {
-    setIsPostsOnly(!isPostsOnly);
-    onClick();
+  const clickPosts = () => {
+    setIsPostsOnly(true);
+    onToggle("posts");
+  };
+
+  const clickActivity = () => {
+    setIsPostsOnly(false);
+    onToggle("activity");
   };
 
   return (
-    <div className={styles.container} onClick={internalOnClick}>
+    <div className={styles.container}>
       <div
+        onClick={clickPosts}
         className={classnames(styles.toggleSwitch, {
           [styles.switchOn]: isPostsOnly,
         })}
@@ -23,6 +29,7 @@ export default function PostsToggle({ onClick }) {
       </div>
 
       <div
+        onClick={clickActivity}
         className={classnames(styles.toggleSwitch, {
           [styles.switchOn]: !isPostsOnly,
         })}

@@ -14,3 +14,10 @@
 .content > div {
   height: 100%;
 }
+
+@media all and (max-width: 1350px) {
+  .childrenContainer {
+    justify-content: left;
+    padding-left: 290px;
+  }
+}

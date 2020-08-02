@@ -25,7 +25,7 @@ export default function CommentComposer({ parentTx, onSave, onCancel }) {
 
   return (
     <div className={styles.container}>
-      <NewCommentHeader parentId={parentTx.id} />
+      <NewCommentHeader text={comment} parentId={parentTx.id} />
       <div className={styles.editorModule}>
         <TextEditor
           defaultValue={comment}

@@ -56,8 +56,10 @@ class Sidebar extends React.Component {
                   </span>
                 </Link>
               </div>
-              <div className={styles.logOut} onClick={this.handleLogout}>
-                Log out
+              <div className={styles.menuItem}>
+                <a className={styles.logOut} onClick={this.handleLogout}>
+                  Log out
+                </a>
               </div>
             </div>
             <div className={styles.newPost}>

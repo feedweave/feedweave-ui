@@ -1,6 +1,7 @@
 .container {
   margin: 12px 0;
   font-family: "Roboto";
+  color: #505050;
 }
 
 .container img {
@@ -9,4 +10,13 @@
 
 .container > p:empty {
   display: none;
+}
+
+.container a {
+  color: #505050;
+  text-decoration: underline;
+}
+
+.container a:hover {
+  color: black;
 }

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 
+import { Link } from "@reach/router";
 import { UserContext, APP_NAME } from "../../util";
 import { PostButtonWrapper } from "../PostButton";
 import HeaderOptions from "../HeaderOptions";
@@ -70,13 +71,15 @@ export function OptionsButton({ tx }) {
 }
 
 export function CommentCountButton({ tx }) {
-  const { comments, commentsCount: txCommentCount } = tx;
+  const { id, comments, commentsCount: txCommentCount } = tx;
   const commentCount = (comments && comments.length) || txCommentCount || 0;
   return (
-    <div className={styles.buttonContainer}>
-      <CommentIcon />
-      <div className={styles.counter}>{commentCount}</div>
-    </div>
+    <Link to={`/post/${id}`} state={{ activateReply: id }}>
+      <div className={styles.buttonContainer}>
+        <CommentIcon />
+        <div className={styles.counter}>{commentCount}</div>
+      </div>
+    </Link>
   );
 }
 

@@ -56,3 +56,17 @@
 .editorControlsContainer .codeIcon {
   margin-top: 1px;
 }
+
+.textCounters {
+  display: flex;
+}
+
+.characterCount,
+.wordCount,
+.byteCount,
+.arCount,
+.newPostText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
