@@ -7,6 +7,9 @@ import en from "javascript-time-ago/locale/en";
 import unified from "unified";
 import parse from "remark-parse";
 import remark2react from "remark-react";
+import rehype from "rehype-parse";
+import rehype2remark from "rehype-remark";
+import stringify from "remark-stringify";
 
 const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
 const API_PORT = process.env.REACT_APP_API_PORT;
@@ -148,4 +151,15 @@ export async function fetchBytePrice() {
   const parsed = parseInt(price, 10);
   const inAr = winstonToAr(parsed);
   return parseFloat(inAr.substring(0, inAr.length - 3));
+}
+
+export function convertHTMLtoMarkdown(html) {
+  const markdown = unified()
+    .use(rehype)
+    .use(rehype2remark)
+    .use(stringify)
+    .processSync(html)
+    .toString();
+
+  return markdown;
 }

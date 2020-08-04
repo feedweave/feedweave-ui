@@ -2,14 +2,15 @@
   padding-top: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
 }
 
 .footerContainer {
-  border-top: 1px solid #dedede;
-  padding-top: 12px;
-  padding-bottom: 50px;
+  background: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footerContentContainer {
@@ -17,4 +18,23 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-top: 1px solid #dedede;
+  padding-top: 12px;
+  padding-bottom: 50px;
+  max-width: 738px;
+  margin: 0 auto;
+}
+
+.container > *:last-child {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.editor {
+  margin-top: 24px;
+  padding: 0 8px;
+  padding-bottom: 132px;
+  height: 100%;
 }

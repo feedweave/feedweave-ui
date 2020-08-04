@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
 
-import { APP_NAME, APP_VERSION, fetchBytePrice } from "../../util";
+import {
+  APP_NAME,
+  APP_VERSION,
+  fetchBytePrice,
+  convertHTMLtoMarkdown,
+} from "../../util";
 
-import TextEditor from "../../components/TextEditor";
+import EditorWrapper, { TextEditor } from "../../components/NewTextEditor";
 import Button from "../../components/Button";
 import { PostButtonWrapper } from "../../components/PostButton";
 
 import styles from "./index.module.css";
+import postStyles from "../../components/PostBody/index.module.css";
 
-import { NewPostHeader, EditorControls } from "../../components/TextComposer";
-
-const unescape = (text) => {
-  return text.replace(/\\([\\`*{}[\]()#+\-.!_>])/g, "$1");
-};
+import {
+  NewPostHeader,
+  RemirrorEditorControls,
+} from "../../components/TextComposer";
 
 const tags = {
   "App-Name": APP_NAME,
@@ -24,9 +29,10 @@ function NewPost() {
   const [post, setPost] = useState("");
   const [bytePrice, setBytePrice] = useState(1676997);
 
-  const handleTextChange = (value) => {
-    const text = unescape(value());
-    setPost(text);
+  const handleTextChange = (controller) => {
+    const html = controller.getHTML();
+    const markdown = convertHTMLtoMarkdown(html);
+    setPost(markdown);
   };
 
   const onSave = () => {
@@ -45,15 +51,19 @@ function NewPost() {
   return (
     <div className={styles.container}>
       <NewPostHeader text={post} bytePrice={bytePrice} />
-      <TextEditor defaultValue={post} handleTextChange={handleTextChange} />
-      <div className={styles.footerContainer}>
-        <div className={styles.footerContentContainer}>
-          <EditorControls />
-          <PostButtonWrapper data={post} tags={tags} onSave={onSave}>
-            <Button>Publish to Arweave</Button>
-          </PostButtonWrapper>
+      <EditorWrapper onChange={handleTextChange}>
+        <div className={postStyles.post}>
+          <TextEditor className={styles.editor} />
         </div>
-      </div>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerContentContainer}>
+            <RemirrorEditorControls />
+            <PostButtonWrapper data={post} tags={tags} onSave={onSave}>
+              <Button>Publish to Arweave</Button>
+            </PostButtonWrapper>
+          </div>
+        </div>
+      </EditorWrapper>
     </div>
   );
 }

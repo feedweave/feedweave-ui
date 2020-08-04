@@ -9,3 +9,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.remirror-editor {
+  outline: 0px solid transparent;
+  height: 100%;
+  font-size: 15px;
+}

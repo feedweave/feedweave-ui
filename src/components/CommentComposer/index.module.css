@@ -6,6 +6,11 @@
   height: 100%;
 }
 
+.editor {
+  margin: 20px 0;
+  padding: 0 10px;
+}
+
 .editorModule {
   border-bottom: 1px solid #dedede;
   border-left: 1px solid #dedede;

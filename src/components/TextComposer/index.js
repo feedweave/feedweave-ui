@@ -1,17 +1,18 @@
 import React from "react";
+import { useRemirror } from "remirror/react";
 
-import { NewPostIcon, ReplyIcon, TruncatedHashLink } from "..//ActionHeader";
+import { NewPostIcon, ReplyIcon, TruncatedHashLink } from "../ActionHeader";
 
-import boldIcon from "./bold-icon.svg";
-import underlineIcon from "./underline-icon.svg";
-import italicIcon from "./italic-icon.svg";
-import strikethroughIcon from "./strikethrough-icon.svg";
-import h1Icon from "./h1-icon.svg";
-import h2Icon from "./h2-icon.svg";
-import olIcon from "./ol-icon.svg";
-import ulIcon from "./ul-icon.svg";
-import codeIcon from "./code-icon.svg";
-import quoteIcon from "./quote-icon.svg";
+import boldIcon from "./bold.svg";
+import underlineIcon from "./underline.svg";
+import italicIcon from "./italic.svg";
+import strikethroughIcon from "./strikethrough.svg";
+import h1Icon from "./h1.svg";
+import h2Icon from "./h2.svg";
+import olIcon from "./ol.svg";
+import ulIcon from "./ul.svg";
+import codeIcon from "./code.svg";
+import quoteIcon from "./quote.svg";
 
 import styles from "./index.module.css";
 
@@ -78,27 +79,78 @@ export function NewCommentHeader({ parentId, text, bytePrice = 0 }) {
   );
 }
 
-export function EditorControls() {
+export function RemirrorEditorControls() {
+  const { commands, active } = useRemirror({ autoUpdate: true });
+  return <EditorControls active={active} commands={commands} />;
+}
+
+function EditorControls({ commands, active }) {
   return (
     <div className={styles.editorControlsContainer}>
-      <img src={boldIcon} alt="bold-icon" />
       <img
-        className={styles.underlineIcon}
+        onClick={() => commands && commands.toggleBold()}
+        className={active && active.bold() ? styles.activeControl : null}
+        src={boldIcon}
+        alt="bold"
+      />
+      <img
+        onClick={() => commands && commands.toggleUnderline()}
+        className={active && active.underline() ? styles.activeControl : null}
         src={underlineIcon}
-        alt="underline-icon"
+        alt="underline"
       />
-      <img className={styles.italicIcon} src={italicIcon} alt="italic-icon" />
       <img
-        className={styles.strikethroughIcon}
-        src={strikethroughIcon}
-        alt="strikethrough-icon"
+        onClick={() => commands && commands.toggleItalic()}
+        className={active && active.italic() ? styles.activeControl : null}
+        src={italicIcon}
+        alt="italic"
       />
-      <img src={h1Icon} alt="h1-icon" />
-      <img src={h2Icon} alt="h2-icon" />
-      <img src={olIcon} alt="ol-icon" />
-      <img className={styles.ulIcon} src={ulIcon} alt="ul-icon" />
-      <img className={styles.codeIcon} src={codeIcon} alt="code-icon" />
-      <img src={quoteIcon} alt="quote-icon" />
+      <img
+        onClick={() => commands && commands.toggleStrike()}
+        className={active && active.strike() ? styles.activeControl : null}
+        src={strikethroughIcon}
+        alt="strikethrough"
+      />
+      <img
+        onClick={() => commands && commands.toggleHeading({ level: 1 })}
+        className={
+          active && active.heading({ level: 1 }) ? styles.activeControl : null
+        }
+        src={h1Icon}
+        alt="h1"
+      />
+      <img
+        onClick={() => commands && commands.toggleHeading({ level: 2 })}
+        className={
+          active && active.heading({ level: 2 }) ? styles.activeControl : null
+        }
+        src={h2Icon}
+        alt="h2"
+      />
+      <img
+        onClick={() => commands && commands.toggleOrderedList()}
+        className={active && active.orderedList() ? styles.activeControl : null}
+        src={olIcon}
+        alt="ol"
+      />
+      <img
+        onClick={() => commands && commands.toggleBulletList()}
+        className={active && active.bulletList() ? styles.activeControl : null}
+        src={ulIcon}
+        alt="ul"
+      />
+      <img
+        className={active && active.code() ? styles.activeControl : null}
+        onClick={() => commands && commands.toggleCode()}
+        src={codeIcon}
+        alt="code"
+      />
+      <img
+        className={active && active.blockquote() ? styles.activeControl : null}
+        onClick={() => commands && commands.toggleBlockquote()}
+        src={quoteIcon}
+        alt="quote"
+      />
     </div>
   );
 }

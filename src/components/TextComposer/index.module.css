@@ -32,29 +32,21 @@
 .editorControlsContainer {
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .editorControlsContainer img {
   cursor: pointer;
-  margin: 0 10px;
+  margin: 0 6px;
+  filter: invert(59%) sepia(0%) saturate(5%) hue-rotate(158deg) brightness(94%)
+    contrast(90%);
 }
 
-.editorControlsContainer .underlineIcon {
-  margin-top: 3px;
+.editorControlsContainer img:hover {
+  filter: none;
 }
 
-.editorControlsContainer .italicIcon {
-  margin-top: -1px;
-}
-
-.editorControlsContainer .strikethroughIcon {
-  margin-top: 1px;
-}
-
-.editorControlsContainer .ulIcon,
-.editorControlsContainer .codeIcon {
-  margin-top: 1px;
+img.activeControl {
+  filter: none;
 }
 
 .textCounters {

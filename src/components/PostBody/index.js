@@ -42,12 +42,16 @@ const trim = (options) => (tree) => {
 };
 
 export default function PostBody({ content }) {
-  return <div className={styles.container}>{renderMarkdown(content)}</div>;
+  return (
+    <div className={styles.container}>
+      <div className={styles.post}>{renderMarkdown(content)}</div>
+    </div>
+  );
 }
 
 export const PostSnippet = ({ post }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.snippetContainer}>
       {
         unified()
           .use(remark)
