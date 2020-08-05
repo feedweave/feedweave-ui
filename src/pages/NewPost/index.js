@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
+import classnames from "classnames";
 
 import {
   APP_NAME,
@@ -52,9 +53,7 @@ function NewPost() {
     <div className={styles.container}>
       <NewPostHeader text={post} bytePrice={bytePrice} />
       <EditorWrapper onChange={handleTextChange}>
-        <div className={postStyles.post}>
-          <TextEditor className={styles.editor} />
-        </div>
+        <TextEditor className={classnames(styles.editor, postStyles.post)} />
         <div className={styles.footerContainer}>
           <div className={styles.footerContentContainer}>
             <RemirrorEditorControls />
