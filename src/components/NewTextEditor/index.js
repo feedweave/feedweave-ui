@@ -18,9 +18,7 @@ import {
 } from "remirror/preset/list";
 import { CorePreset } from "remirror/preset/core";
 
-import { RemirrorProvider, useManager } from "remirror/react";
-
-import { useRemirror } from "remirror/react";
+import { RemirrorProvider, useManager, useRemirror } from "remirror/react";
 
 const EXTENSIONS = [
   new CorePreset(),
