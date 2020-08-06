@@ -11,14 +11,15 @@ import { PostPageHeader } from "../../components/TransactionHeaders";
 import styles from "./index.module.css";
 import ReplyButtonWithComposer from "../../components/ReplyButtonWithComposer";
 
-function Post({ txId, location }) {
+function Post({ txId, location: { state: locationState } }) {
   const [postData, setPostData] = useState({});
   const [commentsData, setCommentsData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { post, user } = postData;
 
-  const showReplyComposer = location.state.activateReply === txId;
+  const showReplyComposer =
+    locationState && locationState.activateReply === txId;
 
   useEffect(() => {
     async function fetchData() {
