@@ -1,31 +1,37 @@
-.container {
+.postContainer {
   margin: 24px 0 12px;
 }
 
 .snippetContainer {
   margin: 12px 0;
+  cursor: pointer;
 }
 
-.post {
+.post,
+.snippet {
   font-family: "Roboto";
   color: #505050;
   font-size: 15px;
 }
 
-.post img {
+.post img,
+.snippet img {
   max-width: 100%;
 }
 
-.post a {
+.post a,
+.snippet a {
   color: #505050;
   text-decoration: underline;
 }
 
-.post a:hover {
+.post a:hover,
+.snippet a:hover {
   color: black;
 }
 
-.post blockquote {
+.post blockquote,
+.snippet blockquote {
   margin-left: 20px;
   border-left: 1px solid #68717a;
   padding-left: 15px;
@@ -65,18 +71,22 @@
 }
 
 .post ol,
-.post ul {
+.post ul,
+.snippet ol,
+.snippet ul {
   padding-left: 22px;
 }
 
-.post code {
+.post code,
+.snippet code {
   background-color: #efefef;
   color: #505050;
   padding: 2px 3px;
   font-family: "Roboto Mono";
 }
 
-.post pre {
+.post pre,
+.snippet pre {
   overflow: inherit;
   font-family: "Roboto Mono";
   font-style: normal;
@@ -85,8 +95,19 @@
   line-height: 150%;
 }
 
-.post pre code {
+.post pre code,
+.snippet pre code {
   width: 100%;
   display: block;
   padding: 15px;
+}
+
+.snippet h1,
+.snippet h2,
+.snippet h3,
+.snippet h4,
+.snippet h5,
+.snippet h6 {
+  font-size: 15px;
+  font-weight: bold;
 }

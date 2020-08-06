@@ -122,32 +122,6 @@ h4 {
   max-width: 100%;
 }
 
-.feedContainer h1,
-.feedContainer h2,
-.feedContainer h3,
-.feedContainer h4,
-.feedContainer h5,
-.feedContainer h6 {
-  font-size: 15px;
-  color: #646464;
-  font-weight: bold;
-}
-
 .bodyContainer {
   padding: 0 8px;
-  font-size: 15px;
-}
-
-.bodyContainer h1,
-.bodyContainer h2,
-.bodyContainer h3,
-.bodyContainer h4,
-.bodyContainer h5,
-.bodyContainer h6 {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.snippetContainer {
-  cursor: pointer;
 }

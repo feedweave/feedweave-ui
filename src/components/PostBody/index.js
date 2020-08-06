@@ -43,7 +43,7 @@ const trim = (options) => (tree) => {
 
 export default function PostBody({ content }) {
   return (
-    <div className={styles.container}>
+    <div className={styles.postContainer}>
       <div className={styles.post}>{renderMarkdown(content)}</div>
     </div>
   );
@@ -52,14 +52,16 @@ export default function PostBody({ content }) {
 export const PostSnippet = ({ post }) => {
   return (
     <div className={styles.snippetContainer}>
-      {
-        unified()
-          .use(remark)
-          .use(shorten)
-          .use(trim)
-          .use(remark2react)
-          .processSync(post).contents
-      }
+      <div className={styles.snippet}>
+        {
+          unified()
+            .use(remark)
+            .use(shorten)
+            .use(trim)
+            .use(remark2react)
+            .processSync(post).contents
+        }
+      </div>
     </div>
   );
 };
