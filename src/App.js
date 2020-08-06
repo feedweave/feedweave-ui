@@ -10,6 +10,8 @@ import NewPost from "./pages/NewPost";
 import User from "./pages/User";
 import Following from "./pages/Following";
 
+import ScrollToTop from "./components/ScrollToTop";
+
 import { UserContext, fetchUser } from "./util";
 
 function NewApp() {
@@ -31,13 +33,15 @@ function NewApp() {
   return (
     <UserContext.Provider value={{ user, handleUser, reloadUser }}>
       <Router style={{ height: "100%" }} primary={false}>
-        <Main path="/">
-          <Home path="/" />
-          <Following path="/following" />
-          <Post path="/post/:txId" />
-          <NewPost path="/new-post" />
-          <User path="/user/:address/*" />
-        </Main>
+        <ScrollToTop path="/">
+          <Main path="/">
+            <Home path="/" />
+            <Following path="/following" />
+            <Post path="/post/:txId" />
+            <NewPost path="/new-post" />
+            <User path="/user/:address/*" />
+          </Main>
+        </ScrollToTop>
       </Router>
     </UserContext.Provider>
   );
