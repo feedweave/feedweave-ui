@@ -20,7 +20,7 @@ import { CorePreset } from "remirror/preset/core";
 
 import { RemirrorProvider, useManager, useRemirror } from "remirror/react";
 
-const EXTENSIONS = [
+const EXTENSIONS = () => [
   new CorePreset(),
   new BoldExtension(),
   new ItalicExtension(),
@@ -44,10 +44,10 @@ const EditorWrapper = ({ children, className, onChange }) => {
 
   return (
     <RemirrorProvider
-      placeholder="foo"
+      placeholder="Write something here"
       autoFocus={true}
-      manager={extensionManager}
       value={value}
+      manager={extensionManager}
       onChange={onChange}
       className={className}
     >
