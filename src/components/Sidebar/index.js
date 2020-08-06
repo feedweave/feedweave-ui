@@ -4,7 +4,7 @@ import { Link, navigate } from "@reach/router";
 import styles from "./index.module.css";
 import logo from "./feedweave-logo.png";
 
-import { UserContext } from "../../util";
+import { UserContext, getUserName } from "../../util";
 
 import LoginButton from "../LoginButton";
 
@@ -52,7 +52,7 @@ class Sidebar extends React.Component {
                 <Link to={`/user/${user.address}`}>
                   Profile
                   <span className={styles.userName}>
-                    &nbsp;@{user.userInfo.arweaveId}
+                    &nbsp;{getUserName(user.userInfo)}
                   </span>
                 </Link>
               </div>

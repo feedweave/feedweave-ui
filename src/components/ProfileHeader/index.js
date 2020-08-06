@@ -4,17 +4,10 @@ import { Link } from "@reach/router";
 import UserIcon from "../UserIcon";
 import FollowButton from "../FollowButton";
 import styles from "./index.module.css";
+import { getUserName } from "../../util";
 
 export default function ProfileHeader({ user, reloadUser }) {
-  const {
-    postCount,
-    followerIds,
-    followingIds,
-    arweaveId,
-    twitterId,
-    id,
-  } = user;
-  const username = arweaveId ? `@${arweaveId}` : id;
+  const { postCount, followerIds, followingIds, twitterId, id } = user;
   return (
     <div className={styles.container}>
       <div className={styles.upperRectangle}></div>
@@ -23,7 +16,7 @@ export default function ProfileHeader({ user, reloadUser }) {
           <UserIcon size="44px" user={user} />
         </div>
         <div className={styles.userInfoText}>
-          <div className={styles.username}>{username}</div>
+          <div className={styles.username}>{getUserName(user)}</div>
           <div className={styles.addressTwitterFollow}>
             <div className={styles.addressTwitter}>
               <div className={styles.address}>
