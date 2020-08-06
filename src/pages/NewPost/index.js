@@ -21,6 +21,8 @@ import {
   RemirrorEditorControls,
 } from "../../components/TextComposer";
 
+import { NewPostMetaTags } from "../../components/MetaTags";
+
 const tags = {
   "App-Name": APP_NAME,
   "App-Version": APP_VERSION,
@@ -51,6 +53,7 @@ function NewPost() {
 
   return (
     <div className={styles.container}>
+      <NewPostMetaTags />
       <NewPostHeader text={post} bytePrice={bytePrice} />
       <EditorWrapper onChange={handleTextChange}>
         <TextEditor className={classnames(styles.editor, postStyles.post)} />

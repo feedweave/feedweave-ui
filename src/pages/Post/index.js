@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import PostMetaTags from "../../components/PostMetaTags";
+import { PostMetaTags } from "../../components/MetaTags";
 
 import { loadPost, loadComments } from "../../util";
 import Comments from "../../components/Comments";

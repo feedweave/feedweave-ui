@@ -5,6 +5,7 @@ import { UserContext, fetchFollowingFeed } from "../../util";
 import ActivityFeed from "../../components/ActivityFeed";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import EmptyState from "../../components/EmptyState";
+import { FollowingMetaTags } from "../../components/MetaTags";
 
 import styles from "../Home/index.module.css";
 
@@ -56,6 +57,7 @@ class Following extends React.Component {
     const { isLoaded } = this.state;
     return (
       <div className={styles.container}>
+        <FollowingMetaTags />
         {isLoaded ? <div>{this.renderFeed()}</div> : <LoadingSpinner />}
       </div>
     );

@@ -5,6 +5,8 @@ import ActivityFeed from "../../components/ActivityFeed";
 import PostsToggle from "../../components/PostsToggle";
 import Button from "../../components/Button";
 
+import { HomeMetaTags } from "../../components/MetaTags";
+
 import styles from "./index.module.css";
 
 function LoadMoreButton({ onClick, isLoading }) {
@@ -71,6 +73,7 @@ function Home() {
 
   return (
     <div className={styles.container}>
+      <HomeMetaTags />
       <div>
         <div className={styles.toggleContainer}>
           <PostsToggle onToggle={typeChanged} />

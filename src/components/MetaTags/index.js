@@ -2,17 +2,18 @@ import React from "react";
 
 import Helmet from "react-helmet";
 
-var unified = require("unified");
-var remark = require("remark-parse");
-var stringify = require("remark-stringify");
+import unified from "unified";
+import remark from "remark-parse";
+import stringify from "remark-stringify";
+import visit from "unist-util-visit";
+import remove from "unist-util-remove";
+import select from "unist-util-select";
 
-var visit = require("unist-util-visit");
-var remove = require("unist-util-remove");
-var select = require("unist-util-select");
+import { getUserName } from "../../util";
 
 const characterLimit = 140;
 
-const shorten = options => tree => {
+const shorten = (options) => (tree) => {
   let nodeFound = false;
 
   const test = (node, index, parent) => {
@@ -30,15 +31,15 @@ const shorten = options => tree => {
   remove(tree, test);
 };
 
-const replace = options => tree => {
-  visit(tree, "root", function(node) {
+const replace = (options) => (tree) => {
+  visit(tree, "root", function (node) {
     node.children = [select.select("text", tree)];
   });
 };
 
-const trim = options => tree => {
+const trim = (options) => (tree) => {
   let aggregateLength = 0;
-  visit(tree, "text", function(node) {
+  visit(tree, "text", function (node) {
     const valueLength = node.value.length;
     aggregateLength += valueLength;
     if (aggregateLength > characterLimit) {
@@ -50,7 +51,7 @@ const trim = options => tree => {
   });
 };
 
-const extractTitle = content => {
+const extractTitle = (content) => {
   return unified()
     .use(remark)
     .use(shorten)
@@ -62,17 +63,17 @@ const extractTitle = content => {
     .trim();
 };
 
-const extractPostMeta = post => {
+const extractPostMeta = (post) => {
   const { content, id } = post;
   const title = extractTitle(content);
 
   return {
     title,
-    url: `https://feedweave.co/post/${id}`
+    url: `https://feedweave.co/post/${id}`,
   };
 };
 
-const PostMetaTags = ({ post }) => {
+export const PostMetaTags = ({ post }) => {
   const { title, url } = extractPostMeta(post);
   return (
     <Helmet>
@@ -90,4 +91,35 @@ const PostMetaTags = ({ post }) => {
   );
 };
 
-export default PostMetaTags;
+export const HomeMetaTags = () => {
+  return (
+    <Helmet>
+      <title>FeedWeave</title>
+    </Helmet>
+  );
+};
+
+export const FollowingMetaTags = () => {
+  return (
+    <Helmet>
+      <title>Following</title>
+    </Helmet>
+  );
+};
+
+export const NewPostMetaTags = () => {
+  return (
+    <Helmet>
+      <title>New Post</title>
+    </Helmet>
+  );
+};
+
+export const UserMetaTags = ({ user }) => {
+  const username = getUserName(user);
+  return (
+    <Helmet>
+      <title>{username}</title>
+    </Helmet>
+  );
+};

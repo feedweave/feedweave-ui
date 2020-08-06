@@ -8,6 +8,8 @@ import FollowList from "../../components/FollowList";
 import EmptyState from "../../components/EmptyState";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
+import { UserMetaTags } from "../../components/MetaTags";
+
 import styles from "./index.module.css";
 
 const Index = ({ feed }) => {
@@ -60,6 +62,7 @@ function User({ address }) {
     <LoadingSpinner />
   ) : (
     <div className={styles.container}>
+      <UserMetaTags user={user} />
       <ProfileHeader user={user} reloadUser={reloadUser} />
       <div className={styles.routeContainer}>
         <Router primary={false}>
