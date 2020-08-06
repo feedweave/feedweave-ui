@@ -14,8 +14,11 @@ import {
 
 function HeaderWithBody({ Header, tx, user }) {
   const handleSnippetClick = (e) => {
-    if (e.target.tagName.toLowerCase() !== "a") {
-      navigate(`/post/${tx.id}`);
+    const url = `/post/${tx.id}`;
+    if (e.metaKey) {
+      window.open(url, "_blank");
+    } else if (e.target.tagName.toLowerCase() !== "a") {
+      navigate(url);
     }
   };
 
