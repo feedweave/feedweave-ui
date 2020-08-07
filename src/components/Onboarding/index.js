@@ -1,10 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import classnames from "classnames";
 
 import UserIcon from "../UserIcon";
 import Button from "../Button";
+import { PostButtonWrapper } from "../PostButton";
+
+import { fetchUserByArweaveID, useDebounce, UserContext } from "../../util";
 
 import styles from "./index.module.css";
+
+const arweaveIdTags = {
+  "App-Name": "arweave-id",
+  "App-Version": "0.0.1",
+  Type: "name",
+};
+
+const tagsWithTime = () => {
+  return { ...arweaveIdTags, "Unix-Time": Math.floor(Date.now() / 1000) };
+};
 
 export function ConfirmTx() {
   return (
@@ -152,34 +165,93 @@ function LinkTwitter({ user }) {
 }
 function ConfirmID({ id, transaction }) {}
 
-function Welcome({ user }) {
+function Welcome({ onClose, onCancel }) {
+  const { user, reloadUser } = useContext(UserContext);
+  const [username, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isNameTaken, setIsNameTaken] = useState(false);
+  const debouncedUsername = useDebounce(username, 300);
+
+  const onUsernameChange = (event) => {
+    const value = event.target.value;
+    console.log(value);
+    setUsername(value);
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!debouncedUsername || debouncedUsername === "") {
+        return;
+      }
+      setIsNameTaken(false);
+      setIsLoading(true);
+      try {
+        const user = await fetchUserByArweaveID(debouncedUsername);
+
+        if (user) {
+          setIsNameTaken(true);
+        }
+      } catch (e) {
+        //TODO handle error
+      }
+      setIsLoading(false);
+    }
+
+    fetchData();
+  }, [debouncedUsername]);
+
+  const onSave = () => {
+    reloadUser();
+    onClose();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.heading}>Welcome to FeedWeave!</div>
         <div className={styles.text}>
-          Set your username and link Twitter to confirm your identity and set
-          your profile photo.
+          <p>Set up your human-readable username.</p>
         </div>
       </div>
       <div className={styles.middle}>
         <UserIcon size={44} user={user} />
         <div className={styles.userInfo}>
-          <div className={styles.userName}>@username</div>
+          <div className={styles.userNameInput}>
+            <div>@</div>
+            <input
+              placeholder="username"
+              autoFocus
+              value={username}
+              onChange={onUsernameChange}
+            />
+          </div>
           <div className={styles.addressAndButtonContainer}>
-            <div className={styles.userAddress}>
-              vvSAIicpLpJAvcub5QF4xm1QmTY3_RrdZM3g3BN
-            </div>
-            <Button theme="gray">Link Twitter</Button>
+            <div className={styles.userAddress}>{user.address}</div>
           </div>
         </div>
       </div>
       <div className={styles.bottom}>
-        <div className={styles.uploadKeyfile}>Upload a different keyfile</div>
-        <div className={styles.finishSetup}>Finish Profile Setup</div>
+        <Button theme="secondary" onClick={onCancel}>
+          Set up later
+        </Button>
+        <div className={styles.buttonWithError}>
+          {isNameTaken ? (
+            <div className={styles.error}>That name is already taken.</div>
+          ) : null}
+
+          <PostButtonWrapper
+            data={username}
+            tags={tagsWithTime()}
+            onSave={onSave}
+          >
+            <Button isDisabled={isNameTaken} isLoading={isLoading}>
+              Set Username
+            </Button>
+          </PostButtonWrapper>
+        </div>
       </div>
     </div>
   );
 }
 
-export default LinkTwitter;
+export default Welcome;

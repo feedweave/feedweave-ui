@@ -23,6 +23,10 @@ function NewApp() {
     setUser(updatedUser);
   };
 
+  const declineOnboarding = () => {
+    window.localStorage.setItem("declinedOnboarding", "yes");
+  };
+
   const reloadUser = async () => {
     if (cachedUser) {
       const updatedUserInfo = await fetchUser(cachedUser.address);
@@ -31,7 +35,9 @@ function NewApp() {
   };
 
   return (
-    <UserContext.Provider value={{ user, handleUser, reloadUser }}>
+    <UserContext.Provider
+      value={{ user, handleUser, reloadUser, declineOnboarding }}
+    >
       <Router style={{ height: "100%" }} primary={false}>
         <ScrollToTop path="/">
           <Main path="/">

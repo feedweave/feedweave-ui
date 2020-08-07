@@ -2,7 +2,7 @@
   width: 607px;
   background: #ffffff;
   border: 1px solid #68717a;
-  font-size: 15px;
+  font-size: 13px;
   font-family: "Roboto Mono", monospace;
 }
 
@@ -32,10 +32,12 @@
   display: flex;
   flex-flow: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .userAddress {
   color: #68717a;
+  font-size: 13px;
 }
 
 .userInfo {
@@ -43,6 +45,12 @@
   display: flex;
   flex-direction: column;
   margin-left: 12px;
+}
+
+.userNameInput {
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
 }
 
 .addressAndButtonContainer {
@@ -102,6 +110,21 @@
   color: rgba(0, 0, 0, 0.25);
 }
 
+.userNameInput input {
+  height: 24px;
+  background-color: inherit;
+  border: none;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+  color: black;
+  font-weight: 500;
+}
+
+.userNameInput input::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+}
+
 .twitterInput {
   display: flex;
   flex-direction: row;
@@ -158,4 +181,13 @@
   height: 182px;
   line-height: 200px;
   text-align: center;
+}
+
+.buttonWithError {
+  display: flex;
+  align-items: center;
+}
+.error {
+  color: #ff0000;
+  margin-right: 8px;
 }

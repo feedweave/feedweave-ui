@@ -8,6 +8,7 @@ export default function Button({
   theme = "green",
   onClick = () => {},
   isLoading,
+  isDisabled,
 }) {
   const handleClick = (e) => {
     if (!isLoading) {
@@ -25,6 +26,7 @@ export default function Button({
         [styles.gray]: theme === "gray",
         [styles.secondary]: theme === "secondary",
         [styles.loading]: isLoading,
+        [styles.disabled]: isDisabled,
       })}
     >
       {isLoading ? "Loading..." : children}

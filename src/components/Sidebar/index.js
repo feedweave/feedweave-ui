@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, navigate } from "@reach/router";
 
 import styles from "./index.module.css";
@@ -8,78 +8,96 @@ import { UserContext, getUserName } from "../../util";
 
 import LoginButton from "../LoginButton";
 
-class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
+import Modal from "../Modal";
+import Onboarding from "../Onboarding";
 
-  static contextType = UserContext;
+function Sidebar() {
+  const { user, handleUser, declineOnboarding } = useContext(UserContext);
+  const declinedOnboarding =
+    window.localStorage.getItem("declinedOnboarding") === "yes";
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
-  handleLogout = () => {
-    const { handleUser } = this.context;
+  useEffect(() => {
+    setShowOnboarding(
+      !declinedOnboarding && !!user && !user.userInfo.arweaveId
+    );
+  }, [user, declinedOnboarding]);
 
+  const handleLogout = () => {
     navigate("/");
 
     handleUser(null);
+    window.localStorage.setItem("declinedOnboarding", "");
   };
 
-  render() {
-    const { user } = this.context;
-    return (
-      <div className={styles.container}>
-        <div className={styles.logoParent}>
-          <Link to="/">
-            <div className={styles.logo}>
-              <img alt="feedweave logo" src={logo} />
-              <span>FeedWeave</span>
-            </div>
-          </Link>
-        </div>
-        {user ? (
-          <div className={styles.menu}>
-            <div className={styles.activityMenu}>
-              <div className={styles.menuItem}>
-                <Link to="/">Activity on Arweave</Link>
-              </div>
-              <div className={styles.menuItem}>
-                <Link to="/following">Following</Link>
-              </div>
-            </div>
+  const handleCloseOnboarding = () => {
+    setShowOnboarding(false);
+  };
 
-            <div className={styles.userMenu}>
-              <div className={styles.menuItem}>
-                <Link to={`/user/${user.address}`}>
-                  Profile
-                  <span className={styles.userName}>
-                    &nbsp;{getUserName(user.userInfo)}
-                  </span>
-                </Link>
-              </div>
-              <div className={styles.menuItem}>
-                <a className={styles.logOut} onClick={this.handleLogout}>
-                  Log out
-                </a>
-              </div>
-            </div>
-            <div className={styles.newPost}>
-              <div className={styles.menuItem}>
-                <Link to="/new-post">New Post</Link>
-              </div>
-            </div>
-            <div></div>
+  const handleCancelOnboarding = () => {
+    declineOnboarding();
+    setShowOnboarding(false);
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.logoParent}>
+        <Link to="/">
+          <div className={styles.logo}>
+            <img alt="feedweave logo" src={logo} />
+            <span>FeedWeave</span>
           </div>
-        ) : (
-          <div className={styles.loginContainer}>
-            <LoginButton />
-          </div>
-        )}
-        {/* <Modal initialShow={true}>
-          <Onboarding user={user} />
-        </Modal> */}
+        </Link>
       </div>
-    );
-  }
+      {user ? (
+        <div className={styles.menu}>
+          <div className={styles.activityMenu}>
+            <div className={styles.menuItem}>
+              <Link to="/">Activity on Arweave</Link>
+            </div>
+            <div className={styles.menuItem}>
+              <Link to="/following">Following</Link>
+            </div>
+          </div>
+
+          <div className={styles.userMenu}>
+            <div className={styles.menuItem}>
+              <Link to={`/user/${user.address}`}>
+                Profile
+                <span className={styles.userName}>
+                  &nbsp;{getUserName(user.userInfo)}
+                </span>
+              </Link>
+            </div>
+            <div className={styles.menuItem}>
+              <a className={styles.logOut} onClick={handleLogout}>
+                Log out
+              </a>
+            </div>
+          </div>
+          <div className={styles.newPost}>
+            <div className={styles.menuItem}>
+              <Link to="/new-post">New Post</Link>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      ) : (
+        <div className={styles.loginContainer}>
+          <LoginButton />
+        </div>
+      )}
+      {showOnboarding ? (
+        <Modal>
+          <Onboarding
+            user={user}
+            onClose={handleCloseOnboarding}
+            onCancel={handleCancelOnboarding}
+          />{" "}
+        </Modal>
+      ) : null}
+    </div>
+  );
 }
 
 export default Sidebar;

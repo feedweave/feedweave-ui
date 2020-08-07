@@ -54,3 +54,10 @@
   align-items: center;
   text-transform: capitalize;
 }
+
+.disabled {
+  color: #8c8c8c;
+  border: 1px solid #8c8c8c;
+  cursor: not-allowed;
+  pointer-events: none;
+}
