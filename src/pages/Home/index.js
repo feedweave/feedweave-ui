@@ -13,9 +13,13 @@ import styles from "./index.module.css";
 function LoadMoreButton({ onClick, isLoading }) {
   return (
     <div className={styles.loadMoreButtonContainer}>
-      <Button onClick={onClick} isLoading={isLoading}>
-        Load more posts
-      </Button>
+      {isLoading ? (
+        <div className={styles.spinnerContainer}>
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <Button onClick={onClick}>Load more posts</Button>
+      )}
     </div>
   );
 }
