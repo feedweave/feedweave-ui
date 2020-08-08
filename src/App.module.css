@@ -1,0 +1,6 @@
+.container {
+  height: 100%;
+}
+.container > div:first-child {
+  height: 100%;
+}

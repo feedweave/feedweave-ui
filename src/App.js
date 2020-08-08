@@ -3,6 +3,8 @@ import { Router } from "@reach/router";
 
 import "./App.css";
 
+import styles from "./App.module.css";
+
 import Main from "./pages/Main";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
@@ -38,7 +40,7 @@ function NewApp() {
     <UserContext.Provider
       value={{ user, handleUser, reloadUser, declineOnboarding }}
     >
-      <Router style={{ height: "100%" }} primary={false}>
+      <Router className={styles.container} primary={false}>
         <ScrollToTop path="/">
           <Main path="/">
             <Home path="/" />

@@ -6,6 +6,7 @@ import PostsToggle from "../../components/PostsToggle";
 import Button from "../../components/Button";
 
 import { HomeMetaTags } from "../../components/MetaTags";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 import styles from "./index.module.css";
 
@@ -20,6 +21,7 @@ function LoadMoreButton({ onClick, isLoading }) {
 }
 
 function Home() {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [currentCursor, setCurrentCursor] = useState(null);
   const [feedType, setFeedType] = useState("posts");
@@ -49,6 +51,7 @@ function Home() {
         feed: { users: mergedUsers, transactions: mergedTransactions },
         nextCursor,
       });
+      setIsInitialLoading(false);
       setIsLoading(false);
     }
 
@@ -69,6 +72,7 @@ function Home() {
       nextCursor: null,
     });
     setCurrentCursor(null);
+    setIsInitialLoading(true);
   }
 
   return (
@@ -78,12 +82,16 @@ function Home() {
         <div className={styles.toggleContainer}>
           <PostsToggle onToggle={typeChanged} />
         </div>
-        <div>
-          <ActivityFeed feed={feed} />
-          {nextCursor ? (
-            <LoadMoreButton onClick={loadMorePosts} isLoading={isLoading} />
-          ) : null}
-        </div>
+        {isInitialLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <ActivityFeed feed={feed} />
+            {nextCursor ? (
+              <LoadMoreButton onClick={loadMorePosts} isLoading={isLoading} />
+            ) : null}
+          </>
+        )}
       </div>
     </div>
   );

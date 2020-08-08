@@ -1,15 +1,45 @@
 .container {
-  font-family: "Roboto Mono";
-  font-size: 13px;
-  text-align: center;
-  margin: 0 0 15px 0;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.inner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 30%;
+.loading {
+  width: 18px;
+  height: 18px;
+  background: url("./background.png");
+  background-size: 18px 18px;
+  position: relative;
+}
+.loadingInner {
+  -webkit-animation: rotate-cw 1.2s steps(8, end) infinite forwards;
+  animation: rotate-cw 1.2s steps(8, end) infinite forwards;
+  width: 2px;
+  height: 18px;
+  background-color: #68717a;
+  position: absolute;
+  left: 8px;
+  z-index: ;
+}
+
+@-webkit-keyframes rotate-cw {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate-cw {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

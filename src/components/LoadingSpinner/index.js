@@ -10,4 +10,14 @@ function LoadingSpinner() {
   );
 }
 
-export default LoadingSpinner;
+function NewSpinner() {
+  return (
+    <div className={styles.container}>
+      <div className={styles.loading}>
+        <div className={styles.loadingInner}></div>
+      </div>
+    </div>
+  );
+}
+
+export default NewSpinner;

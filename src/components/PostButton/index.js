@@ -11,6 +11,7 @@ import {
 
 import Modal, { ModalBody } from "../Modal";
 import Button from "../Button";
+import LoggedOutWarning from "../LoggedOutWarning";
 
 function Tags({ tags }) {
   return Object.keys(tags).map((k) => (
@@ -197,6 +198,7 @@ function GenerateAndConfirmTx({ data, tags, onSave, onCancel }) {
 }
 
 export function PostButtonWrapper({ data, tags, onSave, children }) {
+  const { user } = useContext(UserContext);
   const [isShowingModal, setIsShowingModal] = useState(false);
   const onClose = (e) => {
     if (e) {
@@ -210,19 +212,25 @@ export function PostButtonWrapper({ data, tags, onSave, children }) {
     onSave(tx);
   };
 
+  const onClick = () => {
+    setIsShowingModal(true);
+  };
+
+  const modalContents = user ? (
+    <GenerateAndConfirmTx
+      data={data}
+      tags={tags}
+      onSave={onInternalSave}
+      onCancel={onClose}
+    />
+  ) : (
+    <LoggedOutWarning onClose={onClose} />
+  );
+
   return (
-    <div onClick={() => setIsShowingModal(true)}>
+    <div onClick={onClick}>
       {children}
-      {isShowingModal ? (
-        <Modal onClose={onClose}>
-          <GenerateAndConfirmTx
-            data={data}
-            tags={tags}
-            onSave={onInternalSave}
-            onCancel={onClose}
-          />
-        </Modal>
-      ) : null}
+      {isShowingModal ? <Modal onClose={onClose}>{modalContents}</Modal> : null}
     </div>
   );
 }
