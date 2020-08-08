@@ -83,3 +83,15 @@
   background: #68717a;
   color: #fafafa;
 }
+
+.onboardingButtons {
+  display: flex;
+}
+
+.onboardingButtons > * {
+  margin: 0 10px;
+}
+
+.onboardingButtons > *:last-child {
+  margin-right: 0;
+}

@@ -1,17 +1,88 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+
 import { Link } from "@reach/router";
 
 import UserIcon from "../UserIcon";
 import FollowButton from "../FollowButton";
+import Button from "../Button";
+import Modal from "../Modal";
 import styles from "./index.module.css";
-import { getUserName } from "../../util";
+import { getUserName, UserContext } from "../../util";
+
+import { SetupUsername, SetupTwitter } from "../Onboarding";
+
+function OnboardingButtons({ user, onSave }) {
+  const { arweaveId, twitterId } = user.userInfo;
+  const [showWhichModal, setShowWhichModal] = useState(null);
+
+  let ModalContent;
+
+  if (showWhichModal === "name") {
+    ModalContent = SetupUsername;
+  } else if (showWhichModal === "twitter") {
+    ModalContent = SetupTwitter;
+  } else {
+    ModalContent = null;
+  }
+
+  const handleSetupName = () => {
+    setShowWhichModal("name");
+  };
+
+  const handleLinkTwitter = () => {
+    setShowWhichModal("twitter");
+  };
+
+  const handleModalClose = () => {
+    setShowWhichModal(null);
+  };
+
+  const handleModalSave = () => {
+    setShowWhichModal(null);
+    onSave();
+  };
+
+  return (
+    <div className={styles.onboardingButtons}>
+      {!arweaveId ? (
+        <Button theme="greenFilled" onClick={handleSetupName}>
+          Set Name
+        </Button>
+      ) : null}
+      {!twitterId ? (
+        <Button theme="greenFilled" onClick={handleLinkTwitter}>
+          Link Twitter
+        </Button>
+      ) : null}
+      {ModalContent ? (
+        <Modal>
+          <ModalContent
+            user={user}
+            onCancel={handleModalClose}
+            onSave={handleModalSave}
+          />
+        </Modal>
+      ) : null}
+    </div>
+  );
+}
 
 export default function ProfileHeader({ user, reloadUser }) {
   const { postCount, followerIds, followingIds, twitterId, id } = user;
+  const { user: loggedInUser, reloadUser: reloadLoggedInUser } = useContext(
+    UserContext
+  );
+  const showOnboardingButtons = loggedInUser && loggedInUser.address === id;
+
+  const onOnboardingSave = () => {
+    reloadUser();
+    reloadLoggedInUser();
+  };
   return (
     <div className={styles.container}>
       <div className={styles.upperRectangle}></div>
       <div className={styles.userInfo}>
+        <div></div>
         <div className={styles.avatarContainer}>
           <UserIcon size="44px" user={user} />
         </div>
@@ -29,6 +100,12 @@ export default function ProfileHeader({ user, reloadUser }) {
               ) : null}
             </div>
             <FollowButton user={user} onSave={reloadUser} />
+            {showOnboardingButtons ? (
+              <OnboardingButtons
+                user={loggedInUser}
+                onSave={onOnboardingSave}
+              />
+            ) : null}
           </div>
         </div>
       </div>

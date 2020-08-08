@@ -9,10 +9,12 @@ import { UserContext, getUserName } from "../../util";
 import LoginButton from "../LoginButton";
 
 import Modal from "../Modal";
-import Onboarding from "../Onboarding";
+import { FirstTimeOnboarding } from "../Onboarding";
 
 function Sidebar() {
-  const { user, handleUser, declineOnboarding } = useContext(UserContext);
+  const { user, handleUser, declineOnboarding, reloadUser } = useContext(
+    UserContext
+  );
   const declinedOnboarding =
     window.localStorage.getItem("declinedOnboarding") === "yes";
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -89,9 +91,10 @@ function Sidebar() {
       )}
       {showOnboarding ? (
         <Modal>
-          <Onboarding
+          <FirstTimeOnboarding
             user={user}
-            onClose={handleCloseOnboarding}
+            reloadUser={reloadUser}
+            onSave={handleCloseOnboarding}
             onCancel={handleCancelOnboarding}
           />{" "}
         </Modal>

@@ -30,8 +30,6 @@
 }
 
 .greenFilled {
-  width: 96px;
-  height: 30px;
   background: #57943a;
   border-radius: 2px;
   text-decoration-line: underline;

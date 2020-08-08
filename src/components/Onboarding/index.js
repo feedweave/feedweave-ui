@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 
 import UserIcon from "../UserIcon";
 import Button from "../Button";
 import { PostButtonWrapper } from "../PostButton";
 
-import { fetchUserByArweaveID, useDebounce, UserContext } from "../../util";
+import { fetchUserByArweaveID, useDebounce, getUserName } from "../../util";
 
 import styles from "./index.module.css";
 
@@ -14,6 +14,21 @@ const arweaveIdTags = {
   "App-Version": "0.0.1",
   Type: "name",
 };
+
+const twitterTags = {
+  "App-Name": "identity-link",
+  "App-Version": "0.0.1",
+  Provider: "twitter",
+};
+
+function postToTwitter(address) {
+  const msg = `I am verifying myself on @FEEDweave_! My Arweave address is ${address}`;
+  window.open(
+    `https://twitter.com/intent/tweet?text=${msg}`,
+    "mywin",
+    "left=20,top=20,width=500,height=448,toolbar=1,resizable=0"
+  );
+}
 
 const tagsWithTime = () => {
   return { ...arweaveIdTags, "Unix-Time": Math.floor(Date.now() / 1000) };
@@ -53,27 +68,28 @@ export function ConfirmTx() {
   );
 }
 
-function TwitterProof({ user }) {
+function TwitterProof({ user, twitterHandle }) {
+  const avatarUrl = `https://unavatar.now.sh/twitter/${twitterHandle}`;
   return (
     <div className={styles.twitterProofContainer}>
-      <UserIcon size={44} user={user} />
+      <img
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: parseInt(44, 10) / 2,
+        }}
+        alt="avatar"
+        src={avatarUrl}
+      />
       <div className={styles.userInfo}>
-        <div className={styles.userName}>@username</div>
-        <div className={styles.userAddress}>
-          vvSAIicpLpJAvcub5QF4xm1QmTY3_RrdZM3g3BN
-        </div>
+        <div className={styles.userName}>{getUserName(user.userInfo)}</div>
+        <div className={styles.userAddress}>{user.address}</div>
       </div>
     </div>
   );
 }
 
-function TwitterHandleInput({ user }) {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
-
+function TwitterHandleInput({ user, value, onChange }) {
   return (
     <div>
       <div className={styles.inputContainer}>
@@ -87,7 +103,13 @@ function TwitterHandleInput({ user }) {
         <div className={classnames(styles.input, styles.twitterInput)}>
           <div className={styles.atPrefix}>@</div>
 
-          <input type="text" ref={inputRef} placeholder="yourname" />
+          <input
+            type="text"
+            placeholder="yourname"
+            value={value}
+            onChange={onChange}
+            autoFocus
+          />
         </div>
       </div>
     </div>
@@ -97,10 +119,10 @@ function TwitterHandleInput({ user }) {
 function LinkTwitterTop() {
   return (
     <>
-      <div className={styles.heading}>Link Twitter Account</div>
+      <div className={styles.heading}>Link Twitter</div>
       <div className={styles.text}>
-        Linking your Twitter account displays your avatar and verifies your
-        identity, so people know who you are.
+        Linking Twitter syncs your avatar and verifies your identity, so people
+        know who you are.
         <ol>
           <li>Post a tweet with your Arweave address.</li>
           <li>Submit an Arweave transaction with your Twitter handle.</li>
@@ -110,20 +132,16 @@ function LinkTwitterTop() {
   );
 }
 
-function LinkTwitter({ user }) {
+export function SetupTwitter({ user, onSave, onCancel }) {
   const [flowStep, setFlowStep] = useState("postToTwitter");
+  const [twitterHandle, setTwitterHandle] = useState("");
+
+  const onTwitterHandleChange = (event) => {
+    setTwitterHandle(event.target.value);
+  };
 
   const handlePostToTwitter = () => {
-    setFlowStep("submitProof");
-  };
-
-  const handleSubmitProof = () => {
-    setFlowStep("confirmTx");
-  };
-
-  const handleConfirmTx = () => {};
-
-  const handleBack = () => {
+    postToTwitter(user.address);
     setFlowStep("submitProof");
   };
 
@@ -133,22 +151,27 @@ function LinkTwitter({ user }) {
 
   if (flowStep === "postToTwitter") {
     top = <LinkTwitterTop />;
-    middle = <TwitterHandleInput user={user} />;
+    middle = (
+      <TwitterHandleInput
+        user={user}
+        onChange={onTwitterHandleChange}
+        value={twitterHandle}
+      />
+    );
     button = <Button onClick={handlePostToTwitter}>Post to Twitter</Button>;
   }
 
   if (flowStep === "submitProof") {
     top = <LinkTwitterTop />;
-    middle = <TwitterProof user={user} />;
+    middle = <TwitterProof user={user} twitterHandle={twitterHandle} />;
     button = (
-      <Button onClick={handleSubmitProof}>Submit Proof of Identity</Button>
-    );
-  }
-
-  if (flowStep === "confirmTx") {
-    top = <ConfirmTx />;
-    button = (
-      <Button onClick={handleConfirmTx}>Submit Proof of Identity</Button>
+      <PostButtonWrapper
+        data={twitterHandle}
+        tags={twitterTags}
+        onSave={onSave}
+      >
+        <Button>Submit Proof of Identity</Button>
+      </PostButtonWrapper>
     );
   }
 
@@ -157,16 +180,16 @@ function LinkTwitter({ user }) {
       <div className={styles.top}>{top}</div>
       <div className={styles.middle}>{middle}</div>
       <div className={styles.bottom}>
-        <div></div>
+        <Button theme="secondary" onClick={onCancel}>
+          Set up later
+        </Button>
         {button}
       </div>
     </div>
   );
 }
-function ConfirmID({ id, transaction }) {}
 
-function Welcome({ onClose, onCancel }) {
-  const { user, reloadUser } = useContext(UserContext);
+export function SetupUsername({ user, onSave, onCancel }) {
   const [username, setUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isNameTaken, setIsNameTaken] = useState(false);
@@ -174,7 +197,6 @@ function Welcome({ onClose, onCancel }) {
 
   const onUsernameChange = (event) => {
     const value = event.target.value;
-    console.log(value);
     setUsername(value);
   };
 
@@ -199,11 +221,6 @@ function Welcome({ onClose, onCancel }) {
 
     fetchData();
   }, [debouncedUsername]);
-
-  const onSave = () => {
-    reloadUser();
-    onClose();
-  };
 
   return (
     <div className={styles.container}>
@@ -254,4 +271,26 @@ function Welcome({ onClose, onCancel }) {
   );
 }
 
-export default Welcome;
+export function FirstTimeOnboarding({ user, reloadUser, onSave, onCancel }) {
+  const [onboardingStep, setOnboardingStep] = useState("name");
+
+  const onUsernameSave = () => {
+    setOnboardingStep("twitter");
+    reloadUser();
+  };
+
+  const onTwitterSave = () => {
+    reloadUser();
+    onSave();
+  };
+
+  if (onboardingStep === "name") {
+    return (
+      <SetupUsername user={user} onSave={onUsernameSave} onCancel={onCancel} />
+    );
+  } else if (onboardingStep === "twitter") {
+    return (
+      <SetupTwitter user={user} onSave={onTwitterSave} onCancel={onCancel} />
+    );
+  }
+}
