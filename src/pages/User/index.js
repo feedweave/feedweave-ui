@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Router } from "@reach/router";
 
-import { fetchUserFeed, fetchUser } from "../../util";
+import { fetchUserFeed, fetchUser, UserContext } from "../../util";
 import ActivityFeed from "../../components/ActivityFeed";
 import ProfileHeader from "../../components/ProfileHeader";
 import FollowList from "../../components/FollowList";
@@ -12,20 +12,24 @@ import { UserMetaTags } from "../../components/MetaTags";
 
 import styles from "./index.module.css";
 
-const Index = ({ feed }) => {
+const Index = ({ feed, isLoggedInUser }) => {
   const { transactions } = feed;
+  const messagePrefix = isLoggedInUser ? "You haven't" : "This user hasn't";
   return transactions.length === 0 ? (
-    <EmptyState>This user hasn't made any posts yet.</EmptyState>
+    <EmptyState>{messagePrefix} made any posts yet.</EmptyState>
   ) : (
     <ActivityFeed feed={feed} />
   );
 };
 
 function User({ address }) {
+  const { user: loggedInUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
   const [relatedUsers, setRelatedUsers] = useState([]);
   const [feed, setFeed] = useState([]);
+
+  const isLoggedInUser = loggedInUser && loggedInUser.address === user.id;
 
   useEffect(() => {
     async function fetchData() {
@@ -52,11 +56,13 @@ function User({ address }) {
     setRelatedUsers(relatedUsers);
   };
 
+  const messagePrefix = isLoggedInUser ? "You aren't" : "This user isn't";
+
   const followingEmptyElement = (
-    <EmptyState>This user isn't following anyone yet.</EmptyState>
+    <EmptyState>{messagePrefix} following anyone yet.</EmptyState>
   );
   const followersEmptyElement = (
-    <EmptyState>This user isn't followed by anyone yet.</EmptyState>
+    <EmptyState>{messagePrefix} followed by anyone yet.</EmptyState>
   );
   return isLoading ? (
     <LoadingSpinner />
@@ -66,7 +72,7 @@ function User({ address }) {
       <ProfileHeader user={user} reloadUser={reloadUser} />
       <div className={styles.routeContainer}>
         <Router primary={false}>
-          <Index path="/" feed={feed} />
+          <Index path="/" feed={feed} isLoggedInUser={isLoggedInUser} />
           <FollowList
             path="/following"
             displayIds={user.followingIds}

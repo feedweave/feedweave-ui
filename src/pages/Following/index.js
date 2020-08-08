@@ -50,6 +50,14 @@ class Following extends React.Component {
       );
     }
 
+    if (feed.transactions.length === 0) {
+      return (
+        <EmptyState>
+          <div>The users you're following haven't posted anything yet.</div>
+        </EmptyState>
+      );
+    }
+
     return <ActivityFeed feed={feed} />;
   }
 
