@@ -39,6 +39,12 @@ export function FollowIcon() {
 
 export function OptionsIcon({ ref, onClick = () => {} }) {
   return (
-    <img ref={ref} alt="options-icon" src={optionsIcon} onClick={onClick} />
+    <img
+      className={styles.iconStyle}
+      ref={ref}
+      alt="options-icon"
+      src={optionsIcon}
+      onClick={onClick}
+    />
   );
 }

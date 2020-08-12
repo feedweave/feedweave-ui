@@ -30,6 +30,7 @@ function generateLikeTags(tx, user) {
 }
 
 export function OptionsButton({ tx }) {
+  const { user } = useContext(UserContext);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleClick = () => {
@@ -43,29 +44,42 @@ export function OptionsButton({ tx }) {
      * Alert if clicked on outside of element
      */
     function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target) &&
+        showOptions
+      ) {
         setShowOptions(false);
+        event.stopPropagation();
       }
     }
 
     // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    // document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
+      // document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, [wrapperRef]);
+  }, [wrapperRef, showOptions]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.buttonContainer}>
         <OptionsIcon onClick={handleClick} />
-        {showOptions ? (
-          <div ref={wrapperRef} className={styles.optionsContainer}>
-            <HeaderOptions />
-          </div>
-        ) : null}
       </div>
+      {showOptions ? (
+        <div ref={wrapperRef} className={styles.optionsContainer}>
+          <HeaderOptions
+            user={user}
+            tx={tx}
+            onClose={() => {
+              setShowOptions(false);
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

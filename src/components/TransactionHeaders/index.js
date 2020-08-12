@@ -54,7 +54,7 @@ function LikeAndOptions({ tx }) {
   return (
     <div className={styles.innerContainer}>
       <LikeCountButton tx={tx} />
-      <OptionsButton />
+      <OptionsButton tx={tx} />
     </div>
   );
 }
