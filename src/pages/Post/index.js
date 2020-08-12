@@ -44,7 +44,9 @@ function Post({ txId, location: { state: locationState } }) {
   };
 
   return isLoading ? (
-    <LoadingSpinner />
+    <div className={styles.spinnerContainer}>
+      <LoadingSpinner />
+    </div>
   ) : (
     <div className={styles.container}>
       <PostMetaTags post={post} />
