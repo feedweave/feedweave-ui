@@ -15,7 +15,7 @@
   height: 100%;
 }
 
-@media all and (max-width: 1350px) {
+@media all and (max-width: 1215px) {
   .childrenContainer {
     justify-content: left;
     padding-left: 290px;
