@@ -51,8 +51,7 @@
   cursor: pointer;
 }
 
-.userMenu,
-.newPost {
+.menuSection {
   margin-top: 16px;
 }
 

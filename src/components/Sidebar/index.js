@@ -62,7 +62,7 @@ function Sidebar() {
             </div>
           </div>
 
-          <div className={styles.userMenu}>
+          <div className={styles.menuSection}>
             <div className={styles.menuItem}>
               <Link to={`/user/${user.address}`}>
                 Profile
@@ -72,14 +72,14 @@ function Sidebar() {
               </Link>
             </div>
             <div className={styles.menuItem}>
+              <Link to="/new-post">New Post</Link>
+            </div>
+          </div>
+          <div className={styles.menuSection}>
+            <div className={styles.menuItem}>
               <a className={styles.logOut} onClick={handleLogout}>
                 Log out
               </a>
-            </div>
-          </div>
-          <div className={styles.newPost}>
-            <div className={styles.menuItem}>
-              <Link to="/new-post">New Post</Link>
             </div>
           </div>
           <div></div>
