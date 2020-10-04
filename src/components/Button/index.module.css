@@ -1,0 +1,61 @@
+.container {
+  display: inline-block;
+  font-family: Roboto Mono;
+  font-weight: normal;
+  font-size: 13px;
+  padding: 8px 10px;
+  color: #57943a;
+  cursor: pointer;
+}
+
+.green {
+  border: 1px solid #57943a;
+  color: #57943a;
+}
+
+.gray {
+  background: #e1e1e1;
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.secondary {
+  background: none;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration-line: underline;
+}
+
+.loading {
+  cursor: default;
+}
+
+.greenFilled {
+  background: #57943a;
+  border-radius: 2px;
+  text-decoration-line: underline;
+  color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.grayFilled {
+  width: 96px;
+  height: 30px;
+  background: #e1e1e1;
+  border-radius: 2px;
+  text-decoration-line: underline;
+  color: #8c8c8c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.disabled {
+  color: #8c8c8c;
+  border: 1px solid #8c8c8c;
+  cursor: not-allowed;
+  pointer-events: none;
+}

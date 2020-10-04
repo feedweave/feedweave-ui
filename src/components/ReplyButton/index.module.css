@@ -1,0 +1,12 @@
+.replyButton {
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  text-decoration-line: underline;
+  color: #57943a;
+  display: flex;
+  cursor: pointer;
+}
+
+.replyButtonIcon {
+  margin-right: 11px;
+}

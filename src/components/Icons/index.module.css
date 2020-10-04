@@ -1,0 +1,4 @@
+.iconStyle {
+  filter: invert(58%) sepia(0%) saturate(0%) hue-rotate(88deg) brightness(95%)
+    contrast(97%);
+}

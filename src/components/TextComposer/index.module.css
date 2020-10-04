@@ -1,0 +1,64 @@
+.newPostHeaderContainer,
+.newPostHeaderLeft,
+.newPostHeaderRight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.newPostHeaderContainer {
+  font-family: "Roboto Mono", monospace;
+  color: #8c8c8c;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #d7d7d7;
+  font-size: 13px;
+}
+
+.newPostHeaderLeft > *,
+.dataGroup > * {
+  margin: 0 6px;
+}
+
+.newPostHeaderRight {
+  color: #626262;
+  opacity: 0.5;
+}
+.dataGroup {
+  display: flex;
+  margin: 0 6px;
+}
+
+.editorControlsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.editorControlsContainer img {
+  cursor: pointer;
+  margin: 0 6px;
+  filter: invert(59%) sepia(0%) saturate(5%) hue-rotate(158deg) brightness(94%)
+    contrast(90%);
+}
+
+.editorControlsContainer img:hover {
+  filter: none;
+}
+
+img.activeControl {
+  filter: none;
+}
+
+.textCounters {
+  display: flex;
+}
+
+.characterCount,
+.wordCount,
+.byteCount,
+.arCount,
+.newPostText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

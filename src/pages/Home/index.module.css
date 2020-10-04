@@ -1,3 +1,6 @@
+.container {
+  margin-top: 85px;
+}
 .nav {
   font-size: 14px;
   text-transform: uppercase;
@@ -22,7 +25,21 @@
 .nav li a[aria-current="page"] {
   color: #666666;
 }
-.loadMoreButton {
-  margin: 0 auto 15px auto;
-  display: block;
+.loadMoreButtonContainer {
+  display: flex;
+  margin-bottom: 48px;
+}
+
+.loadMoreButtonContainer > * {
+  margin: 0 auto;
+}
+
+.toggleContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+}
+
+.spinnerContainer {
+  height: 37px;
 }

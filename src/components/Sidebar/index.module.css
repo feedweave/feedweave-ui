@@ -1,0 +1,83 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  width: 290px;
+  /* flex: 0 0 290px; */
+  padding: 15px;
+}
+
+.container a {
+  text-decoration: none;
+  color: black;
+}
+.logoParent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subHeading {
+  color: rgba(104, 113, 122, 0.5);
+}
+
+.logo {
+  border: 1px solid #68717a;
+  width: 105px;
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  height: 28px;
+}
+.logo span {
+  color: #68717a;
+}
+
+.logo img {
+  width: 13px;
+  height: 13px;
+}
+
+.menu {
+  margin-top: 16px;
+}
+
+.menu .userName {
+  color: #68717a;
+}
+.menu .logOut {
+  cursor: pointer;
+}
+
+.menuSection {
+  margin-top: 16px;
+}
+
+.menuItem a {
+  display: flex;
+  align-items: center;
+}
+.menuItem a::before {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 11px;
+  background-color: black;
+  margin-right: 8px;
+  visibility: hidden;
+}
+
+.menuItem:hover a::before {
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.menuItem a[aria-current="page"]::before {
+  visibility: visible;
+  background-color: black;
+}
+
+.loginContainer {
+  margin-top: 8px;
+}

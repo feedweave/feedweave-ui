@@ -1,0 +1,177 @@
+.overlay {
+  z-index: 98;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: rgba(250, 250, 250, 0.75);
+}
+
+.modal {
+  z-index: 99;
+  /* Everything below is optional styling */
+  position: relative;
+}
+
+.modalClose {
+  position: absolute;
+  top: -24px;
+  right: 0;
+  padding: 5px;
+  border: 0;
+  -webkit-appearance: none;
+  background: none;
+  color: black;
+  cursor: pointer;
+}
+
+.modalBody {
+}
+
+.container {
+  width: 521px;
+  background: #ffffff;
+  border: 1px solid #68717a;
+  font-size: 15px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.heading {
+  font-weight: 500;
+  color: #222222;
+  margin-bottom: 8px;
+}
+
+.inputContainer:first-of-type {
+  margin-bottom: 24px;
+}
+
+.inputHeading {
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.top,
+.middle {
+  border-bottom: 1px solid #68717a;
+  padding: 18px;
+}
+
+.middle {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.userAddress {
+  color: #68717a;
+}
+
+.userInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+}
+
+.addressAndButtonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -3px;
+}
+
+.bottom {
+  font-size: 13px;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  padding: 12px 12px;
+}
+
+.uploadKeyfile {
+  text-decoration-line: underline;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.finishSetup {
+  text-decoration-line: underline;
+
+  color: #57943a;
+  cursor: pointer;
+}
+
+.top ol {
+  margin-top: 8px;
+}
+
+.middle input {
+  height: 36px;
+  width: 325px;
+  background: #fafafa;
+  border: 1px solid #d7d7d7;
+  font-size: 13px;
+  color: #8c8c8c;
+  padding: 0 10px;
+}
+
+.middle input:focus {
+  outline: none;
+}
+
+.middle input[placeholder="yourname"] {
+  font-size: 15px;
+  color: #5d5c5c;
+}
+
+.middle input[placeholder="yourname"]::placeholder {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.twitterInput {
+  display: flex;
+  flex-direction: row;
+}
+
+.atPrefix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 11px;
+  background: #fafafa;
+  border-top: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  color: #68717a;
+}
+
+.twitterProofContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.txData {
+  font-size: 12px;
+}
+
+.dataRow {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 4px;
+}
+
+.dataKey {
+  font-weight: bold;
+  width: 75px;
+  color: rgba(98, 98, 98, 0.7);
+}

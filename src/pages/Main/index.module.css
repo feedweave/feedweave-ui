@@ -1,0 +1,23 @@
+.container {
+  height: 100%;
+}
+.childrenContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 636px;
+}
+
+.content > div {
+  height: 100%;
+}
+
+@media all and (max-width: 1215px) {
+  .childrenContainer {
+    justify-content: left;
+    padding-left: 290px;
+  }
+}

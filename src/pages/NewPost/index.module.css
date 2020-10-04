@@ -1,22 +1,40 @@
 .container {
-  margin-bottom: 15px;
-}
-.continueEditingButton {
-  margin-right: 15px;
-}
-.previewPost {
-  margin-bottom: 20px;
-}
-.buttonContainer {
-  justify-content: flex-end;
+  padding-top: 35px;
   display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.previewContainer img {
-  width: 100%;
+.footerContainer {
+  background: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.previewWarning {
-  margin-top: 15px;
-  color: red;
+.footerContentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #dedede;
+  padding-top: 12px;
+  padding-bottom: 50px;
+  max-width: 636px;
+  margin: 0 auto;
+}
+
+.container > *:last-child {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.editor {
+  margin-top: 24px;
+  padding: 0 8px;
+  padding-bottom: 132px;
+  height: 100%;
 }

@@ -1,116 +1,73 @@
-import React from "react";
-import { Button } from "reactstrap";
-import TextEditor from "../../components/TextEditor";
+import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
+import classnames from "classnames";
 
-import unified from "unified";
-import parse from "remark-parse";
-import remark2react from "remark-react";
+import {
+  APP_NAME,
+  APP_VERSION,
+  fetchBytePrice,
+  convertHTMLtoMarkdown,
+} from "../../util";
 
-import { UserContext, APP_NAME, APP_VERSION } from "../../util";
-import SaveTransactionWithConfirmationButton from "../../components/SaveTransactionWithConfirmationButton";
+import EditorWrapper, { TextEditor } from "../../components/NewTextEditor";
+import Button from "../../components/Button";
+import { PostButtonWrapper } from "../../components/PostButton";
+
 import styles from "./index.module.css";
+import postStyles from "../../components/PostBody/index.module.css";
+
+import {
+  NewPostHeader,
+  RemirrorEditorControls,
+} from "../../components/TextComposer";
+
+import { NewPostMetaTags } from "../../components/MetaTags";
 
 const tags = {
   "App-Name": APP_NAME,
-  "App-Version": APP_VERSION
+  "App-Version": APP_VERSION,
 };
 
-const unescape = text => {
-  return text.replace(/\\([\\`*{}[\]()#+\-.!_>])/g, "$1");
-};
+function NewPost() {
+  const [post, setPost] = useState("");
+  const [bytePrice, setBytePrice] = useState(1676997);
 
-class NewPost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { post: "", showPreview: false };
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.togglePreview = this.togglePreview.bind(this);
-  }
-
-  static contextType = UserContext;
-
-  handleTextChange = value => {
-    const text = unescape(value());
-    this.setState({ post: text });
+  const handleTextChange = (controller) => {
+    const html = controller.getHTML();
+    const markdown = convertHTMLtoMarkdown(html);
+    setPost(markdown);
   };
 
-  async onSave(tx) {
-    navigate(`/post/${tx.id}`);
-  }
+  const onSave = () => {
+    navigate("/");
+  };
 
-  togglePreview() {
-    this.setState({ showPreview: !this.state.showPreview });
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const bytePrice = await fetchBytePrice();
+      setBytePrice(bytePrice);
+    }
 
-  renderEditor() {
-    const { post } = this.state;
-    return (
-      <div className={styles.editorContainer}>
-        <TextEditor
-          defaultValue={post}
-          handleTextChange={this.handleTextChange}
-        />
-        <div className={styles.buttonContainer}>
-          <Button
-            color="primary"
-            disabled={post === ""}
-            onClick={this.togglePreview}
-          >
-            Preview
-          </Button>
-        </div>
-      </div>
-    );
-  }
+    fetchData();
+  }, []);
 
-  renderPreview() {
-    const { post } = this.state;
-    const { user } = this.context;
-    return (
-      <div className={styles.previewContainer}>
-        <div className={styles.previewPost}>
-          {
-            unified()
-              .use(parse)
-              .use(remark2react)
-              .processSync(post).contents
-          }
+  return (
+    <div className={styles.container}>
+      <NewPostMetaTags />
+      <NewPostHeader text={post} bytePrice={bytePrice} />
+      <EditorWrapper onChange={handleTextChange}>
+        <TextEditor className={classnames(styles.editor, postStyles.post)} />
+        <div className={styles.footerContainer}>
+          <div className={styles.footerContentContainer}>
+            <RemirrorEditorControls />
+            <PostButtonWrapper data={post} tags={tags} onSave={onSave}>
+              <Button>Publish to Arweave</Button>
+            </PostButtonWrapper>
+          </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <Button
-            className={styles.continueEditingButton}
-            onClick={this.togglePreview}
-          >
-            Edit
-          </Button>
-          <SaveTransactionWithConfirmationButton
-            data={post}
-            tags={tags}
-            user={user}
-            onSave={this.onSave}
-            buttonText="Publish"
-            color="primary"
-          />
-        </div>
-        <div className={styles.previewWarning}>
-          WARNING: FEEDweave uses a blockchain as a datastore, so all data is
-          immutable. Deleting or editing posts is not yet supported. Make sure
-          your post is formatted correctly before publishing.
-        </div>
-      </div>
-    );
-  }
-
-  render() {
-    const { showPreview } = this.state;
-    return (
-      <div className={styles.container}>
-        {showPreview ? this.renderPreview() : this.renderEditor()}
-      </div>
-    );
-  }
+      </EditorWrapper>
+    </div>
+  );
 }
 
 export default NewPost;

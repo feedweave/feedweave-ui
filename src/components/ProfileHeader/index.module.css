@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d7d7d7;
+  font-family: "Roboto Mono", monospace;
+}
+
+.container a {
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.upperRectangle {
+  height: 134px;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: row;
+  padding: 11px;
+}
+
+.avatarContainer img {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+}
+
+.userInfoText {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  flex: 1;
+}
+
+.username {
+  font-size: 16px;
+  color: #222222;
+  font-weight: 500;
+}
+
+.addressTwitterFollow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-top: -6px;
+}
+.addressTwitter {
+  display: flex;
+  flex-direction: row;
+}
+
+.twitter {
+  margin-left: 30px;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #d7d7d7;
+  font-size: 13px;
+}
+.navigation a {
+  text-decoration: none;
+  color: #68717a;
+}
+
+.navigationButton {
+  padding: 5px 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navigationButton:hover {
+  background: rgba(104, 113, 122, 0.2);
+}
+
+.navigationButton[aria-current="page"] {
+  background: #68717a;
+  color: #fafafa;
+}
+
+.onboardingButtons {
+  display: flex;
+}
+
+.onboardingButtons > * {
+  margin: 0 10px;
+}
+
+.onboardingButtons > *:last-child {
+  margin-right: 0;
+}

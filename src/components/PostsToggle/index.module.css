@@ -1,0 +1,30 @@
+.container {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 13px;
+  color: #68717a;
+  font-family: "Roboto Mono", monospace;
+  cursor: pointer;
+}
+
+.toggleSwitch {
+  padding: 4px 6px;
+}
+
+.container > *:first-child {
+  padding-left: 0;
+}
+
+.container > *:last-child {
+  padding-right: 0;
+}
+
+.toggleSwitch:hover {
+  color: #505050;
+}
+
+.switchOn {
+  color: #000000;
+  text-decoration: underline;
+}

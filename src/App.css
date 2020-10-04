@@ -1,3 +1,6 @@
+#root {
+  height: 100%;
+}
 .App {
   text-align: center;
 }
@@ -5,6 +8,10 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+a:hover {
+  text-decoration: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {

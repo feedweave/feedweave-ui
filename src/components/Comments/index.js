@@ -1,62 +1,76 @@
 import React from "react";
-import { Link } from "@reach/router";
-import { Comment, Header } from "semantic-ui-react";
 
-import placeholderIcon from "../UserIcon/placeholder-icon.png";
+import PostBody from "../PostBody";
+import ReplyButtonWithComposer from "../ReplyButtonWithComposer";
+import EmptyState from "../EmptyState";
+import { PostPageCommentHeader } from "../TransactionHeaders";
 
-import { formatDate, renderMarkdown } from "../../util";
+import styles from "./index.module.css";
 
-const displayName = ({ id, arweaveId }) => {
-  const userName = arweaveId ? `@${arweaveId}` : id.substr(0, 8) + "...";
-  return <Link to={`/user/${id}`}>{userName}</Link>;
-};
+function Comment({ comment, users, parentUser, onSave, parentTx, parentType }) {
+  const user = users.find((u) => u.id === comment.ownerAddress);
+  const { comments: childrenComments, users: commentUsers } = comment;
 
-const CustomComment = ({
-  comment: { content, timestamp, ownerAddress },
-  users,
-}) => {
-  const user = users.find((u) => u.id === ownerAddress);
-
-  const { twitterId } = user;
-
-  const iconUrl = twitterId
-    ? `https://unavatar.now.sh/twitter/${twitterId}`
-    : placeholderIcon;
   return (
-    <Comment>
-      <Comment.Avatar src={iconUrl} />
-      <Comment.Content>
-        <Comment.Author as="span">{displayName(user)}</Comment.Author>
-        <Comment.Metadata>
-          <div>{formatDate(timestamp)}</div>
-        </Comment.Metadata>
-        <Comment.Text>{renderMarkdown(content)}</Comment.Text>
-      </Comment.Content>
-    </Comment>
+    <div className={styles.actionContainer}>
+      <PostPageCommentHeader tx={comment} user={user} />
+      <div className={styles.bodyContainer}>
+        <PostBody content={comment.content} />
+      </div>
+      <div>
+        <ReplyButtonWithComposer
+          indentComposer={true}
+          parentTx={comment}
+          onSave={onSave}
+        />
+        {childrenComments.length > 0 ? (
+          <div className={styles.childrenComments}>
+            {childrenComments.map((c) => (
+              <Comment
+                key={c.id}
+                comment={c}
+                users={commentUsers}
+                parentUser={user}
+                onSave={onSave}
+                parentType="comment"
+                parentTx={comment}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
-};
-
-class Comments extends React.Component {
-  render() {
-    const {
-      data: { comments, users },
-    } = this.props;
-
-    return (
-      <Comment.Group>
-        <Header as="h3" dividing>
-          Comments
-        </Header>
-        {comments.length > 0 ? (
-          comments.map((c) => (
-            <CustomComment key={c.id} comment={c} users={users} />
-          ))
-        ) : (
-          <div>There are no comments yet.</div>
-        )}
-      </Comment.Group>
-    );
-  }
 }
 
-export default Comments;
+export default function Comments({
+  data: { comments, users },
+  parentTx,
+  parentUser,
+  onSave,
+}) {
+  return (
+    <div className={styles.container}>
+      {comments.length > 0 ? (
+        comments.map((c) => (
+          <Comment
+            key={c.id}
+            parentTx={parentTx}
+            comment={c}
+            users={users}
+            parentUser={parentUser}
+            onSave={onSave}
+            parentType="post"
+          />
+        ))
+      ) : (
+        <EmptyState>
+          <div className={styles.noCommentsBold}>
+            There are no comments yet.
+          </div>
+          <div>Be the first to share your thoughts.</div>
+        </EmptyState>
+      )}
+    </div>
+  );
+}

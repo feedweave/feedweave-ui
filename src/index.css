@@ -9,3 +9,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.remirror-editor {
+  outline: 0px solid transparent;
+  height: 100%;
+  font-size: 15px;
+}
+
+.remirror-is-empty:first-of-type::before {
+  position: absolute;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+  content: attr(data-placeholder);
+}

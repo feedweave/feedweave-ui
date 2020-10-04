@@ -1,184 +1,96 @@
-import React from "react";
-import { Router, Link } from "@reach/router";
+import React, { useState, useEffect, useContext } from "react";
+import { Router } from "@reach/router";
 
-import { API_HOST, APP_NAME } from "../../util";
-import PostFeed from "../../components/PostFeed";
-import FollowButton from "../../components/FollowButton";
+import { fetchUserFeed, fetchUser, UserContext } from "../../util";
+import ActivityFeed from "../../components/ActivityFeed";
+import ProfileHeader from "../../components/ProfileHeader";
+import FollowList from "../../components/FollowList";
+import EmptyState from "../../components/EmptyState";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
-import { UserContext } from "../../util";
+import { UserMetaTags } from "../../components/MetaTags";
 
 import styles from "./index.module.css";
-import SetUpIDButton from "../../components/SetUpIDButton";
-import VerifyTwitterButton from "../../components/VerifyTwitterButton";
 
-const FollowList = ({ ids, title, users }) => {
-  return (
-    <div>
-      <div className={styles.followTitle}>{title}</div>
-      {ids.map((id) => {
-        const relatedUser = users.find((user) => user.id === id) || {};
-        const displayName =
-          (relatedUser.arweaveId && `@${relatedUser.arweaveId}`) || id;
-
-        return (
-          <div>
-            <Link to={`/user/${id}`}>{displayName}</Link>
-          </div>
-        );
-      })}
-    </div>
+const Index = ({ feed, isLoggedInUser }) => {
+  const { transactions } = feed;
+  const messagePrefix = isLoggedInUser ? "You haven't" : "This user hasn't";
+  return transactions.length === 0 ? (
+    <EmptyState>{messagePrefix} made any posts yet.</EmptyState>
+  ) : (
+    <ActivityFeed feed={feed} />
   );
 };
 
-const Index = ({ feed }) => {
-  if (feed.length === 0) {
-    return "No posts yet!";
-  } else {
-    return <PostFeed feed={feed} />;
-  }
-};
+function User({ address }) {
+  const { user: loggedInUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState({});
+  const [relatedUsers, setRelatedUsers] = useState([]);
+  const [feed, setFeed] = useState([]);
 
-class User extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      user: {},
-      relatedUsers: [],
-      feed: [],
-    };
+  const isLoggedInUser = loggedInUser && loggedInUser.address === user.id;
 
-    this.loadData = this.loadData.bind(this);
-  }
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
 
-  static contextType = UserContext;
+      const [feed, { user, relatedUsers }] = await Promise.all([
+        fetchUserFeed(address),
+        fetchUser(address),
+      ]);
 
-  async componentDidMount() {
-    await this.loadData();
-  }
+      setFeed(feed);
+      setUser(user);
+      setRelatedUsers(relatedUsers);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.walletId !== prevProps.walletId) {
-      this.loadData();
-    }
-  }
-
-  async loadData() {
-    // TODO handle errors
-    this.setState({ isLoaded: false });
-    const { walletId } = this.props;
-    const feed = await fetch(
-      `${API_HOST}/transactions?app-name=${APP_NAME}&wallet-id=${walletId}`
-    ).then((res) => res.json());
-
-    const { user, relatedUsers } = await fetch(
-      `${API_HOST}/arweave-social/user/${walletId}`
-    ).then((res) => res.json());
-    this.setState({ isLoaded: true, feed, user, relatedUsers });
-  }
-  renderFollowButton() {
-    const { walletId } = this.props;
-    const { user: loggedInUser } = this.context;
-    if (!loggedInUser) {
-      return;
+      setIsLoading(false);
     }
 
-    if (loggedInUser.address === walletId) {
-      return;
-    }
+    fetchData();
+  }, [address]);
 
-    return (
-      <div className={styles.followButton}>
-        <FollowButton walletId={walletId} />
-      </div>
-    );
-  }
+  const reloadUser = async () => {
+    const { user, relatedUsers } = await fetchUser(address);
+    setUser(user);
+    setRelatedUsers(relatedUsers);
+  };
 
-  render() {
-    const { walletId } = this.props;
-    const { user: loggedInUser } = this.context;
-    const { user, feed, isLoaded, relatedUsers } = this.state;
-    const { postCount, followerIds, followingIds, arweaveId, twitterId } = user;
+  const messagePrefix = isLoggedInUser ? "You aren't" : "This user isn't";
 
-    const isLoggedInUser = loggedInUser && loggedInUser.address === walletId;
-
-    const showIdButton = isLoggedInUser && !arweaveId;
-    const showTwitterButton = isLoggedInUser && !twitterId;
-    const element = isLoaded ? (
-      <div>
-        <div className={styles.userNameContainer}>
-          {twitterId ? (
-            <div className={styles.twitterAvatar}>
-              <img
-                alt="twitter-avatar"
-                src={`https://unavatar.now.sh/twitter/${twitterId}`}
-              />
-            </div>
-          ) : null}
-          <div className={styles.userNameText}>
-            <h1 className={styles.userName}>
-              <Link to={`/user/${user.id}`}>
-                {arweaveId ? `@${arweaveId}` : walletId}
-              </Link>
-            </h1>
-            {arweaveId ? (
-              <div className={styles.userNameSubheading}>{walletId}</div>
-            ) : null}
-          </div>
-        </div>
-        {showIdButton || showTwitterButton ? (
-          <div className={styles.idButtons}>
-            {showIdButton ? <SetUpIDButton onSave={this.loadData} /> : null}
-            {showTwitterButton ? <VerifyTwitterButton /> : null}
-          </div>
-        ) : null}
-        <div className={styles.userStats}>
-          <div>
-            <Link to={`/user/${user.id}`}>Posts</Link>: {postCount}
-          </div>
-          <div>
-            <Link to={`/user/${user.id}/followers`}>Followers</Link>:{" "}
-            {followerIds.length}
-          </div>
-          <div>
-            <Link to={`/user/${user.id}/following`}>Following</Link>:{" "}
-            {followingIds.length}
-          </div>
-          {twitterId ? (
-            <div>
-              Twitter:{" "}
-              <a href={`https://twitter.com/${twitterId}`}>{`@${twitterId}`}</a>
-            </div>
-          ) : null}
-          <div>
-            <a href={`https://explorer.arweave.co/address/${user.id}`}>
-              Arweave activity
-            </a>
-          </div>
-          {this.renderFollowButton()}
-        </div>
+  const followingEmptyElement = (
+    <EmptyState>{messagePrefix} following anyone yet.</EmptyState>
+  );
+  const followersEmptyElement = (
+    <EmptyState>{messagePrefix} followed by anyone yet.</EmptyState>
+  );
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
+    <div className={styles.container}>
+      <UserMetaTags user={user} />
+      <ProfileHeader user={user} reloadUser={reloadUser} />
+      <div className={styles.routeContainer}>
         <Router primary={false}>
-          <Index path="/" feed={feed} />
+          <Index path="/" feed={feed} isLoggedInUser={isLoggedInUser} />
           <FollowList
             path="/following"
-            ids={user.followingIds}
-            users={relatedUsers}
-            title="Following"
+            displayIds={user.followingIds}
+            allUsers={relatedUsers}
+            reloadUser={reloadUser}
+            emptyElement={followingEmptyElement}
           />
           <FollowList
             path="/followers"
-            ids={user.followerIds}
-            users={relatedUsers}
-            title="Followers"
+            displayIds={user.followerIds}
+            allUsers={relatedUsers}
+            reloadUser={reloadUser}
+            emptyElement={followersEmptyElement}
           />
         </Router>
       </div>
-    ) : (
-      "Loading..."
-    );
-    return element;
-  }
+    </div>
+  );
 }
 
 export default User;

@@ -1,0 +1,46 @@
+.container {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.editor {
+  margin: 20px 0;
+  padding: 0 10px;
+}
+
+.editorModule {
+  border-bottom: 1px solid #dedede;
+  border-left: 1px solid #dedede;
+  border-right: 1px solid #dedede;
+}
+
+.footerContainer {
+  border-top: 1px solid #dedede;
+  padding: 12px;
+}
+
+.footerContentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.spacerButton {
+  width: 12px;
+}
+
+.cancelButton {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #8c8c8c;
+  margin-right: 24px;
+}

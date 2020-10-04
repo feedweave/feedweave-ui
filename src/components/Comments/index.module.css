@@ -1,0 +1,22 @@
+.container {
+  margin-top: 90px;
+}
+
+.actionContainer {
+  margin-bottom: 36px;
+}
+
+.bodyContainer {
+  padding: 0 8px;
+  font-size: 15px;
+}
+
+.childrenComments {
+  margin-top: 36px;
+  margin-left: 40px;
+}
+
+.noCommentsBold {
+  font-weight: bold;
+  margin-bottom: 17px;
+}

@@ -1,3 +1,11 @@
+.container {
+  margin-top: 15px;
+}
+
+.routeContainer {
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
 .userName {
   font-size: 19px;
   font-weight: bold;

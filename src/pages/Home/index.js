@@ -1,97 +1,104 @@
-import React from "react";
-import { Link } from "@reach/router";
-import { Button } from "reactstrap";
+import React, { useState, useEffect } from "react";
 
-import { API_HOST, UserContext } from "../../util";
-import PostFeed from "../../components/PostFeed";
+import { fetchPostFeed, fetchActivityFeed } from "../../util";
+import ActivityFeed from "../../components/ActivityFeed";
+import PostsToggle from "../../components/PostsToggle";
+import Button from "../../components/Button";
+
+import { HomeMetaTags } from "../../components/MetaTags";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 import styles from "./index.module.css";
 
-const fetchFeed = async cursor => {
-  const queryParam = cursor ? `?cursor=${cursor}` : "";
-  const res = await fetch(`${API_HOST}/post-feed${queryParam}`);
-  const json = await res.json();
+function LoadMoreButton({ onClick, isLoading }) {
+  return (
+    <div className={styles.loadMoreButtonContainer}>
+      {isLoading ? (
+        <div className={styles.spinnerContainer}>
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <Button onClick={onClick}>Load more posts</Button>
+      )}
+    </div>
+  );
+}
 
-  return json;
-};
+function Home() {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentCursor, setCurrentCursor] = useState(null);
+  const [feedType, setFeedType] = useState("posts");
+  const [feedData, setFeedData] = useState({
+    feed: { users: [], transactions: [] },
+    nextCursor: null,
+  });
+  const { feed, nextCursor } = feedData;
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      let json;
+      if (feedType === "posts") {
+        json = await fetchPostFeed(currentCursor);
+      } else {
+        json = await fetchActivityFeed(currentCursor);
+      }
+      const {
+        nextCursor,
+        transactions: newTransactions,
+        users: newUsers,
+      } = json;
+      const mergedUsers = feed.users.concat(newUsers);
+      const mergedTransactions = feed.transactions.concat(newTransactions);
+      setFeedData({
+        feed: { users: mergedUsers, transactions: mergedTransactions },
+        nextCursor,
+      });
+      setIsInitialLoading(false);
+      setIsLoading(false);
+    }
+
+    fetchData();
+  }, [currentCursor, feedType]);
+
+  function loadMorePosts() {
+    setCurrentCursor(nextCursor);
+  }
+
+  function typeChanged(type) {
+    if (feedType === type) {
+      return;
+    }
+    setFeedType(type);
+    setFeedData({
+      feed: { users: [], transactions: [] },
       nextCursor: null,
-      feed: {}
-    };
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  static contextType = UserContext;
-
-  async handleClick() {
-    const {
-      nextCursor,
-      feed: { transactions, users }
-    } = this.state;
-    const json = await fetchFeed(nextCursor);
-    this.setState({
-      isLoaded: true,
-      feed: {
-        transactions: transactions.concat(json.transactions),
-        users: users.concat(json.users)
-      },
-      nextCursor: json.nextCursor
     });
+    setCurrentCursor(null);
+    setIsInitialLoading(true);
   }
 
-  async componentDidMount() {
-    // TODO handle errors
-    const json = await fetchFeed();
-    const { nextCursor } = json;
-    this.setState({ isLoaded: true, feed: json, nextCursor });
-  }
-
-  render() {
-    const { isLoaded, feed, nextCursor } = this.state;
-    const { user } = this.context;
-    return (
+  return (
+    <div className={styles.container}>
+      <HomeMetaTags />
       <div>
-        <nav className={styles.nav}>
-          {user ? (
-            <ul>
-              <li>
-                <Link to="/my-feed">Your feed</Link>
-              </li>
-              <li>
-                <Link to="/">Global feed</Link>
-              </li>
-            </ul>
-          ) : (
-            <ul>
-              <li>Global feed</li>
-            </ul>
-          )}
-        </nav>
-        {isLoaded ? (
-          <div>
-            <PostFeed feed={feed} />
-            {nextCursor ? (
-              <Button
-                className={styles.loadMoreButton}
-                onClick={this.handleClick}
-              >
-                Load more posts
-              </Button>
-            ) : null}
-          </div>
+        <div className={styles.toggleContainer}>
+          <PostsToggle onToggle={typeChanged} />
+        </div>
+        {isInitialLoading ? (
+          <LoadingSpinner />
         ) : (
-          "Loading..."
+          <>
+            <ActivityFeed feed={feed} />
+            {nextCursor ? (
+              <LoadMoreButton onClick={loadMorePosts} isLoading={isLoading} />
+            ) : null}
+          </>
         )}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Home;

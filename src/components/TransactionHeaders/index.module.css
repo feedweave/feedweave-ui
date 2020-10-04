@@ -1,0 +1,63 @@
+.headerContainer {
+  border: 1px solid #d7d7d7;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-family: "Roboto Mono";
+  font-size: 13px;
+  color: #8c8c8c;
+}
+.grayHeaderContainer {
+  background: #fafafa;
+}
+
+.innerContainer,
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.innerContainer > * {
+  margin: 0 6px;
+}
+
+.innerContainer > *:first-child {
+  margin-left: 0;
+}
+
+.innerContainer > *:last-child {
+  margin-right: 0;
+}
+
+.verticalBreak {
+  border-right: 1px solid #d7d7d7;
+  height: 100%;
+}
+
+.username a {
+  color: #222222;
+  font-weight: 500;
+}
+.username.grayUsername a {
+  color: #8c8c8c;
+  text-decoration-line: underline;
+}
+
+.link,
+.boldLink {
+  color: #8c8c8c;
+  text-decoration: underline;
+}
+
+.link:hover,
+.boldLink:hover {
+  color: #505050;
+  text-decoration: underline;
+}
+
+.boldLink {
+  font-weight: 500;
+}

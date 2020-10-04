@@ -1,0 +1,55 @@
+.container {
+  margin: 16px 0 32px 0;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerTop {
+  height: 128px;
+  border-top: 1px solid #d7d7d7;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+}
+
+.body {
+  color: #505050;
+  line-height: 150%;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  padding: 0 8px;
+  color: #505050;
+}
+
+.body img {
+  max-width: 100%;
+}
+
+.body h1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  /* font-size: 26px; */
+  color: #222222;
+}
+
+.body h2 {
+  font-weight: 500;
+  font-size: 22px;
+  color: #222222;
+}
+.body h3,
+.body h4,
+.body h5,
+.body h6 {
+  font-weight: 500;
+  font-size: 18px;
+  color: #222222;
+}
+
+.spinnerContainer {
+  margin-top: 144px;
+}

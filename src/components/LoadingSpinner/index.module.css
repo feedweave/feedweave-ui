@@ -1,0 +1,45 @@
+.container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  width: 18px;
+  height: 18px;
+  background: url("./background.png");
+  background-size: 18px 18px;
+  position: relative;
+}
+.loadingInner {
+  -webkit-animation: rotate-cw 1.2s steps(8, end) infinite forwards;
+  animation: rotate-cw 1.2s steps(8, end) infinite forwards;
+  width: 2px;
+  height: 18px;
+  background-color: #68717a;
+  position: absolute;
+  left: 8px;
+  z-index: ;
+}
+
+@-webkit-keyframes rotate-cw {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate-cw {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

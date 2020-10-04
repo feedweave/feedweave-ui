@@ -1,0 +1,127 @@
+.container > * {
+  margin-bottom: 4em;
+}
+.itemBody {
+  color: black;
+}
+
+.itemContainer {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.fullSizeContainer {
+  border-bottom: 0;
+}
+
+.itemContainer:hover {
+  background-color: #fbfbfb;
+}
+
+.fullSizeContainer:hover {
+  background-color: white;
+}
+
+.itemContainer a {
+  text-decoration: none;
+}
+
+.itemWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemBody {
+  padding-left: 10px;
+  flex-basis: 0px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.itemContent {
+  color: #646464;
+  font-size: 15px;
+}
+
+.itemContent h1,
+h2,
+h3,
+h4 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  color: black;
+}
+
+.itemContent h2,
+h3,
+h4 {
+  font-size: 20px;
+}
+
+.itemContent > *:last-child {
+  margin-bottom: 5px;
+}
+.itemMetadata {
+  font-size: 13px;
+  display: flex;
+  margin-bottom: 5px;
+}
+.twitterAvatar {
+  width: 50px;
+  height: 50px;
+  flex-basis: 50px;
+  flex-grow: 0;
+}
+.twitterAvatar img {
+  width: 100%;
+  border-radius: 25px;
+}
+.metadataText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.itemHeader {
+  font-size: 15px;
+}
+
+.itemHeader a {
+  text-decoration: none;
+  color: #444444;
+  font-weight: bold;
+}
+.itemHeader a:hover {
+  text-decoration: underline;
+}
+
+.itemTime {
+  margin-left: 5px;
+}
+
+.itemDateAndPending {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  color: #646464;
+  margin-bottom: 5px;
+}
+
+.itemPending {
+  display: inline-block;
+  background-color: #f1f1f1;
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: #424242;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.itemContainer img {
+  max-width: 100%;
+}
+
+.bodyContainer {
+  padding: 0 8px;
+}

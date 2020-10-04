@@ -1,51 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Router } from "@reach/router";
 
 import "./App.css";
+
+import styles from "./App.module.css";
 
 import Main from "./pages/Main";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
 import NewPost from "./pages/NewPost";
 import User from "./pages/User";
-import YourFeed from "./pages/YourFeed";
-// import Following from "./pages/Following";
+import Following from "./pages/Following";
 
-import { UserContext } from "./util";
+import ScrollToTop from "./components/ScrollToTop";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleUser = this.handleUser.bind(this);
+import { UserContext, fetchUser } from "./util";
 
-    const cachedUser = JSON.parse(window.localStorage.getItem("user"));
-    this.state = {
-      user: cachedUser,
-      handleUser: this.handleUser
-    };
-  }
+function NewApp() {
+  const cachedUser = JSON.parse(window.localStorage.getItem("user"));
+  const [user, setUser] = useState(cachedUser);
 
-  handleUser(user) {
-    window.localStorage.setItem("user", JSON.stringify(user));
-    this.setState({ user });
-  }
+  const handleUser = (updatedUser) => {
+    window.localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
 
-  render() {
-    return (
-      <UserContext.Provider value={this.state}>
-        <Router primary={false}>
+  const declineOnboarding = () => {
+    window.localStorage.setItem("declinedOnboarding", "yes");
+  };
+
+  const reloadUser = async () => {
+    if (cachedUser) {
+      const updatedUserInfo = await fetchUser(cachedUser.address);
+      handleUser({ ...cachedUser, userInfo: updatedUserInfo.user });
+    }
+  };
+
+  return (
+    <UserContext.Provider
+      value={{ user, handleUser, reloadUser, declineOnboarding }}
+    >
+      <Router className={styles.container} primary={false}>
+        <ScrollToTop path="/">
           <Main path="/">
             <Home path="/" />
-            <YourFeed path="/my-feed" />
+            <Following path="/following" />
             <Post path="/post/:txId" />
             <NewPost path="/new-post" />
-            <User path="/user/:walletId/*" />
+            <User path="/user/:address/*" />
           </Main>
-        </Router>
-      </UserContext.Provider>
-    );
-  }
+        </ScrollToTop>
+      </Router>
+    </UserContext.Provider>
+  );
 }
 
-export default App;
+export default NewApp;
